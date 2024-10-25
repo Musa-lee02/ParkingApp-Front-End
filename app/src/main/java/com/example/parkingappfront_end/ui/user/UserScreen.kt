@@ -38,7 +38,7 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 
-import com.example.parkingAppFront_End.model.Credential
+import com.example.parkingappfront_end.model.Credential
 import com.example.parkingappfront_end.viewmodels.LoginViewModel
 import java.time.Instant
 import java.time.LocalDate

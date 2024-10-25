@@ -9,8 +9,8 @@
 9        android:targetSdkVersion="34" />
 10
 11    <uses-permission android:name="android.permission.INTERNET" />
-11-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:4:5-66
-11-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:4:22-64
+11-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:4:5-66
+11-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:4:22-64
 12    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 12-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\transforms-4\99579e4aecdd78fa269fb04ee8d4dbfc\transformed\places-3.5.0\AndroidManifest.xml:9:5-81
 12-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\transforms-4\99579e4aecdd78fa269fb04ee8d4dbfc\transformed\places-3.5.0\AndroidManifest.xml:9:22-78
@@ -43,47 +43,47 @@
 25-->[androidx.core:core:1.13.1] C:\Users\samue\.gradle\caches\transforms-4\a5a8c77e903f1bd380ca3c68e0ffe868\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
 26
 27    <application
-27-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:6:5-29:19
+27-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:6:5-29:19
 28        android:allowBackup="true"
-28-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:9:9-35
+28-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:9:9-35
 29        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
 29-->[androidx.core:core:1.13.1] C:\Users\samue\.gradle\caches\transforms-4\a5a8c77e903f1bd380ca3c68e0ffe868\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
 30        android:dataExtractionRules="@xml/data_extraction_rules"
-30-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:10:9-65
+30-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:10:9-65
 31        android:debuggable="true"
 32        android:extractNativeLibs="false"
 33        android:fullBackupContent="@xml/backup_rules"
-33-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:11:9-54
+33-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:11:9-54
 34        android:icon="@mipmap/ic_launcher"
-34-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:12:9-43
+34-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:12:9-43
 35        android:label="@string/app_name"
-35-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:13:9-41
+35-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:13:9-41
 36        android:networkSecurityConfig="@xml/network_security_config"
-36-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:7:9-69
+36-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:7:9-69
 37        android:roundIcon="@mipmap/ic_launcher_round"
-37-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:14:9-54
+37-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:14:9-54
 38        android:supportsRtl="true"
-38-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:15:9-35
+38-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:15:9-35
 39        android:testOnly="true"
 40        android:theme="@style/Theme.EcommerceFrontEnd" >
-40-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:16:9-55
+40-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:16:9-55
 41        <activity
-41-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:19:9-28:20
-42            android:name="com.example.parkingAppFront_End.MainActivity"
-42-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:20:13-72
+41-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:19:9-28:20
+42            android:name="com.example.parkingappfront_end.MainActivity"
+42-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:20:13-72
 43            android:exported="true"
-43-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:21:13-36
+43-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:21:13-36
 44            android:theme="@style/Theme.EcommerceFrontEnd" >
-44-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:22:13-59
+44-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:22:13-59
 45            <intent-filter>
-45-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:23:13-27:29
+45-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:23:13-27:29
 46                <action android:name="android.intent.action.MAIN" />
-46-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:24:17-69
-46-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:24:25-66
+46-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:24:17-69
+46-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:24:25-66
 47
 48                <category android:name="android.intent.category.LAUNCHER" />
-48-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:26:17-77
-48-->C:\Users\samue\AndroidStudioProjects\ParkingAppFrontEnd\app\src\main\AndroidManifest.xml:26:27-74
+48-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:26:17-77
+48-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:26:27-74
 49            </intent-filter>
 50        </activity>
 51        <activity
