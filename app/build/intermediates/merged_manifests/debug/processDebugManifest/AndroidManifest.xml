@@ -39,7 +39,7 @@
         android:testOnly="true"
         android:theme="@style/Theme.EcommerceFrontEnd" >
         <activity
-            android:name="com.example.parkingAppFront_End.MainActivity"
+            android:name="com.example.parkingappfront_end.MainActivity"
             android:exported="true"
             android:theme="@style/Theme.EcommerceFrontEnd" >
             <intent-filter>
