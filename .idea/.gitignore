@@ -1,3 +1,10 @@
 # Default ignored files
 /shelf/
 /workspace.xml
+
+
+#Gradle
+
+gradle/wrapper/gradle-wrapper.properties
+local.properties
+settings.gradle.kts
