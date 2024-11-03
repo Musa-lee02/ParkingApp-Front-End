@@ -47,11 +47,11 @@ import java.time.format.DateTimeFormatter
 
 
 @Composable
-fun UserAuthScreen(loginViewModel: LoginViewModel, registrationViewModel: RegistrationViewModel, navController: NavController) {
-    var selectedTabIndex by remember { mutableStateOf(0) }
+fun SignInUpScreen(loginViewModel: LoginViewModel, registrationViewModel: RegistrationViewModel, navController: NavController) {
+    var selectedTabIndex by remember { mutableStateOf(0) } //Serve per tenere traccia della tab selezionata per mostrare la pagina di accesso o di registrazione
 
-    Column(modifier = Modifier.fillMaxSize()) {
-        TabRow(selectedTabIndex = selectedTabIndex) {Tab(
+    Column(modifier = Modifier.fillMaxSize()) { //Crea una colonna che occupa tutto lo spazio disponibile
+        TabRow(selectedTabIndex = selectedTabIndex) {Tab( //Serve per visualizzare le tab di accesso e registrazione
             selected = selectedTabIndex == 0,
             onClick = { selectedTabIndex = 0 },
             text = { Text("Accedi") }
@@ -64,38 +64,38 @@ fun UserAuthScreen(loginViewModel: LoginViewModel, registrationViewModel: Regist
         }
 
         // Il resto del codice per visualizzare LoginPage o RegistrationScreen
-        when (selectedTabIndex) {
+        when (selectedTabIndex) { //In base alla tab selezionata mostra la pagina di accesso o di registrazione
             0 -> LoginPage(
                 loginViewModel = loginViewModel,
                 onLoginSuccess = {
-                    navController.navigate("home") {
-                        popUpTo("userAuth") { inclusive = true }
+                    navController.navigate("home") { //Se il login ha successo naviga alla schermata home
+                        popUpTo("userAuth") { inclusive = true } //Chiude tutte le schermate precedenti
                     }
                 }
             )
-            1 -> RegistrationScreen(
+            1 -> RegistrationScreen( // Mostra la schermata di registrazione
                 registrationViewModel,
                 onRegistrationComplete = {
-                    navController.navigate("userAuth") {
+                    navController.navigate("userAuth") { //Se la registrazione ha successo naviga alla schermata di autenticazione
                         popUpTo("userAuth") { inclusive = true }
                     }
                 },
-                onSwitchToLogin = { selectedTabIndex = 0 }
+                onSwitchToLogin = { selectedTabIndex = 0 }//Permette di tornare alla schermata di accesso quando si è già registrati
             )
         }
     }
 }
 
 @Composable
-fun LoginPage(loginViewModel: LoginViewModel, onLoginSuccess: () -> Unit) {
-    var email by remember { mutableStateOf("") }
+fun LoginPage(loginViewModel: LoginViewModel, onLoginSuccess: () -> Unit) { //Pagina di accesso
+    var email by remember { mutableStateOf("") } //Variabili per tenere traccia dell'email e della password
     var password by remember { mutableStateOf("") }
-    var passwordVisible by remember { mutableStateOf(false) }
+    var passwordVisible by remember { mutableStateOf(false) } //Variabile per mostrare o nascondere la password
 
-    var isEmailValid by remember { mutableStateOf(false) }
-    val emailRegex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
+    var isEmailValid by remember { mutableStateOf(false) } //Variabili per controllare se l'email e la password sono valide
+    val emailRegex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$") //Regex per la validazione dell'email
 
-    var isPasswordValid by remember { mutableStateOf(false) }
+    var isPasswordValid by remember { mutableStateOf(false) } //Variabile per controllare se la password è valida
 
     Column(
         modifier = Modifier
@@ -112,7 +112,7 @@ fun LoginPage(loginViewModel: LoginViewModel, onLoginSuccess: () -> Unit) {
 
         OutlinedTextField(
             value = email,
-            onValueChange = {
+            onValueChange = { //Controlla se l'email è valida
                 email = it
                 isEmailValid = emailRegex.matches(it)
             },
@@ -120,8 +120,8 @@ fun LoginPage(loginViewModel: LoginViewModel, onLoginSuccess: () -> Unit) {
             modifier = Modifier
                 .fillMaxWidth(0.9f)
                 .padding(bottom = 8.dp),
-            shape = RoundedCornerShape(16.dp),
-            singleLine = true
+            shape = RoundedCornerShape(16.dp), //Imposta i bordi arrotondati
+            singleLine = true  //Permette di scrivere su una sola riga
         )
         Spacer(modifier = Modifier.height(10.dp))
 
@@ -138,8 +138,8 @@ fun LoginPage(loginViewModel: LoginViewModel, onLoginSuccess: () -> Unit) {
                 .padding(bottom = 8.dp),
             shape = RoundedCornerShape(16.dp),
             singleLine = true,
-            visualTransformation = if (passwordVisible) VisualTransformation.None
-            else PasswordVisualTransformation(),
+            visualTransformation = if (passwordVisible) VisualTransformation.None //Mostra o nasconde la password
+                                    else PasswordVisualTransformation(),
             trailingIcon = {
                 IconButton(onClick = { passwordVisible = !passwordVisible }) {
                     Icon(
@@ -152,13 +152,13 @@ fun LoginPage(loginViewModel: LoginViewModel, onLoginSuccess: () -> Unit) {
         Spacer(modifier = Modifier.height(10.dp))
 
         Button(
-            onClick = {
-                loginViewModel.login(Credential(email, password), onLoginSuccess)
+            onClick = { //Quando si preme il pulsante di accesso
+                loginViewModel.login(Credential(email, password), onLoginSuccess) //Esegue il login
             },
             modifier = Modifier
                 .fillMaxWidth(0.5f)
                 .padding(bottom = 16.dp),
-            enabled = isEmailValid && isPasswordValid
+            enabled = isEmailValid && isPasswordValid //Il pulsante è abilitato solo se l'email e la password sono valide, le variabili di sopra
         ) {
             Text("Accedi", style = MaterialTheme.typography.bodyLarge)
         }
@@ -167,17 +167,17 @@ fun LoginPage(loginViewModel: LoginViewModel, onLoginSuccess: () -> Unit) {
 
 @Composable
 fun RegistrationScreen(registrationViewModel : RegistrationViewModel, onRegistrationComplete: () -> Unit, onSwitchToLogin: () -> Unit) {
-    var currentStep by remember { mutableStateOf(1) }
+    var currentStep by remember { mutableStateOf(1) } //Variabile per tenere traccia dello step corrente (2 step inseriti per adesso)
 
     Column(modifier = Modifier.padding(16.dp)) {
         when (currentStep) {
-            1 -> RegistrationStep1(registrationViewModel, onNext = { currentStep = 2 })
+            1 -> RegistrationStep1(registrationViewModel, onNext = { currentStep = 2 }) //Mostra il primo step e passa al secondo quando si preme il pulsante
             2 -> RegistrationStep2(registrationViewModel = registrationViewModel, onRegistrationComplete, onNext = { currentStep = 3 }, onBack = { currentStep = 1 })
         }
 
         Spacer(modifier = Modifier.height(8.dp))
 
-        if (currentStep == 1) {
+        if (currentStep == 1) { //Se si è nel primo step mostra il pulsante per passare al secondo
             TextButton(onClick = onSwitchToLogin) {
                 Text("Hai già un account? Accedi")
             }
@@ -187,7 +187,7 @@ fun RegistrationScreen(registrationViewModel : RegistrationViewModel, onRegistra
 
 @Composable
 fun RegistrationStep1(registrationViewModel: RegistrationViewModel, onNext: () -> Unit) {
-    var name by remember { mutableStateOf("") }
+    var name by remember { mutableStateOf("") }   // Variabili per tenere traccia del nome, cognome, email, password e conferma password
     var surname by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -199,12 +199,12 @@ fun RegistrationStep1(registrationViewModel: RegistrationViewModel, onNext: () -
     var isConfirmPasswordValid by remember { mutableStateOf(true) }
 
     // Regex per la validazione dell'email
-    val emailRegex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")
+    val emailRegex = Regex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$") //Regex per la validazione dell'email
 
     // Regex per la validazione della password
     val passwordRegex = Regex("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&+=!])[\\w@#$%^&+=!]{8,20}$")
 
-    val isFormValid = isEmailValid && isPasswordValid && isConfirmPasswordValid
+    val isFormValid = isEmailValid && isPasswordValid && isConfirmPasswordValid // Il form è valido se l'email, la password e la conferma password sono valide e non vuote
             && name.isNotBlank() && surname.isNotBlank() && email.isNotBlank()
             && password.isNotBlank() && confirmPassword.isNotBlank()
 
@@ -317,8 +317,8 @@ fun RegistrationStep1(registrationViewModel: RegistrationViewModel, onNext: () -
 
             Button(
                 onClick = {
-                    if (password == confirmPassword) {
-                        registrationViewModel.updateUserDetails(name, surname, email, password)
+                    if (password == confirmPassword) {// Se le password corrispondono
+                        registrationViewModel.updateUserDetails(name, surname, email, password) // Aggiorna i dettagli dell'utente
                         onNext() // Passa al prossimo step
                     } else {
                         // Mostra un messaggio di errore: le password non corrispondono
@@ -371,14 +371,14 @@ fun RegistrationStep2(registrationViewModel: RegistrationViewModel, onRegistrati
                 label = { Text("Data di nascita") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                readOnly = true,
+                readOnly = true, // Non permette all'utente di modificare la data
                 trailingIcon = {
                     IconButton(onClick = { showDatePicker = true }) {
                         Icon(Icons.Filled.CalendarToday, contentDescription = "Seleziona data")
                     }
                 }
             )
-            if (showDatePicker) {
+            if (showDatePicker) { // Mostra il date picker se showDatePicker è true
                 DatePickerDialog(
                     onDismissRequest = { showDatePicker = false },confirmButton = {
                         Button(onClick = { showDatePicker = false }) {
@@ -393,7 +393,7 @@ fun RegistrationStep2(registrationViewModel: RegistrationViewModel, onRegistrati
                     }
                 ) {
                     val datePickerState = rememberDatePickerState(
-                        initialSelectedDateMillis = selectedDate.atStartOfDay(ZoneId.systemDefault())
+                        initialSelectedDateMillis = selectedDate.atStartOfDay(ZoneId.systemDefault()) // Imposta la data iniziale del date picker a selectedDate
                             .toInstant().toEpochMilli(),
                         yearRange = IntRange(1900, LocalDate.now().year),
                         selectableDates = object : SelectableDates {
@@ -431,7 +431,7 @@ fun RegistrationStep2(registrationViewModel: RegistrationViewModel, onRegistrati
                 value = phoneNumber,
                 onValueChange = { newValue ->
                     phoneNumber = newValue.filter { it.isDigit() } // Accetta solo numeri
-                    isPhoneNumberValid =  phoneNumber.isNotBlank() && italianPhoneNumberRegex.matches(phoneNumber)
+                    isPhoneNumberValid =  phoneNumber.isNotBlank() && italianPhoneNumberRegex.matches(phoneNumber) // Controlla se il numero di telefono è valido e non vuoto
                 },
                 label = { Text("Numero di telefono") },
                 modifier = Modifier.fillMaxWidth(),
@@ -518,6 +518,8 @@ fun RegistrationStep2(registrationViewModel: RegistrationViewModel, onRegistrati
     }
 }
 
+
+// (NON ANCORA USATO) Serve per vedere i dati dell utente una volta registrato e per modificarle
 @Composable
 fun UserDetailsScreen(navController: NavController, viewModel: RegistrationViewModel) {
     var name by remember { mutableStateOf(viewModel.registrationData.value.name) }
