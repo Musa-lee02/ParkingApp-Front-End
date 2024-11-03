@@ -33,7 +33,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
-import com.example.parkingappfront_end.model.Book
 
 var testImgs : List<String> = listOf("https://mockuptree.com/wp-content/uploads/edd/2019/10/free-Book-mockup-150x150.jpg",
     "https://images.thegreatestbooks.org/m8kb7ah2lhy960dbp473zna11wb4",
@@ -58,20 +57,8 @@ fun HomeScreen(navController: NavController) {
 
 }
 
-@Composable
-fun ProductCard(navController: NavController, book: Book, height: Dp, width: Dp) { // Book is a data class, nav controller is used to navigate to the details page
-
-
-    Card(
-        //
-    ) {
-        Column(
-            //
-        ) {
-
-        }
-    }
-}
+//@Composable
+//fun ProductCard(navController: NavController, book: Book, height: Dp, width: Dp) { // Book is a data class, nav controller is used to navigate to the details page
 
 
 
