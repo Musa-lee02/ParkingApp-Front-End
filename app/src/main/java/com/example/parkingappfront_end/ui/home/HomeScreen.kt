@@ -59,71 +59,20 @@ fun HomeScreen(navController: NavController) {
 }
 
 @Composable
-fun ProductCard(navController: NavController, book: Book, height: Dp, width: Dp) {
-    val imageUrl = remember(book.id) {
-        testImgs[book.id.hashCode() % testImgs.size]
-    }
-    val imagePainter = rememberAsyncImagePainter(
-        model = imageUrl,
-        error = rememberAsyncImagePainter("https://mockuptree.com/wp-content/uploads/edd/2019/10/free-Book-mockup-150x150.jpg")
-    )
-    val isLoading = imagePainter.state is AsyncImagePainter.State.Loading
+fun ProductCard(navController: NavController, book: Book, height: Dp, width: Dp) { // Book is a data class, nav controller is used to navigate to the details page
+
 
     Card(
-        modifier = Modifier.productCardModifier(height, width, navController, book.id),
-        shape = RoundedCornerShape(12.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        //
     ) {
         Column(
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            //
         ) {
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(height * 0.6f)
-                    .clip(RoundedCornerShape(8.dp))
-            ) {
-                Image(
-                    painter = imagePainter,
-                    contentDescription = book.title,
-                    modifier = Modifier.fillMaxSize(),
-                    contentScale = ContentScale.Crop
-                )
-                if (isLoading) {
-                    CircularProgressIndicator(
-                        modifier = Modifier.align(Alignment.Center)
-                    )
-                }
-            }
-            Spacer(modifier = Modifier.height(8.dp))
-            Text(text = book.title, fontWeight = FontWeight.Bold, fontSize = 14.sp, maxLines = 1)
-            Text(text = "di " + book.author, fontSize = 12.sp, maxLines = 1)
-            Text(text = "${"%,.2f".format(book.price)} €", fontSize = 15.sp)
+
         }
     }
 }
 
-
-@Composable
-fun ProductSection(navController: NavController, title: String, books: List<Book>, height: Dp = 180.dp, width: Dp = 140.dp) {
-    Column(
-        modifier = Modifier
-            .padding(16.dp)
-    ) {
-        Text(text = title, fontWeight = FontWeight.Bold, fontSize = 18.sp)
-        Spacer(modifier = Modifier.height(8.dp))
-        LazyRow (
-            horizontalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            items(books, key = {it.id}) { book ->
-                ProductCard(navController,book, height, width) // Aumentiamo la larghezza delle card (150 dp invece di 100 dp)
-            }
-        }
-    }
-}
 
 
 
