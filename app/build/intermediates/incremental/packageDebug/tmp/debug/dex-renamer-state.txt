@@ -1,16 +1,16 @@
-#Fri Oct 25 18:56:37 CEST 2024
-base.0=C\:\\Users\\samue\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
-base.1=C\:\\Users\\samue\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
-base.10=C\:\\Users\\samue\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes4.dex
-base.11=C\:\\Users\\samue\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes5.dex
-base.2=C\:\\Users\\samue\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
-base.3=C\:\\Users\\samue\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\2\\classes.dex
-base.4=C\:\\Users\\samue\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\4\\classes.dex
-base.5=C\:\\Users\\samue\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\5\\classes.dex
-base.6=C\:\\Users\\samue\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\7\\classes.dex
-base.7=C\:\\Users\\samue\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\9\\classes.dex
-base.8=C\:\\Users\\samue\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
-base.9=C\:\\Users\\samue\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes3.dex
+#Tue Oct 29 11:39:18 CET 2024
+base.0=C\:\\Users\\lupin\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=C\:\\Users\\lupin\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.10=C\:\\Users\\lupin\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes4.dex
+base.11=C\:\\Users\\lupin\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes5.dex
+base.2=C\:\\Users\\lupin\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
+base.3=C\:\\Users\\lupin\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\2\\classes.dex
+base.4=C\:\\Users\\lupin\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\4\\classes.dex
+base.5=C\:\\Users\\lupin\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\5\\classes.dex
+base.6=C\:\\Users\\lupin\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\7\\classes.dex
+base.7=C\:\\Users\\lupin\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\9\\classes.dex
+base.8=C\:\\Users\\lupin\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
+base.9=C\:\\Users\\lupin\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes3.dex
 path.0=classes.dex
 path.1=0/classes.dex
 path.10=classes4.dex

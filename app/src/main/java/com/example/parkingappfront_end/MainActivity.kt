@@ -53,26 +53,26 @@ import com.example.parkingappfront_end.repository.AccountRepository
 import com.example.parkingappfront_end.repository.AuthRepository
 import com.example.parkingappfront_end.ui.home.HomeScreen
 import com.example.parkingappfront_end.ui.theme.ParkingAppFrontEndTheme
-import com.example.parkingAppFront_End.ui.user.UserAuthScreen
+import com.example.parkingAppFront_End.ui.user.SignInUpScreen
 import com.example.parkingappfront_end.viewmodels.AccountViewModel
 import com.example.parkingappfront_end.viewmodels.LoginViewModel
 import com.example.parkingappfront_end.viewmodels.RegistrationViewModel
 import kotlinx.coroutines.async
 
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
+class MainActivity : ComponentActivity() { // ComponentActivity è una classe di base per attività che utilizzano il framework di composizione
+    override fun onCreate(savedInstanceState: Bundle?) { // onCreate è un metodo che viene chiamato quando l'attività viene creata
         super.onCreate(savedInstanceState)
         setContent {
-            ParkingAppFrontEndTheme {
+            ParkingAppFrontEndTheme { // ParkingAppFrontEndTheme è un tema personalizzato, fai CTRL + Click per visualizzare il codice
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val navController = rememberNavController()
+                    val navController = rememberNavController() // rememberNavController è una funzione di Compose che serve a mantenere il NavController in modo che non venga distrutto quando lo schermo viene ruotato
                     NavigationView(navController)
-                    SessionManager.init(this)
+                    SessionManager.init(this) // Inizializza la sessione
                 }
             }
         }
@@ -80,60 +80,47 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun NavigationView(navController: NavHostController) {
+@Composable // @Composable è un'annotazione che serve a creare un'interfaccia utente
+fun NavigationView(navController: NavHostController) { // NavigationView è una funzione che serve a creare la navigazione
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     val selectedIndex = remember { mutableIntStateOf(0) }
 
     // Usa remember per mantenere i ViewModel
-    val accountViewModel = remember { AccountViewModel(repository = AccountRepository(RetrofitClient.userApiService)) }
+    val accountViewModel = remember { AccountViewModel(repository = AccountRepository(RetrofitClient.userApiService)) } // AccountViewModel è una classe che serve a mantenere i dati dell'utente
 
     Scaffold(
-        topBar = { TopBar(navController) },
-        bottomBar = { BottomBar(selectedIndex, navController) }
-    ) { innerPadding ->
+        topBar = { TopBar(navController) }, // TopBar è una funzione che serve a creare la barra superiore
+        bottomBar = { BottomBar(selectedIndex, navController) } // BottomBar è una funzione che serve a creare la barra inferiore
+    ) { innerPadding -> // innerPadding è un parametro che serve a creare il padding
         NavHost(
             navController = navController,
-            startDestination = "home",
+            startDestination = "home", // startDestination è una stringa che serve a indicare la destinazione iniziale
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("home") {
-                selectedIndex.value = 0
+            composable("home") { //route = "home" è una stringa che serve a indicare la destinazione, quando si preme il pulsante Home si va alla destinazione "home"
+                selectedIndex.value = 0 // selectedIndex.value = 0 è una funzione che serve a indicare che l'indice selezionato è 0
                 HomeScreen(navController)
             }
 
-            composable("/books_details/{idBook}", arguments = listOf(navArgument("idBook") { type = NavType.LongType })) { backStackEntry ->
-                val idBook = backStackEntry.arguments?.getLong("idBook") ?: 0L
 
-                // Carica il libro corrispondente all'id
-                LaunchedEffect(idBook) {
-                    //
-                }
-
-                // Osserva i cambiamenti del libro
-                //val book by bookViewModel.bookFlow.collectAsState()
-
-            }
-
-
-            composable("userAuth") {
+            composable("userAuth") { //Vai a SignInUpScreen quando si preme il pulsante User
                 selectedIndex.value = 1
-                val _authApiService = RetrofitClient.authApiService
+                val _authApiService = RetrofitClient.authApiService // authApiService è un'istanza di AuthApiService
                 val repository = AuthRepository(_authApiService)
-                UserAuthScreen(loginViewModel = LoginViewModel(repository), registrationViewModel = RegistrationViewModel(repository), navController)
+                SignInUpScreen(loginViewModel = LoginViewModel(repository), registrationViewModel = RegistrationViewModel(repository), navController) // SignInUpScreen è una funzione che serve a creare la schermata di accesso e registrazione
             }
 
-            composable("account-manager") {
+            composable("account-manager") { //Vai a MyAccountScreen quando si preme il pulsante Account, NON PRESENTE NEL CODICE
                 selectedIndex.value = 1
 
-                LaunchedEffect(Unit) {
-                    accountViewModel.loadUserDetails(forceReload = true)
+                LaunchedEffect(Unit) { // LaunchedEffect è una funzione di Compose che serve a lanciare un effetto
+                    accountViewModel.loadUserDetails(forceReload = true) // loadUserDetails è una funzione che serve a caricare i dettagli dell'utente
                 }
 
                 val _userApiService = RetrofitClient.userApiService
                 val repository = AccountRepository(_userApiService)
             }
-            composable("my-account") {
+            composable("my-account") {// NON PRESENTE NEL CODICE, Vai a MyAccountScreen quando si preme il pulsante Account
                 LaunchedEffect(Unit) {
                     Log.d("MyAccountScreen", "SessionManager.user: ${SessionManager.user}")
                     val userDetailsJob = async {accountViewModel.loadUserDetails(forceReload = true)}
@@ -238,3 +225,4 @@ fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostContro
 
     }
 }
+//commenti
