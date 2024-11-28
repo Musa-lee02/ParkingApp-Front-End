@@ -10,10 +10,6 @@ pluginManagement {
         mavenCentral()
         gradlePluginPortal()
     }
-    plugins {
-        kotlin("jvm") version "2.0.0"
-
-    }
 }
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
@@ -23,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ParkingAppFront_End"
+rootProject.name = "ProvandoPerDavvero"
 include(":app")

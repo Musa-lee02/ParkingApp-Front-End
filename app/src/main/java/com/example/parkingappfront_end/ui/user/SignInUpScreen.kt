@@ -346,11 +346,6 @@ fun RegistrationStep2(registrationViewModel: RegistrationViewModel, onRegistrati
     var isPhoneNumberValid by remember { mutableStateOf(false) }
     val italianPhoneNumberRegex = Regex("[0-9]{9,11}$")
 
-    /*
-    var street by remember { mutableStateOf("") }
-    var city by remember { mutableStateOf("") }
-    var province by remember { mutableStateOf("") }
-    var zipCode by remember { mutableStateOf("") }*/
 
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
@@ -441,62 +436,7 @@ fun RegistrationStep2(registrationViewModel: RegistrationViewModel, onRegistrati
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            /*
-            OutlinedTextField(
-                value = admin,
-                onValueChange = { admin = it },
-                label = { Text("Codice ADMIN") },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                singleLine = true
-            )
-            Text(
-                text = "Facoltativo",
-                style = MaterialTheme.typography.bodySmall,
-                modifier = Modifier
-                    .padding(top = 4.dp)
-                    .offset(x = 8.dp),
-            )
-            Spacer(modifier = Modifier.height(10.dp))*/
 
-
-        /* Indirizzo
-        OutlinedTextField(
-            value = street,
-            onValueChange = { street = it },
-            label = { Text("Via") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            value = city,
-            onValueChange = { city = it },
-            label = { Text("Città") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            value = province,
-            onValueChange = { province = it },
-            label = { Text("Provincia") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedTextField(
-            value = zipCode,
-            onValueChange = { zipCode = it },
-            label = { Text("Codice postale") },
-            modifier = Modifier.fillMaxWidth()
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-        */
 
 
         Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
@@ -596,42 +536,6 @@ fun UserDetailsScreen(navController: NavController, viewModel: RegistrationViewM
     }
 }
 
-/*
-@Composable
-fun RegistrationCompleteScreen(navController: NavController) {
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        Text("Registrazione Completa!", style = MaterialTheme.typography.headlineMedium, modifier = Modifier.padding(bottom = 16.dp))
-        Text("Grazie per esserti registrato. Puoi ora accedere alla tua area personale.", style = MaterialTheme.typography.bodyLarge, modifier = Modifier.padding(bottom = 16.dp))
 
-        Button(
-            onClick = {
-                navController.navigate("login") {
-                    popUpTo("userStart") { inclusive = true }
-                }
-            },
-            modifier = Modifier.fillMaxWidth(0.6f)
-        ) {
-            Text("Vai al Login")
-        }
-    }
-}
-*/
-
-/*
-@Composable
-fun UserScreen(navHostController: NavHostController) {
-    val navController = rememberNavController()
-    NavHost(navController = navController, startDestination = "userStart") {
-        composable("userStart") { UserStartScreen(navController) }
-        composable("login") { LoginPage() }
-        // Aggiungi le rotte per i passaggi di registrazione qui
-    }
-}*/
 
 

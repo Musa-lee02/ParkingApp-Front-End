@@ -1,74 +1,70 @@
 [
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\mipmap-hdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/mipmap-anydpi_ic_launcher_round.xml.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/mipmap-anydpi/ic_launcher_round.xml"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\mipmap-mdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/drawable/ic_launcher_background.xml"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/xml_data_extraction_rules.xml.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/xml/data_extraction_rules.xml"
+        "merged": "com.example.provandoperdavvero.app-debug-50:/drawable_parcheggio.jpg.flat",
+        "source": "com.example.provandoperdavvero.app-main-52:/drawable/parcheggio.jpg"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/raw_your_certificate.pem.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/raw/your_certificate.pem"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\drawable\\ic_launcher_background.xml"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/xml_network_security_config.xml.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/xml/network_security_config.xml"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\xml\\backup_rules.xml"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\xml\\data_extraction_rules.xml"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\mipmap-xxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\mipmap-xxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/drawable_ic_launcher_foreground.xml.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/drawable/ic_launcher_foreground.xml"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\drawable-v24\\ic_launcher_foreground.xml"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/mipmap-xxxhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/xml_backup_rules.xml.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/xml/backup_rules.xml"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\mipmap-hdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/mipmap-hdpi/ic_launcher.webp"
-    },
-    {
-        "merged": "com.example.ecommercefront_end.app-debug-79:/mipmap-anydpi_ic_launcher.xml.flat",
-        "source": "com.example.ecommercefront_end.app-main-81:/mipmap-anydpi/ic_launcher.xml"
+        "merged": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-debug-50:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\lupin\\.gradle\\daemon\\8.7\\com.example.provandoperdavvero.app-main-52:\\mipmap-xhdpi\\ic_launcher.webp"
     }
 ]

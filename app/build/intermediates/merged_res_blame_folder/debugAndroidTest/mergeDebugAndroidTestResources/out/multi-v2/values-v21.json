@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.ecommercefront_end.test.app-mergeDebugAndroidTestResources-34:/values-v21/values-v21.xml",
+            "outputFile": "com.example.provandoperdavvero.test.app-mergeDebugAndroidTestResources-32:/values-v21/values-v21.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\samue\\.gradle\\caches\\transforms-4\\d79178c6c0bc8c1617d7b9da0d0cb5d3\\transformed\\core-1.13.1\\res\\values-v21\\values-v21.xml",
+                    "source": "C:\\Users\\lupin\\.gradle\\caches\\transforms-4\\447bcc80ee2482e14a5509f64d66a54e\\transformed\\core-1.13.1\\res\\values-v21\\values-v21.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,13",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4",
@@ -23,7 +23,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\samue\\.gradle\\caches\\transforms-4\\a1a2613b99361d0b7c636399916a065e\\transformed\\core-1.6.1\\res\\values-v21\\values.xml",
+                    "source": "C:\\Users\\lupin\\.gradle\\caches\\transforms-4\\3ee7ff98d03a511cc05f2477e4e1b7bc\\transformed\\core-1.6.1\\res\\values-v21\\values.xml",
                     "from": {
                         "startLines": "4,13",
                         "startColumns": "0,0",
