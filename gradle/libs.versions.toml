@@ -1,59 +1,16 @@
 [versions]
-agp = "8.5.2"
-androidxMaterial = "1.7.2"
-coilCompose = "2.4.0"
-coilComposeVersion = "2.7.0"
-coilKtCoilCompose = "2.4.0"
-converterGson = "2.9.0"
-googleGson = "2.10.1"
-googleMaterial = "1.12.0"
-gson = "2.10.1"
-gsonVersion = "2.8.2"
-jacksonAnnotations = "2.18.0"
-jwtdecode = "2.0.1"
-kotlin = "1.9.23"
+agp = "8.6.0"
+kotlin = "1.9.0"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-ktorClientCio = "2.3.4"
-ktorClientCioVersion = "2.3.4"
-ktorClientCore = "2.3.4"
-ktorClientCoreVersion = "2.3.4"
-ktorClientLogging = "2.3.4"
-ktorClientLoggingVersion = "2.3.4"
-ktorClientSerialization = "2.3.4"
-ktorClientSerializationVersion = "2.3.4"
-lifecycleRuntimeKtx = "2.8.4"
-activityCompose = "1.9.1"
-composeBom = "2024.06.00"
-materialVersion = "1.4.0"
-roomVersion = "2.6.1"
-navigationRuntimeKtx = "2.7.7"
-browser = "1.8.0"
-material = "1.12.0"
-places = "3.5.0"
-coreI18n = "1.0.0-alpha01"
-
-firebaseFirestoreKtx = "25.0.0"
-lifecycleRuntimeComposeAndroid = "2.8.4"
-securityCrypto = "1.1.0-alpha06"
-volley = "1.2.1"
-
+lifecycleRuntimeKtx = "2.8.6"
+activityCompose = "1.9.3"
+composeBom = "2024.04.01"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-material = { module = "androidx.compose.material:material", version.ref = "androidxMaterial" }
-androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
-coil-compose-v240 = { module = "io.coil-kt:coil-compose", version.ref = "coilKtCoilCompose" }
-coil-kt-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilComposeVersion" }
-coil = { module = "io.coil-kt:coil", version.ref = "coilComposeVersion" }
-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilComposeVersion" }
-converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
-gson-v2101 = { module = "com.google.code.gson:gson", version.ref = "googleGson" }
-gson-v282 = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
-jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jacksonAnnotations" }
-jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jacksonAnnotations" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -64,37 +21,11 @@ androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version = "1.6.7" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.2.1" }
-androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.7"}
-androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref = "navigationRuntimeKtx" }
-androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
-androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
-androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
-androidx-compose-material = { group = "androidx.compose.material", name = "material-icons-extended", version = "1.6.7" }
-androidx-activity = { group = "androidx.activity", name="activity", version.ref="activityCompose"}
-androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
-
-firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
-jwtdecode = { module = "com.auth0.android:jwtdecode", version.ref = "jwtdecode" }
-ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktorClientCioVersion" }
-ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorClientCoreVersion" }
-ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorClientLoggingVersion" }
-ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktorClientSerializationVersion" }
-material = { module = "com.google.android.material:material", version.ref = "materialVersion" }
-material-v1120 = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
-retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterGson" }
-androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
-ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
-ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
-
-places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
-androidx-core-i18n = { group = "androidx.core", name = "core-i18n", version.ref = "coreI18n" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-com-google-devtools-ksp = { id = "com.google.devtools.ksp", version = "1.9.23-1.0.20"}
+kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 
