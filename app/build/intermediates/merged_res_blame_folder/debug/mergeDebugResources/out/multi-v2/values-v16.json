@@ -1,17 +1,16 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.ecommercefront_end.app-mergeDebugResources-77:/values-v16/values-v16.xml",
+            "outputFile": "com.example.parkingappfront_end.app-mergeDebugResources-51:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\lupin\\.gradle\\caches\\transforms-4\\c4f7942d55cfc372a229361e18e06be5\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\samue\\.gradle\\caches\\transforms-4\\3807c12caea50a9cf36d22dc7fdc7a06\\transformed\\core-1.12.0\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",
                         "startOffsets": "55",
-                        "endLines": "5",
-                        "endColumns": "12",
-                        "endOffsets": "223"
+                        "endColumns": "65",
+                        "endOffsets": "116"
                     }
                 }
             ]

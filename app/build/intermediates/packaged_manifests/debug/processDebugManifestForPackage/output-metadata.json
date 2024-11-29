@@ -4,7 +4,7 @@
     "type": "PACKAGED_MANIFESTS",
     "kind": "Directory"
   },
-  "applicationId": "com.example.provandoperdavvero",
+  "applicationId": "com.example.parkingappfront_end",
   "variantName": "debug",
   "elements": [
     {

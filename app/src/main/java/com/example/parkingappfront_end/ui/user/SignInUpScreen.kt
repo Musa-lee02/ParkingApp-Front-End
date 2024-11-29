@@ -1,4 +1,4 @@
-package com.example.parkingAppFront_End.ui.user
+package com.example.parkingappfront_end.ui.user
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+
 import androidx.compose.material.icons.filled.Visibility
 import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
@@ -51,7 +52,8 @@ fun SignInUpScreen(loginViewModel: LoginViewModel, registrationViewModel: Regist
     var selectedTabIndex by remember { mutableStateOf(0) } //Serve per tenere traccia della tab selezionata per mostrare la pagina di accesso o di registrazione
 
     Column(modifier = Modifier.fillMaxSize()) { //Crea una colonna che occupa tutto lo spazio disponibile
-        TabRow(selectedTabIndex = selectedTabIndex) {Tab( //Serve per visualizzare le tab di accesso e registrazione
+        TabRow(selectedTabIndex = selectedTabIndex) {
+            Tab( //Serve per visualizzare le tab di accesso e registrazione
             selected = selectedTabIndex == 0,
             onClick = { selectedTabIndex = 0 },
             text = { Text("Accedi") }
@@ -69,7 +71,7 @@ fun SignInUpScreen(loginViewModel: LoginViewModel, registrationViewModel: Regist
                 loginViewModel = loginViewModel,
                 onLoginSuccess = {
                     navController.navigate("home") { //Se il login ha successo naviga alla schermata home
-                        popUpTo("userAuth") { inclusive = true } //Chiude tutte le schermate precedenti
+                        popUpTo("home") { inclusive = true } //Chiude tutte le schermate precedenti
                     }
                 }
             )

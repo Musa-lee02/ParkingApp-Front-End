@@ -19,5 +19,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "ProvandoPerDavvero"
+rootProject.name = "parkingappfront_end"
 include(":app")

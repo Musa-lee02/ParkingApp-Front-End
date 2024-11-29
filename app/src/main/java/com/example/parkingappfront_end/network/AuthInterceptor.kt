@@ -1,5 +1,6 @@
 package com.example.parkingappfront_end.network
 
+
 import com.example.parkingappfront_end.SessionManager
 import com.example.parkingappfront_end.model.RefreshToken
 import com.example.parkingappfront_end.model.RequiresAuth
@@ -9,6 +10,7 @@ import kotlinx.coroutines.withContext
 import okhttp3.Interceptor
 import okhttp3.Response
 import retrofit2.Invocation
+
 
 class AuthInterceptor(
     private val sessionManager: SessionManager,
@@ -23,7 +25,7 @@ class AuthInterceptor(
         setAuthApiService(RetrofitClient.authApiService)
         val authApiService = authApiService ?: throw IllegalStateException("AuthApiService is null")
         val originalRequest = chain.request()
-        println("Intercepting request: ${originalRequest.url}")
+        //println("Intercepting request: ${originalRequest.url}")
 
         val requiresAuth = originalRequest.tag(Invocation::class.java)?.method()?.getAnnotation(
             RequiresAuth::class.java) != null

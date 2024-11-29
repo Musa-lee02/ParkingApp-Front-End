@@ -6,6 +6,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+
+
 import com.example.parkingappfront_end.SessionManager
 import com.example.parkingappfront_end.model.Credential
 import com.example.parkingappfront_end.repository.AuthRepository
@@ -26,11 +28,15 @@ class LoginViewModel(private val loginRepository: AuthRepository) : ViewModel() 
         viewModelScope.launch { // viewModelScope è un CoroutineScope che è legato al ciclo di vita del ViewModel. Quando il ViewModel viene distrutto, tutte le coroutine vengono cancellate
 
             _isLoading.value = true         // Imposta lo stato di caricamento
-
+            onLoginSuccess()
+            /*
             try {
                 Log.d(TAG, "login: tentativo $credentials")
                 val response = loginRepository.loginUser(credentials)
                 Log.d(TAG, "response: $response")
+
+
+
 
 
                 if (response.isSuccessful && response.body() != null) { // Se la risposta è stata ricevuta con successo e il corpo della risposta non è nullo
@@ -51,7 +57,7 @@ class LoginViewModel(private val loginRepository: AuthRepository) : ViewModel() 
                 Log.e(TAG, "An error occurred during login: ${e.localizedMessage}", e)
             } finally {
                 _isLoading.value = false
-            }
+            }*/
         }
     }
 }

@@ -1,7 +1,6 @@
 package com.example.parkingappfront_end
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.WindowInsets
@@ -31,7 +30,6 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -40,24 +38,23 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
-import com.example.ecommercefront_end.R
+
 import com.example.parkingappfront_end.network.RetrofitClient
 import com.example.parkingappfront_end.repository.AccountRepository
 
 import com.example.parkingappfront_end.repository.AuthRepository
-import com.example.parkingappfront_end.ui.home.HomeScreen
 import com.example.parkingappfront_end.ui.theme.ParkingAppFrontEndTheme
-import com.example.parkingAppFront_End.ui.user.SignInUpScreen
+import com.example.parkingappfront_end.ui.user.SignInUpScreen
+import com.example.parkingappfront_end.ui.home.HomeScreen
+import com.example.parkingappfront_end.ui.reservation.ReservationScreen
+import com.example.parkingappfront_end.ui.payment.PaymentScreen
 import com.example.parkingappfront_end.viewmodels.AccountViewModel
 import com.example.parkingappfront_end.viewmodels.LoginViewModel
 import com.example.parkingappfront_end.viewmodels.RegistrationViewModel
-import kotlinx.coroutines.async
 
 
 class MainActivity : ComponentActivity() { // ComponentActivity è una classe di base per attività che utilizzano il framework di composizione
@@ -72,7 +69,7 @@ class MainActivity : ComponentActivity() { // ComponentActivity è una classe di
                 ) {
                     val navController = rememberNavController() // rememberNavController è una funzione di Compose che serve a mantenere il NavController in modo che non venga distrutto quando lo schermo viene ruotato
                     NavigationView(navController)
-                    SessionManager.init(this) // Inizializza la sessione
+                    //SessionManager.init(this) // Inizializza la sessione
                 }
             }
         }
@@ -94,43 +91,32 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
     ) { innerPadding -> // innerPadding è un parametro che serve a creare il padding
         NavHost(
             navController = navController,
-            startDestination = "home", // startDestination è una stringa che serve a indicare la destinazione iniziale
+            startDestination = "userAuth", // startDestination è una stringa che serve a indicare la destinazione iniziale
             modifier = Modifier.padding(innerPadding)
         ) {
-            composable("home") { //route = "home" è una stringa che serve a indicare la destinazione, quando si preme il pulsante Home si va alla destinazione "home"
-                selectedIndex.value = 0 // selectedIndex.value = 0 è una funzione che serve a indicare che l'indice selezionato è 0
-                HomeScreen(navController)
-            }
-
 
             composable("userAuth") { //Vai a SignInUpScreen quando si preme il pulsante User
-                selectedIndex.value = 1
+                selectedIndex.value = 0
                 val _authApiService = RetrofitClient.authApiService // authApiService è un'istanza di AuthApiService
                 val repository = AuthRepository(_authApiService)
                 SignInUpScreen(loginViewModel = LoginViewModel(repository), registrationViewModel = RegistrationViewModel(repository), navController) // SignInUpScreen è una funzione che serve a creare la schermata di accesso e registrazione
             }
 
-            composable("account-manager") { //Vai a MyAccountScreen quando si preme il pulsante Account, NON PRESENTE NEL CODICE
-                selectedIndex.value = 1
-
-                LaunchedEffect(Unit) { // LaunchedEffect è una funzione di Compose che serve a lanciare un effetto
-                    accountViewModel.loadUserDetails(forceReload = true) // loadUserDetails è una funzione che serve a caricare i dettagli dell'utente
-                }
-
-                val _userApiService = RetrofitClient.userApiService
-                val repository = AccountRepository(_userApiService)
-            }
-            composable("my-account") {// NON PRESENTE NEL CODICE, Vai a MyAccountScreen quando si preme il pulsante Account
-                LaunchedEffect(Unit) {
-                    Log.d("MyAccountScreen", "SessionManager.user: ${SessionManager.user}")
-                    val userDetailsJob = async {accountViewModel.loadUserDetails(forceReload = true)}
-
-                    userDetailsJob.await()
-
-                }
-
+            composable("home") { //route = "home" è una stringa che serve a indicare la destinazione, quando si preme il pulsante Home si va alla destinazione "home"
+                selectedIndex.value = 1 // selectedIndex.value = 0 è una funzione che serve a indicare che l'indice selezionato è 0
+                HomeScreen(navController)
             }
 
+            composable("reservation") { //route = "home" è una stringa che serve a indicare la destinazione, quando si preme il pulsante Home si va alla destinazione "home"
+                selectedIndex.value = 2 // selectedIndex.value = 0 è una funzione che serve a indicare che l'indice selezionato è 0
+                ReservationScreen(navController)
+            }
+
+            composable("payment") { //route = "home" è una stringa che serve a indicare la destinazione, quando si preme il pulsante Home si va alla destinazione "home"
+                selectedIndex.value = 3
+                    //selectedIndex.value = 0 è una funzione che serve a indicare che l'indice selezionato è 0
+                PaymentScreen(navController = navController)
+            }
         }
 
     }
@@ -153,7 +139,7 @@ fun TopBar(navHostController: NavHostController) {
                 IconButton(onClick = { navHostController.popBackStack() }) {
                     Icon(
                         Icons.AutoMirrored.Filled.ArrowBack,
-                        contentDescription = stringResource(R.string.back)
+                        contentDescription = stringResource(R.string.app_name)
                     )
                 }
             }
@@ -174,8 +160,9 @@ fun TopBar(navHostController: NavHostController) {
 @Composable
 fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostController) {
     NavigationBar {
+
         NavigationBarItem(
-            selected = selectedIndex.value == 0,
+            selected = selectedIndex.value == 1,
             onClick = {
                 selectedIndex.value = 0
                 navHostController.navigate("home") {
@@ -189,15 +176,17 @@ fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostContro
             icon = {
                 Icon(
                     Icons.Filled.Home,
-                    contentDescription = stringResource(R.string.home)
+                    contentDescription = stringResource(R.string.app_name)
                 )
             }
+
         )
         NavigationBarItem(
-            selected = selectedIndex.value == 1,
+            selected = selectedIndex.value == 0,
             onClick = {
                 selectedIndex.value = 1
-                if(SessionManager.user == null)
+
+                if(true) //SessionManager.user == null
                     navHostController.navigate("userAuth") {
                         popUpTo(navHostController.graph.startDestinationId) {
                             saveState = true
@@ -213,16 +202,17 @@ fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostContro
                         launchSingleTop = true
                         restoreState = true
                     }
-
             },
             icon = {
                 Icon(
                     Icons.Filled.AccountCircle,
-                    contentDescription = stringResource(R.string.user)
+                    contentDescription = stringResource(R.string.app_name)
                 )
             }
+
         )
 
     }
 }
 //commenti
+
