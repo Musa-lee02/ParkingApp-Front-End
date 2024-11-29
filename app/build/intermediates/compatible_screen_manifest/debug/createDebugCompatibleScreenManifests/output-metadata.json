@@ -4,7 +4,7 @@
     "type": "COMPATIBLE_SCREEN_MANIFEST",
     "kind": "Directory"
   },
-  "applicationId": "com.example.provandoperdavvero",
+  "applicationId": "com.example.parkingappfront_end",
   "variantName": "debug",
   "elements": []
 }

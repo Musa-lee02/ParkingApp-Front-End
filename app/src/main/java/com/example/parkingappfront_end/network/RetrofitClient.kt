@@ -1,21 +1,25 @@
 package com.example.parkingappfront_end.network
 
+
 import com.example.parkingappfront_end.SessionManager
-import com.google.gson.GsonBuilder
 import okhttp3.OkHttpClient
-import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.time.LocalDate
 import javax.net.ssl.HostnameVerifier
 import javax.net.ssl.SSLContext
 import javax.net.ssl.TrustManager
 import javax.net.ssl.X509TrustManager
 
-object RetrofitClient {
-    private const val BASE_URL = "https://10.0.2.2:8081/api/v1/"
+import com.google.gson.GsonBuilder
+import okhttp3.logging.HttpLoggingInterceptor
+import retrofit2.converter.gson.GsonConverterFactory
 
-    private val client: OkHttpClient by lazy {
+
+object RetrofitClient {
+
+    private const val Emulator1_URL = "https://10.0.2.2:8081/api/v1/"
+
+    val client: OkHttpClient by lazy {
         val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
             override fun checkClientTrusted(
                 chain: Array<java.security.cert.X509Certificate>,
@@ -51,11 +55,11 @@ object RetrofitClient {
 
     val retrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(Emulator1_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(
                 GsonBuilder()
-                    .registerTypeAdapter(LocalDate::class.java, LocalDateAdapter())
+                    //.registerTypeAdapter(LocalDate::class.java, LocalDateAdapter()).registerTypeAdapter(PaymentMethodType::class.java,  PaymentMethodTypeAdapter() )
                     .create()
             ))
             .build()
@@ -69,9 +73,6 @@ object RetrofitClient {
         retrofit.create(UserApiService::class.java)
     }
 
-    val booksApiService: BooksApiService by lazy {
-            retrofit.create(BooksApiService::class.java)
-    }
 
 }
 

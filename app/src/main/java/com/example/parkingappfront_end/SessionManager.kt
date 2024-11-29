@@ -6,18 +6,18 @@ import android.content.SharedPreferences
 import android.util.Log
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
-import com.auth0.android.jwt.JWT
 import com.example.parkingappfront_end.model.AccessToken
 import com.example.parkingappfront_end.model.RefreshToken
 import com.example.parkingappfront_end.model.User
 import com.example.parkingappfront_end.model.UserId
+
 import com.example.parkingappfront_end.network.RetrofitClient
 import com.example.parkingappfront_end.repository.AuthRepository
-import com.google.gson.Gson
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 import java.util.UUID
+
 
 object SessionManager {
 
@@ -26,7 +26,7 @@ object SessionManager {
     private const val REFRESH_TOKEN_KEY  = "refresh_token"
 
     private lateinit var prefs: SharedPreferences
-    private val gson = Gson()
+    //private val gson = Gson()
 
     var user: User? = null
     private set
@@ -39,23 +39,6 @@ object SessionManager {
 
     private var authRepository : AuthRepository? = null
 
-     fun init(context: Context) {
-        val masterKeyAlias = MasterKey.Builder(context)
-            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
-            .build()
-
-        prefs = EncryptedSharedPreferences.create(
-            context,
-            PREFS_NAME,
-            masterKeyAlias,
-            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
-            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
-        )
-        setAuthRepository(AuthRepository(RetrofitClient.authApiService))
-
-        loadSession()
-
-    }
 
     private fun getPrefs(): SharedPreferences {
         return prefs ?: throw IllegalStateException("SessionManager not initialized. Call init() first.")
@@ -127,7 +110,9 @@ object SessionManager {
         user = null
     }
 
+
     private fun decodeJwtToken(token: String): User? {
+        /*
         Log.d(TAG, "decodeJwtToken: $token")
         val jwt = JWT(token)
         val userIdS = jwt.getClaim("userId").asString()
@@ -142,7 +127,8 @@ object SessionManager {
         User(userId, firstName, lastName, LocalDate.parse(birthdate), phone_number)
     } else {
         null
-    }
+    }*/
+        return null
 
 }
 
@@ -156,14 +142,6 @@ object SessionManager {
         println("UserId recuperato: $userId")
         return UserId(userId)
     }
-
-
-
-
-
-
-
-
 
 
 

@@ -1,15 +1,15 @@
 plugins {
-    alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
+    id("com.android.application")
+    id("org.jetbrains.kotlin.android")
 }
 
 android {
-    namespace = "com.example.provandoperdavvero"
+    namespace = "com.example.parkingappfront_end"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.example.provandoperdavvero"
-        minSdk = 21
+        applicationId = "com.example.parkingappfront_end"
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -32,6 +32,7 @@ android {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
+
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -40,7 +41,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.2"
+        kotlinCompilerExtensionVersion = "1.4.3" // Versione compatibile con le altre dipendenze
     }
     packaging {
         resources {
@@ -50,43 +51,34 @@ android {
 }
 
 dependencies {
+    implementation(platform(libs.androidx.compose.bom)) // Compose BOM
+    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.activity:activity-compose:1.8.1")
+    implementation("androidx.compose.ui:ui")
+    implementation("androidx.compose.ui:ui-graphics")
+    implementation("androidx.compose.ui:ui-tooling-preview")
+    implementation("androidx.compose.material3:material3")
+    implementation("androidx.navigation:navigation-compose:2.7.0")
+    implementation("androidx.security:security-crypto-ktx:1.1.0-alpha06")
 
-    implementation(libs.androidx.core.ktx)
-    implementation(libs.androidx.lifecycle.runtime.ktx)
-    implementation(libs.androidx.activity.compose)
-    implementation(platform(libs.androidx.compose.bom))
-    //implementation(libs.androidx.compose.ui) // Aggiornato
-    implementation(libs.androidx.ui)
-    //implementation(libs.androidx.compose.ui.graphics) // Aggiornato
-    implementation(libs.androidx.ui.graphics)
-    //implementation(libs.androidx.compose.ui.tooling.preview) // Aggiornato
-    implementation(libs.androidx.ui.tooling.preview)
-    implementation(libs.androidx.material3)
-
-
-    implementation("androidx.navigation:navigation-compose:2.6.0") // Aggiornato
-    //implementation("androidx.navigation:navigation-compose:2.5.3")
-
-
-    //implementation "androidx.navigation:navigation-compose:2.5.3"  // o versione più recente
-    implementation ("androidx.compose.material3:material3:1.0.0") // Material3
-    implementation ("androidx.compose.ui:ui:1.5.0")  // Compose UI
-    implementation ("androidx.compose.runtime:runtime:1.5.0")
-
-
-
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation("junit:junit:4.13.2")
+    androidTestImplementation("androidx.test.ext:junit:1.1.5")
+    androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-tooling")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 
-    //androidTestImplementation(libs.androidx.compose.ui.test.junit4) // Aggiornato
-    androidTestImplementation(libs.androidx.ui.test.junit4)
-    //debugImplementation(libs.androidx.compose.ui.tooling) // Aggiornato
-    debugImplementation(libs.androidx.ui.tooling)
-    //debugImplementation(libs.androidx.compose.ui.test.manifest) // Aggiornato
-    debugImplementation(libs.androidx.ui.test.manifest)
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
 
+    implementation("androidx.compose.material:material-icons-extended:1.0.0-alpha08")
+    implementation("androidx.compose.material:material-icons-extended:libs.versions.compose.get()")
+    implementation("com.squareup.okhttp3:okhttp:4.11.0")
+    implementation("com.squareup.okhttp3:logging-interceptor:4.11.0")
 
+    // Retrofit
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
 
 }
