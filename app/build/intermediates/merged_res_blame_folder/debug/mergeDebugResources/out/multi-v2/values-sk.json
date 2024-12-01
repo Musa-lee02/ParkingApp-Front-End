@@ -4,7 +4,7 @@
             "outputFile": "com.example.parkingappfront_end.app-mergeDebugResources-51:/values-sk/values-sk.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\samue\\.gradle\\caches\\transforms-4\\3807c12caea50a9cf36d22dc7fdc7a06\\transformed\\core-1.12.0\\res\\values-sk\\values-sk.xml",
+                    "source": "C:\\Users\\samue\\.gradle\\caches\\transforms-4\\cbbe5fe9d39900d20585b98442703249\\transformed\\core-1.12.0\\res\\values-sk\\values-sk.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9",
                         "startColumns": "4,4,4,4,4,4,4,4",
@@ -21,7 +21,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\samue\\.gradle\\caches\\transforms-4\\bddcd3a562ce4109fcf91ac612288650\\transformed\\material3-release\\res\\values-sk\\values-sk.xml",
+                    "source": "C:\\Users\\samue\\.gradle\\caches\\transforms-4\\2e936276ca9ebd08478460540ea28bb5\\transformed\\material3-release\\res\\values-sk\\values-sk.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -38,24 +38,7 @@
                     }
                 },
                 {
-                    "source": "C:\\Users\\samue\\.gradle\\caches\\transforms-4\\3ceff17ff78d7e76db1e0b25d64c790f\\transformed\\foundation-release\\res\\values-sk\\values-sk.xml",
-                    "from": {
-                        "startLines": "2,3",
-                        "startColumns": "4,4",
-                        "startOffsets": "55,139",
-                        "endColumns": "83,86",
-                        "endOffsets": "134,221"
-                    },
-                    "to": {
-                        "startLines": "83,84",
-                        "startColumns": "4,4",
-                        "startOffsets": "8475,8559",
-                        "endColumns": "83,86",
-                        "endOffsets": "8554,8641"
-                    }
-                },
-                {
-                    "source": "C:\\Users\\samue\\.gradle\\caches\\transforms-4\\80ebcbd8b409db2b92b255f39e89559b\\transformed\\ui-release\\res\\values-sk\\values-sk.xml",
+                    "source": "C:\\Users\\samue\\.gradle\\caches\\transforms-4\\f233f0ba4845e2d3119fdc9df2ed3d53\\transformed\\ui-release\\res\\values-sk\\values-sk.xml",
                     "from": {
                         "startLines": "2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18",
                         "startColumns": "4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4,4",
@@ -69,6 +52,23 @@
                         "startOffsets": "842,937,1021,1116,1219,1311,1390,7563,7653,7734,7803,7872,7955,8042,8215,8293,8361",
                         "endColumns": "94,83,94,102,91,78,93,89,80,68,68,82,86,71,77,67,113",
                         "endOffsets": "932,1016,1111,1214,1306,1385,1479,7648,7729,7798,7867,7950,8037,8109,8288,8356,8470"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\samue\\.gradle\\caches\\transforms-4\\6cd6d3e9a9227472a990f918a1ad8d4f\\transformed\\foundation-release\\res\\values-sk\\values-sk.xml",
+                    "from": {
+                        "startLines": "2,3",
+                        "startColumns": "4,4",
+                        "startOffsets": "55,139",
+                        "endColumns": "83,86",
+                        "endOffsets": "134,221"
+                    },
+                    "to": {
+                        "startLines": "83,84",
+                        "startColumns": "4,4",
+                        "startOffsets": "8475,8559",
+                        "endColumns": "83,86",
+                        "endOffsets": "8554,8641"
                     }
                 }
             ]

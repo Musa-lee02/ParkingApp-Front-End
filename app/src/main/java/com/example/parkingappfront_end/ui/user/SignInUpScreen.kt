@@ -329,7 +329,7 @@ fun RegistrationStep1(registrationViewModel: RegistrationViewModel, onNext: () -
                 modifier = Modifier.fillMaxWidth(),
                  enabled = isFormValid
             ) {
-                Text("Verifica Email", style = MaterialTheme.typography.bodyLarge)
+                Text("Continua->", style = MaterialTheme.typography.bodyLarge)
             }
         }
     }
@@ -338,16 +338,21 @@ fun RegistrationStep1(registrationViewModel: RegistrationViewModel, onNext: () -
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RegistrationStep2(registrationViewModel: RegistrationViewModel, onRegistrationComplete: () -> Unit, onNext: () -> Unit, onBack: () -> Unit) {
-    var selectedDate by remember { mutableStateOf(LocalDate.now()) }
+
+    val minYear = 1910
+    val maxDate = LocalDate.now().minusYears(16)
+
+    var selectedDate by remember { mutableStateOf(maxDate) }
     var showDatePicker by remember { mutableStateOf(false) }
-    var phoneNumber by remember { mutableStateOf("") }
     var admin by remember { mutableStateOf("") }
 
     fun isValidDate(date: LocalDate): Boolean = date.isBefore(LocalDate.now())
 
-    var isPhoneNumberValid by remember { mutableStateOf(false) }
-    val italianPhoneNumberRegex = Regex("[0-9]{9,11}$")
-
+    /*
+    var street by remember { mutableStateOf("") }
+    var city by remember { mutableStateOf("") }
+    var province by remember { mutableStateOf("") }
+    var zipCode by remember { mutableStateOf("") }*/
 
 
     Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.TopCenter) {
@@ -357,7 +362,7 @@ fun RegistrationStep2(registrationViewModel: RegistrationViewModel, onRegistrati
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.Center
         ) {
-            Text("Step 2 su 2", style = MaterialTheme.typography.headlineSmall)
+            Text("Step 2 / 2", style = MaterialTheme.typography.headlineSmall)
 
             Spacer(modifier = Modifier.height(10.dp))
 
@@ -365,17 +370,17 @@ fun RegistrationStep2(registrationViewModel: RegistrationViewModel, onRegistrati
             OutlinedTextField(
                 value = selectedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
                 onValueChange = { },
-                label = { Text("Data di nascita") },
+                label = { Text("Birth Date") },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(16.dp),
-                readOnly = true, // Non permette all'utente di modificare la data
+                readOnly = true,
                 trailingIcon = {
                     IconButton(onClick = { showDatePicker = true }) {
-                        Icon(Icons.Filled.CalendarToday, contentDescription = "Seleziona data")
+                        Icon(Icons.Filled.CalendarToday, contentDescription = "Select data")
                     }
                 }
             )
-            if (showDatePicker) { // Mostra il date picker se showDatePicker è true
+            if (showDatePicker) {
                 DatePickerDialog(
                     onDismissRequest = { showDatePicker = false },confirmButton = {
                         Button(onClick = { showDatePicker = false }) {
@@ -385,24 +390,22 @@ fun RegistrationStep2(registrationViewModel: RegistrationViewModel, onRegistrati
                     shape = RoundedCornerShape(16.dp),
                     dismissButton = {
                         TextButton(onClick = { showDatePicker = false }) {
-                            Text("Annulla")
+                            Text("Cancel")
                         }
                     }
                 ) {
+
+
                     val datePickerState = rememberDatePickerState(
-                        initialSelectedDateMillis = selectedDate.atStartOfDay(ZoneId.systemDefault()) // Imposta la data iniziale del date picker a selectedDate
+                        initialSelectedDateMillis = selectedDate.atStartOfDay(ZoneId.systemDefault())
                             .toInstant().toEpochMilli(),
-                        yearRange = IntRange(1900, LocalDate.now().year),
+                        yearRange = IntRange(minYear, maxDate.year),
                         selectableDates = object : SelectableDates {
                             override fun isSelectableDate(utcTimeMillis: Long): Boolean {
-                                return Instant.ofEpochMilli(utcTimeMillis)
+                                val date = Instant.ofEpochMilli(utcTimeMillis)
                                     .atZone(ZoneId.systemDefault())
                                     .toLocalDate()
-                                    .isBefore(LocalDate.now()) ||
-                                        Instant.ofEpochMilli(utcTimeMillis)
-                                            .atZone(ZoneId.systemDefault())
-                                            .toLocalDate()
-                                            .isEqual(LocalDate.now())
+                                return !date.isAfter(maxDate)
                             }
                         }
                     )
@@ -423,42 +426,46 @@ fun RegistrationStep2(registrationViewModel: RegistrationViewModel, onRegistrati
                 }
             }
 
-            // Numero di telefono
-            OutlinedTextField(
-                value = phoneNumber,
-                onValueChange = { newValue ->
-                    phoneNumber = newValue.filter { it.isDigit() } // Accetta solo numeri
-                    isPhoneNumberValid =  phoneNumber.isNotBlank() && italianPhoneNumberRegex.matches(phoneNumber) // Controlla se il numero di telefono è valido e non vuoto
-                },
-                label = { Text("Numero di telefono") },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
-            )
-
             Spacer(modifier = Modifier.height(8.dp))
 
 
+            OutlinedTextField(
+                value = admin,
+                onValueChange = { admin = it },
+                label = { Text("ADMIN Code") },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                singleLine = true
+            )
+            Text(
+                text = "Insert Admin Code",
+                style = MaterialTheme.typography.bodySmall,
+                modifier = Modifier
+                    .padding(top = 4.dp)
+                    .offset(x = 8.dp),
+            )
+            Spacer(modifier = Modifier.height(10.dp))
 
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Button(onClick = onBack) {
-                Text("Indietro")
-            }
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                Button(onClick = onBack) {
+                    Text("Indietro")
+                }
 
-            Button(onClick = {
-                registrationViewModel.updateUserDetails(selectedDate, phoneNumber)
-                registrationViewModel.register(onRegistrationComplete)
-                onNext() // Passa al prossimo step
-            },
-                enabled = isPhoneNumberValid
-            ) {
-                Text("Completa Registrazione")
+                Button(onClick = {
+                    registrationViewModel.updateUserDetails(selectedDate, admin)
+                    registrationViewModel.register(onRegistrationComplete)
+                    onNext() // Passa al prossimo step
+                },
+                    enabled = true
+                ) {
+                    Text("Complete Sing Up")
+                }
             }
         }
-      }
     }
 }
+
 
 
 // (NON ANCORA USATO) Serve per vedere i dati dell utente una volta registrato e per modificarle

@@ -9,5 +9,4 @@ data class SaveUser(
     val lastName: String,
     val birthDate: LocalDate,
     val credential: Credential,
-    val phoneNumber : String,
 )

@@ -1,8 +1,11 @@
 package com.example.parkingappfront_end
 
+import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.WindowInsetsSides
 import androidx.compose.foundation.layout.fillMaxSize
@@ -30,6 +33,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
@@ -45,6 +49,7 @@ import androidx.navigation.compose.rememberNavController
 
 import com.example.parkingappfront_end.network.RetrofitClient
 import com.example.parkingappfront_end.repository.AccountRepository
+import com.example.parkingappfront_end.repository.AdminRepository
 
 import com.example.parkingappfront_end.repository.AuthRepository
 import com.example.parkingappfront_end.ui.theme.ParkingAppFrontEndTheme
@@ -52,12 +57,17 @@ import com.example.parkingappfront_end.ui.user.SignInUpScreen
 import com.example.parkingappfront_end.ui.home.HomeScreen
 import com.example.parkingappfront_end.ui.reservation.ReservationScreen
 import com.example.parkingappfront_end.ui.payment.PaymentScreen
+import com.example.parkingappfront_end.ui.user.AccountManagerScreen
+import com.example.parkingappfront_end.ui.user.MyAccountScreen
 import com.example.parkingappfront_end.viewmodels.AccountViewModel
+import com.example.parkingappfront_end.viewmodels.AdminViewModel
 import com.example.parkingappfront_end.viewmodels.LoginViewModel
 import com.example.parkingappfront_end.viewmodels.RegistrationViewModel
+import kotlinx.coroutines.async
 
 
 class MainActivity : ComponentActivity() { // ComponentActivity è una classe di base per attività che utilizzano il framework di composizione
+    @RequiresApi(Build.VERSION_CODES.UPSIDE_DOWN_CAKE)
     override fun onCreate(savedInstanceState: Bundle?) { // onCreate è un metodo che viene chiamato quando l'attività viene creata
         super.onCreate(savedInstanceState)
         setContent {
@@ -69,7 +79,7 @@ class MainActivity : ComponentActivity() { // ComponentActivity è una classe di
                 ) {
                     val navController = rememberNavController() // rememberNavController è una funzione di Compose che serve a mantenere il NavController in modo che non venga distrutto quando lo schermo viene ruotato
                     NavigationView(navController)
-                    //SessionManager.init(this) // Inizializza la sessione
+                    SessionManager.init(this) // Inizializza la sessione
                 }
             }
         }
@@ -83,7 +93,10 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
     val selectedIndex = remember { mutableIntStateOf(0) }
 
     // Usa remember per mantenere i ViewModel
-    val accountViewModel = remember { AccountViewModel(repository = AccountRepository(RetrofitClient.userApiService)) } // AccountViewModel è una classe che serve a mantenere i dati dell'utente
+    val accountRepository = remember { AccountRepository(RetrofitClient.userApiService) }
+
+    val adminViewModel = remember { AdminViewModel(repository = AdminRepository(RetrofitClient.adminApiService)) }
+    val accountViewModel = remember { AccountViewModel(repository = accountRepository) } // AccountViewModel è una classe che serve a mantenere i dati dell'utente
 
     Scaffold(
         topBar = { TopBar(navController) }, // TopBar è una funzione che serve a creare la barra superiore
@@ -91,21 +104,52 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
     ) { innerPadding -> // innerPadding è un parametro che serve a creare il padding
         NavHost(
             navController = navController,
-            startDestination = "userAuth", // startDestination è una stringa che serve a indicare la destinazione iniziale
+            startDestination = if (SessionManager.user != null) "home" else "userAuth", // startDestination è una stringa che serve a indicare la destinazione iniziale
             modifier = Modifier.padding(innerPadding)
         ) {
 
+            composable("home") { //route = "home" è una stringa che serve a indicare la destinazione, quando si preme il pulsante Home si va alla destinazione "home"
+                selectedIndex.value = 0 // selectedIndex.value = 0 è una funzione che serve a indicare che l'indice selezionato è 0
+                HomeScreen(navController)
+            }
+
             composable("userAuth") { //Vai a SignInUpScreen quando si preme il pulsante User
-                selectedIndex.value = 0
+                selectedIndex.value = 1
                 val _authApiService = RetrofitClient.authApiService // authApiService è un'istanza di AuthApiService
                 val repository = AuthRepository(_authApiService)
                 SignInUpScreen(loginViewModel = LoginViewModel(repository), registrationViewModel = RegistrationViewModel(repository), navController) // SignInUpScreen è una funzione che serve a creare la schermata di accesso e registrazione
             }
 
-            composable("home") { //route = "home" è una stringa che serve a indicare la destinazione, quando si preme il pulsante Home si va alla destinazione "home"
-                selectedIndex.value = 1 // selectedIndex.value = 0 è una funzione che serve a indicare che l'indice selezionato è 0
-                HomeScreen(navController)
+            composable("account-manager") {
+                selectedIndex.value = 1
+
+                LaunchedEffect(Unit) {
+                    accountViewModel.loadUserDetails()
+                }
+                val _userApiService = RetrofitClient.userApiService
+                val repository = AccountRepository(_userApiService)
+                AccountManagerScreen(viewModel = accountViewModel, navHostController = navController, onLogout = {
+                    accountViewModel.onLogout()
+                    adminViewModel.onLogout()
+                })
             }
+
+            composable("my-account"){
+
+                LaunchedEffect(Unit) {
+                    Log.d("MyAccountScreen", "SessionManager.user: ${SessionManager.user}")
+                    val userDetailsJob = async {accountViewModel.loadUserDetails()}
+                    userDetailsJob.await()
+                }
+
+                MyAccountScreen(
+                    accountViewModel = accountViewModel,
+                    navController = navController, onLogout = {
+                        accountViewModel.onLogout()
+                        adminViewModel.onLogout()
+                    })
+            }
+
 
             composable("reservation") { //route = "home" è una stringa che serve a indicare la destinazione, quando si preme il pulsante Home si va alla destinazione "home"
                 selectedIndex.value = 2 // selectedIndex.value = 0 è una funzione che serve a indicare che l'indice selezionato è 0
@@ -117,6 +161,8 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
                     //selectedIndex.value = 0 è una funzione che serve a indicare che l'indice selezionato è 0
                 PaymentScreen(navController = navController)
             }
+
+
         }
 
     }
@@ -162,7 +208,7 @@ fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostContro
     NavigationBar {
 
         NavigationBarItem(
-            selected = selectedIndex.value == 1,
+            selected = selectedIndex.value == 0,
             onClick = {
                 selectedIndex.value = 0
                 navHostController.navigate("home") {
@@ -182,11 +228,11 @@ fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostContro
 
         )
         NavigationBarItem(
-            selected = selectedIndex.value == 0,
+            selected = selectedIndex.value == 1,
             onClick = {
                 selectedIndex.value = 1
 
-                if(true) //SessionManager.user == null
+                if(SessionManager.user == null) //SessionManager.user == null
                     navHostController.navigate("userAuth") {
                         popUpTo(navHostController.graph.startDestinationId) {
                             saveState = true

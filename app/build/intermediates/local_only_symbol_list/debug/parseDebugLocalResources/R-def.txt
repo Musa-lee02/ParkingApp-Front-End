@@ -14,7 +14,7 @@ mipmap ic_launcher
 mipmap ic_launcher_round
 raw your_certificate
 string app_name
-style Theme.ProvandoPerDavvero
+style Theme.parkingapp
 xml backup_rules
 xml data_extraction_rules
 xml network_security_config
