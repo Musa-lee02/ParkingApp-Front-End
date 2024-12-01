@@ -2,6 +2,10 @@ package com.example.parkingappfront_end.network
 
 
 import com.example.parkingappfront_end.SessionManager
+import com.example.parkingappfront_end.model.CardProvider
+import com.example.parkingappfront_end.model.CardProviderAdapter
+import com.example.parkingappfront_end.model.PaymentMethodType
+import com.example.parkingappfront_end.model.PaymentMethodTypeAdapter
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import java.time.LocalDate
@@ -59,7 +63,9 @@ object RetrofitClient {
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(
                 GsonBuilder()
-                    //.registerTypeAdapter(LocalDate::class.java, LocalDateAdapter()).registerTypeAdapter(PaymentMethodType::class.java,  PaymentMethodTypeAdapter() )
+                    .registerTypeAdapter(LocalDate::class.java, LocalDateAdapter()).registerTypeAdapter(
+                        PaymentMethodType::class.java,  PaymentMethodTypeAdapter() )
+                    .registerTypeAdapter(CardProvider::class.java, CardProviderAdapter())
                     .create()
             ))
             .build()
@@ -72,6 +78,11 @@ object RetrofitClient {
     val userApiService: UserApiService by lazy {
         retrofit.create(UserApiService::class.java)
     }
+
+    val adminApiService: AdminApiService by lazy {
+        retrofit.create(AdminApiService::class.java)
+    }
+
 
 
 }

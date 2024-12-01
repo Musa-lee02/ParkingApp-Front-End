@@ -8,5 +8,5 @@
     <color name="teal_700">#FF018786</color>
     <color name="white">#FFFFFFFF</color>
     <string name="app_name">Parking App</string>
-    <style name="Theme.ProvandoPerDavvero" parent="android:Theme.Material.Light.NoActionBar"/>
+    <style name="Theme.parkingapp" parent="android:Theme.Material.Light.NoActionBar"/>
 </resources>

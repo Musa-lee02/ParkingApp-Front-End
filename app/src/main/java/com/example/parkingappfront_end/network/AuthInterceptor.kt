@@ -25,7 +25,7 @@ class AuthInterceptor(
         setAuthApiService(RetrofitClient.authApiService)
         val authApiService = authApiService ?: throw IllegalStateException("AuthApiService is null")
         val originalRequest = chain.request()
-        //println("Intercepting request: ${originalRequest.url}")
+        println("Intercepting request: ${originalRequest.url}")
 
         val requiresAuth = originalRequest.tag(Invocation::class.java)?.method()?.getAnnotation(
             RequiresAuth::class.java) != null
@@ -48,11 +48,13 @@ class AuthInterceptor(
             if (response.code == 401) {
 
 
-                    val refreshToken = sessionManager.refreshToken
-                    if (refreshToken != null) {
-                        val newTokensResponse = runBlocking { withContext(Dispatchers.IO) {authApiService.refreshToken(
-                            RefreshToken(refreshToken)
-                        ) } }
+                val refreshToken = sessionManager.refreshToken
+                if (refreshToken != null) {
+                    val newTokensResponse = runBlocking { withContext(Dispatchers.IO) { sessionManager.user?.let {
+                        authApiService.refreshToken(
+                            it.id,RefreshToken(refreshToken))
+                    } } }
+                    if (newTokensResponse != null) {
                         if (newTokensResponse.isSuccessful) {
                             val newAccessToken = newTokensResponse.body()?.accessToken
                             val newRefreshToken = newTokensResponse.body()?.refreshToken
@@ -77,10 +79,11 @@ class AuthInterceptor(
                         }
                     }
                 }
+            }
 
 
-        return response
-    }
+            return response
+        }
         else {
             println("Request without auth" + originalRequest.url)
             return chain.proceed(originalRequest)
