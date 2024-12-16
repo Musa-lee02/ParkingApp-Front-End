@@ -1,7 +1,8 @@
 package com.example.parkingappfront_end.ui.reservation
 
+import android.app.DatePickerDialog
+import android.app.TimePickerDialog
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -11,199 +12,389 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowDropDown
-import androidx.compose.material.icons.outlined.KeyboardArrowUp
+import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
-import com.example.parkingappfront_end.ui.theme.ParkingAppFrontEndTheme
+import androidx.compose.ui.unit.sp
+import com.example.parkingappfront_end.SessionManager
+import com.example.parkingappfront_end.model.LicensePlate
+import com.example.parkingappfront_end.model.ParkingSpace
+import com.example.parkingappfront_end.model.ParkingSpot
+import com.example.parkingappfront_end.model.Reservation
+import com.example.parkingappfront_end.viewmodels.ParkingViewModel
+import java.time.Instant
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
+import java.time.format.DateTimeFormatter
+import java.util.Calendar
+import kotlin.random.Random
 
 
-@Preview(showBackground = true)
 @Composable
-fun PreviewPrenotazioneScreen() {
-    ParkingAppFrontEndTheme{
-        ReservationScreen(rememberNavController())
+fun ParkingSpaceDetails(parkingSpace: ParkingSpace, pSpots: List<ParkingSpot>, viewModel: ParkingViewModel) {
+    LaunchedEffect(key1 = parkingSpace.id) {
+        parkingSpace.id?.let { id ->
+            viewModel.loadParkingSpots(id)
+            viewModel.loadLicensePlates()
+        }
+    }
+
+    Column(modifier = Modifier.padding(16.dp)) {
+        // Titolo della lista
+        Text(
+            text = parkingSpace.name,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
+
+        Spacer(modifier = Modifier.height(8.dp)) // Aggiunto spazio
+
+        // Sezione Privacy
+        Column { // Rimosso Row e aggiunto Column
+            Text(
+                text = parkingSpace.address,
+                fontSize = 18.sp // Ridotta la dimensione del font
+            )
+
+            Spacer(modifier = Modifier.height(4.dp)) // Aggiunto spazio
+
+            Text(
+                text = parkingSpace.city,
+                fontSize = 18.sp // Ridotta la dimensione del font
+            )
+
+            Spacer(modifier = Modifier.height(16.dp)) // Aggiunto spazio
+
+            val validSpots = pSpots?.filterNotNull() ?: emptyList() // Filtra elementi nulli se esistono
+
+            if (validSpots.isNotEmpty()) {
+                ParkingSpaceGrid(
+                    parkingSpots = validSpots,
+                    viewModel = viewModel,
+                    onParkingSpaceSelected = { selectedParkingSpot ->
+                        if (selectedParkingSpot.free) {
+                            // Gestisci il caso del posto libero
+                            println("Posto auto selezionato: ${selectedParkingSpot.number}")
+                        } else {
+                            // Gestisci il caso del posto occupato
+                            println("Posto auto occupato!")
+                        }
+                    }
+                )
+            } else {
+                // Mostra il messaggio solo se la lista è vuota
+                Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    Text(
+                        text = "No available parking spots.",
+                        fontSize = 18.sp,
+                        textAlign = TextAlign.Center,
+                        color = Color.Gray
+                    )
+                }
+            }
+        }
     }
 }
 
+
 @Composable
-fun ReservationScreen(navController: NavController) {
-    // Stato per gestire la visualizzazione del messaggio di conferma
-    var prenotazioneConfermata by remember { mutableStateOf(false) }
+fun ParkingSpaceGrid(
+    parkingSpots: List<ParkingSpot>,
+    onParkingSpaceSelected: (ParkingSpot) -> Unit,
+    viewModel: ParkingViewModel
+) {
+    val chunkedParkingSpots = parkingSpots.chunked(4) // Divide la lista in gruppi di 4 elementi (colonne)
 
-    // Stato per memorizzare le selezioni dell'utente
-    var colonnaSelezionata by remember { mutableStateOf("") }
-    var numeroSelezionato by remember { mutableStateOf(0) }
-    var oreSelezionate by remember { mutableStateOf(0) }
+    LaunchedEffect(key1 = parkingSpots) {
+        viewModel.loadLicensePlates()
+    }
 
-    Column(
+    Column(modifier = Modifier.padding(8.dp)) {
+        chunkedParkingSpots.forEach { rowParkingSpots ->
+            Row(modifier = Modifier.fillMaxWidth()) {
+                rowParkingSpots.forEach { parkingSpot ->
+                    ParkingSpaceItem(parkingSpot, onParkingSpaceSelected, viewModel )
+                }
+            }
+        }
+    }
+}
+
+
+@Composable
+fun ParkingSpaceItem(
+    parkingSpot: ParkingSpot,
+    onParkingSpaceSelected: (ParkingSpot) -> Unit,
+    viewModel: ParkingViewModel
+) {
+    var showDialog by remember { mutableStateOf(false) }
+    var showConfirmationDialog by remember { mutableStateOf(false) }
+    var confirmedReservation by remember { mutableStateOf<Reservation?>(null) }
+
+    Box(
         modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+            .padding(4.dp)
+            .size(50.dp)
+            .background(
+                if (isFreeNow(parkingSpot.reservations)) Color.Green else Color.Yellow,
+                shape = CircleShape
+            )
+            .clickable {
+                if (parkingSpot.free) {
+                    showDialog = true
+                    onParkingSpaceSelected(parkingSpot)
+                }
+            },
+        contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "Sei pronto per prenotare il tuo parcheggio?",
-            style = MaterialTheme.typography.headlineLarge
+            text = parkingSpot.number.toString(),
+            color = Color.Black
         )
+    }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Menu a tendina Scegli colonna
-        Spinner(
-            label = "Scegli colonna",
-            selectedItem = colonnaSelezionata.ifEmpty { "Scegli colonna" },
-            items = listOf("A", "B", "C", "D"),
-            onItemSelected = { colonnaSelezionata = it }
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Menu a tendina Seleziona numero
-        Spinner(
-            label = "Seleziona numero",
-            selectedItem = numeroSelezionato.takeIf { it != 0 }?.toString() ?: "Seleziona numero",
-            items = (1..10).map { it.toString() },
-            onItemSelected = { numeroSelezionato = it.toInt() }
-        )
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Menu a tendina Seleziona ore
-        Spinner(
-            label = "Seleziona ore",
-            selectedItem = oreSelezionate.takeIf { it != 0 }?.toString() ?: "Seleziona ore",
-            items = (1..24).map { it.toString() },
-            onItemSelected = { oreSelezionate = it.toInt() }
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Pulsante Conferma Prenotazione
-        Button(onClick = {
-            prenotazioneConfermata = true
-        }) {
-            Text("Conferma Prenotazione")
-        }
-
-        // Mostra il messaggio di conferma se prenotazioneConfermata è true
-        if (prenotazioneConfermata) {
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Riquadro con sfondo blu per il recap
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(16.dp)
-                    .background(
-                        MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
-                        shape = MaterialTheme.shapes.medium
-                    )
-                    .border(
-                        2.dp,
-                        MaterialTheme.colorScheme.primary,
-                        shape = MaterialTheme.shapes.medium
-                    )
-                    .padding(16.dp)
-            ) {
-                Column {
-                    Text(
-                        text = "Prenotazione Confermata",
-                        style = MaterialTheme.typography.bodyLarge.copy(color = MaterialTheme.colorScheme.primary)
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-                    Text(
-                        text = "Hai prenotato la colonna $colonnaSelezionata, numero $numeroSelezionato per $oreSelezionate ore.",
-                        style = MaterialTheme.typography.bodyMedium
-                    )
-                }
+    if (showDialog) {
+        ReservationDialog(
+            parkingSpot = parkingSpot,
+            viewModel = viewModel,
+            onDismiss = { showDialog = false },
+            onConfirm = { reservation ->
+                viewModel.addReservation(reservation)
+                confirmedReservation = reservation
+                showConfirmationDialog = true
+                showDialog = false
             }
+        )
+    }
 
-            Spacer(modifier = Modifier.height(16.dp))
-
-            // Pulsante per tornare alla home
-            Button(
-                onClick = {
-                    navController.navigate("payment") {
-                        // Navigazione con il popbackstack per rimuovere la schermata corrente dalla pila
-                        popUpTo("reservation") { inclusive = true }
+    // Popup di conferma prenotazione
+    confirmedReservation?.let { reservation ->
+        if (showConfirmationDialog) {
+            AlertDialog(
+                onDismissRequest = { showConfirmationDialog = false },
+                confirmButton = {
+                    Button(onClick = { showConfirmationDialog = false }) {
+                        Text("Ok")
                     }
+                },
+                title = { Text("Prenotazione Confermata!") },
+                text = {
+                    Text(
+                        "Dettagli prenotazione:\n" +
+                                "Posto: ${parkingSpot.number}\n" +
+                                "Inizio: ${reservation.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}\n" +
+                                "Fine: ${reservation.endDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}\n" +
+                                "Prezzo: €${String.format("%.2f", reservation.price)}"
+                    )
                 }
-            ) {
-                Text("Procedi al Pagamento")
-            }
+            )
         }
     }
 }
 
+
+
 @Composable
-fun Spinner(
-    label: String,
-    selectedItem: String,
-    items: List<String>,
-    onItemSelected: (String) -> Unit
+fun ReservationDialog(
+    parkingSpot: ParkingSpot,
+    onDismiss: () -> Unit,
+    onConfirm: (Reservation) -> Unit,
+    viewModel: ParkingViewModel
 ) {
-    var expanded by remember { mutableStateOf(false) }
-    val icon = if (expanded) Icons.Outlined.KeyboardArrowUp else Icons.Outlined.ArrowDropDown
+    var startDate by remember { mutableStateOf(LocalDateTime.now()) }
+    var endDate by remember { mutableStateOf(LocalDateTime.now().plusHours(1)) }
+    var selectedPlate by remember { mutableStateOf<LicensePlate?>(null) }
+    val plates by viewModel.licensePlates.collectAsState()
 
-    Column {
-        // Mostra la selezione attuale sopra il menu
-        Text(
-            text = "$label: $selectedItem",
-            style = MaterialTheme.typography.bodyMedium,
-            modifier = Modifier.padding(start = 16.dp, top = 8.dp, end = 16.dp)
-        )
+    val price = Random.nextDouble(5.0 + (endDate.minute - startDate.minute) * 2, 80.0)
+    var startDatePickerDialog by remember { mutableStateOf(false) }
+    var endDatePickerDialog by remember { mutableStateOf(false) }
 
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .clickable { expanded = !expanded }
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            // Mostra il label del menu (es. "Scegli colonna")
-            Text(label)
-            Icon(imageVector = icon, contentDescription = null)
-        }
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text("Prenota posto auto ${parkingSpot.number}") },
+        text = {
+            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
 
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-            modifier = Modifier
-                .fillMaxWidth()
-                .heightIn(max = 200.dp) // Imposta una altezza massima per il menu
-        ) {
-            items.forEach { item ->
-                DropdownMenuItem(
-                    onClick = {
-                        onItemSelected(item)
-                        expanded = false
+                // Date Picker per Start Date
+                Button(onClick = { startDatePickerDialog = true }) {
+                    Text("Inizio: ${startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}")
+                }
+
+                // Date Picker per End Date
+                Button(onClick = { endDatePickerDialog = true }) {
+                    Text("Fine: ${endDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}")
+                }
+
+                // DropdownMenu per selezionare la targa
+                var expanded by remember { mutableStateOf(false) }
+                OutlinedTextField(
+                    value = selectedPlate?.lpNumber ?: "Seleziona targa",
+                    onValueChange = { },
+                    label = { Text("Targa") },
+                    trailingIcon = {
+                        IconButton(onClick = { expanded = true }) {
+                            Icon(Icons.Filled.ArrowDropDown, contentDescription = "Espandi")
+                        }
                     },
-                    modifier = Modifier
-                        .height(40.dp), // Imposta l'altezza dell'item per ridurre la dimensione del menu
-                    text = { Text(item, style = MaterialTheme.typography.bodySmall) } // Imposta una dimensione più piccola per il testo
+                    readOnly = true
                 )
+
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    plates.forEach { plate ->
+                        DropdownMenuItem(
+                            text = { Text(plate.lpNumber) },
+                            onClick = {
+                                selectedPlate = plate
+                                expanded = false
+                            }
+                        )
+                    }
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Visualizzazione del prezzo
+                Text(
+                    text = "Prezzo: ${price.dec()} €", // Formatta il prezzo come preferisci
+                    style = MaterialTheme.typography// Personalizza lo stile del testo
+                    .bodyMedium
+                    .copy(fontWeight = FontWeight.Bold)
+
+                )
+
+
+                // Mostra DateTimePickerDialog per Start e End
+                if (startDatePickerDialog) {
+                    DateTimePickerDialog(
+                        initialDateTime = startDate,
+                        onDateTimeSelected = { newDateTime ->
+                            startDate = newDateTime
+                            startDatePickerDialog = false
+                        },
+                        onDismiss = { startDatePickerDialog = false }
+                    )
+                }
+                if (endDatePickerDialog) {
+                    DateTimePickerDialog(
+                        initialDateTime = endDate,
+                        onDateTimeSelected = { newDateTime ->
+                            endDate = newDateTime
+                            endDatePickerDialog = false
+                        },
+                        onDismiss = { endDatePickerDialog = false }
+                    )
+                }
+            }
+        },
+        confirmButton = {
+            Button(onClick = {
+                val reservation = Reservation(
+                    parkingSpotId = parkingSpot.id,
+                    startDate = startDate,
+                    endDate = endDate,
+                    id = null, // Sostituisci con l'ID della prenotazione
+                    licensePlateId = selectedPlate?.id ?: 1, // Gestione ID della targa
+                    price = price, // Prezzo casuale
+                    user = SessionManager.user!!
+                )
+                onConfirm(reservation)
+                onDismiss()
+            }) {
+                Text("Conferma")
+            }
+        },
+        dismissButton = {
+            Button(onClick = onDismiss) {
+                Text("Annulla")
             }
         }
+    )
+}
+
+@Composable
+fun DateTimePickerDialog(
+    initialDateTime: LocalDateTime,
+    onDateTimeSelected: (LocalDateTime) -> Unit,
+    onDismiss: () -> Unit
+) {
+    val context = LocalContext.current
+    val calendar = Calendar.getInstance().apply {timeInMillis = initialDateTime.atZone(ZoneId.systemDefault()).toInstant().toEpochMilli()
     }
+
+    val datePickerDialog = DatePickerDialog(
+        context,
+        { _, year, month, dayOfMonth ->
+            val selectedDate = LocalDate.of(year, month + 1, dayOfMonth)
+            TimePickerDialog(
+                context,
+                { _, hour, minute ->
+                    val selectedDateTime = LocalDateTime.of(selectedDate, LocalTime.of(hour, minute))
+                    onDateTimeSelected(selectedDateTime)
+                },
+                calendar.get(Calendar.HOUR_OF_DAY),
+                calendar.get(Calendar.MINUTE),
+                true
+            ).show()
+        },
+        calendar.get(Calendar.YEAR),
+        calendar.get(Calendar.MONTH),
+        calendar.get(Calendar.DAY_OF_MONTH)
+    )
+
+    // Imposta il limite minimo alla data corrente
+    datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+
+    datePickerDialog.setOnDismissListener { onDismiss() }
+    datePickerDialog.show()
+}
+
+
+fun isFreeNow(reservations: List<Reservation>): Boolean {
+    val now = Instant.now().atZone(ZoneId.systemDefault()).toLocalDateTime() // Converti Instant in LocalDateTime
+
+    for (reservation in reservations) {
+        if (now.isAfter(reservation.startDate) && now.isBefore(reservation.endDate)) {
+            return false // Il posto auto è occupato in questo momento
+        }
+    }
+
+    return true // Il posto auto è libero in questo momento
+}
+fun isTimeSlotFree(selectedDateTime: LocalDateTime, reservations: List<Reservation>): Boolean {
+    for (reservation in reservations) {
+        if (selectedDateTime.isAfter(reservation.startDate) && selectedDateTime.isBefore(reservation.endDate)) {
+            return false // La fascia oraria è occupata
+        }
+    }
+    return true // La fascia oraria è libera
 }

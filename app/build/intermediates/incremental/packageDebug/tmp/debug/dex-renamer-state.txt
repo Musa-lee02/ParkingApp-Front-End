@@ -1,4 +1,4 @@
-#Sat Dec 14 18:04:17 CET 2024
+#Tue Dec 17 00:43:35 CET 2024
 base.0=C\:\\Users\\samue\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
 base.1=C\:\\Users\\samue\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
 base.10=C\:\\Users\\samue\\AndroidStudioProjects\\ParkingApp-Front-End\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
