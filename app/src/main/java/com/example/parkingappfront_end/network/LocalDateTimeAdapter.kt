@@ -1,30 +1,26 @@
 package com.example.parkingappfront_end.network
 
-
-
 import com.google.gson.*
 import java.lang.reflect.Type
 import java.time.LocalDate
+import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 
-class LocalDateAdapter : JsonSerializer<LocalDate>, JsonDeserializer<LocalDate> {
-    private val formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd")
+class LocalDateTimeAdapter : JsonDeserializer<LocalDateTime>, JsonSerializer<LocalDateTime> {
 
     override fun serialize(
-        src: LocalDate?,
+        src: LocalDateTime?,
         typeOfSrc: Type?,
         context: JsonSerializationContext?
     ): JsonElement {
-        return JsonPrimitive(src?.format(DateTimeFormatter.ISO_LOCAL_DATE))
+        return JsonPrimitive(src?.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME))
     }
-
-
 
     override fun deserialize(
         json: JsonElement?,
         typeOfT: Type?,
         context: JsonDeserializationContext?
-    ): LocalDate {
-        return LocalDate.parse(json?.asString, DateTimeFormatter.ISO_LOCAL_DATE)
+    ): LocalDateTime {
+        return LocalDateTime.parse(json?.asString, DateTimeFormatter.ISO_LOCAL_DATE_TIME)
     }
 }

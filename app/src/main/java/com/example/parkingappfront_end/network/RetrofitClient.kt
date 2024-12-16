@@ -17,6 +17,7 @@ import javax.net.ssl.X509TrustManager
 import com.google.gson.GsonBuilder
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.converter.gson.GsonConverterFactory
+import java.time.LocalDateTime
 
 
 object RetrofitClient {
@@ -63,7 +64,10 @@ object RetrofitClient {
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(
                 GsonBuilder()
-                    .registerTypeAdapter(LocalDate::class.java, LocalDateAdapter()).registerTypeAdapter(
+                    .registerTypeAdapter(LocalDate::class.java, LocalDateAdapter())
+                    .registerTypeAdapter(LocalDateTime::class.java, LocalDateTimeAdapter())
+
+                    .registerTypeAdapter(
                         PaymentMethodType::class.java,  PaymentMethodTypeAdapter() )
                     .registerTypeAdapter(CardProvider::class.java, CardProviderAdapter())
                     .create()
@@ -81,6 +85,13 @@ object RetrofitClient {
 
     val adminApiService: AdminApiService by lazy {
         retrofit.create(AdminApiService::class.java)
+    }
+
+    val parkingSpaceApiService: ParkingSpaceApiService by lazy {
+        retrofit.create(ParkingSpaceApiService::class.java)
+    }
+    val parkingSpotApiService: ParkingSpotApiService by lazy {
+        retrofit.create(ParkingSpotApiService::class.java)
     }
 
 
