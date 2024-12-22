@@ -100,9 +100,9 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
     val adminViewModel = remember { AdminViewModel(repository = AdminRepository(RetrofitClient.adminApiService)) }
     val accountViewModel = remember { AccountViewModel(repository = accountRepository) } // AccountViewModel è una classe che serve a mantenere i dati dell'utente
 
-    val parkingRepository = remember { ParkingSpaceRep(RetrofitClient.parkingSpaceApiService) }
-    val parkingSpotRepository = remember { ParkingSpotRep(RetrofitClient.parkingSpotApiService) }
-    val parkingViewModel = remember { ParkingViewModel(parkingSpaceRep =  parkingRepository, parkingSpotRep =parkingSpotRepository ) } // ParkingViewModel è una classe che serve a mantenere i dati del parcheggio
+    val parkingRepository = ParkingSpaceRep(RetrofitClient.parkingSpaceApiService)
+    val parkingSpotRepository = ParkingSpotRep(RetrofitClient.parkingSpotApiService)
+    val parkingViewModel = ParkingViewModel(parkingSpaceRep =  parkingRepository, parkingSpotRep =parkingSpotRepository )  // ParkingViewModel è una classe che serve a mantenere i dati del parcheggio
 
 
     Scaffold(
@@ -123,11 +123,11 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
                 HomeScreen(navController, parkingViewModel) // HomeScreen è una funzione che serve a creare la schermata Home
             }
 
-            composable("userAuth") { //Vai a SignInUpScreen quando si preme il pulsante User
+            composable("userAuth") {
                 selectedIndex.value = 1
-                val _authApiService = RetrofitClient.authApiService // authApiService è un'istanza di AuthApiService
+                val _authApiService = RetrofitClient.authApiService
                 val repository = AuthRepository(_authApiService)
-                SignInUpScreen(loginViewModel = LoginViewModel(repository), registrationViewModel = RegistrationViewModel(repository), navController) // SignInUpScreen è una funzione che serve a creare la schermata di accesso e registrazione
+                SignInUpScreen(loginViewModel = LoginViewModel(repository), registrationViewModel = RegistrationViewModel(repository), navController)
             }
 
             composable("account-manager") {
@@ -138,6 +138,7 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
                 }
                 val _userApiService = RetrofitClient.userApiService
                 val repository = AccountRepository(_userApiService)
+
                 AccountManagerScreen(viewModel = accountViewModel, navHostController = navController, onLogout = {
                     accountViewModel.onLogout()
                     adminViewModel.onLogout()

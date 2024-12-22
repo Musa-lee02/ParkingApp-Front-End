@@ -54,17 +54,12 @@ import java.time.LocalTime
 import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import java.util.Locale
 import kotlin.random.Random
 
 
 @Composable
 fun ParkingSpaceDetails(parkingSpace: ParkingSpace, pSpots: List<ParkingSpot>, viewModel: ParkingViewModel) {
-    LaunchedEffect(key1 = parkingSpace.id) {
-        parkingSpace.id?.let { id ->
-            viewModel.loadParkingSpots(id)
-            viewModel.loadLicensePlates()
-        }
-    }
 
     Column(modifier = Modifier.padding(16.dp)) {
         // Titolo della lista
@@ -78,15 +73,16 @@ fun ParkingSpaceDetails(parkingSpace: ParkingSpace, pSpots: List<ParkingSpot>, v
 
         // Sezione Privacy
         Column { // Rimosso Row e aggiunto Column
-            Text(
-                text = parkingSpace.address,
-                fontSize = 18.sp // Ridotta la dimensione del font
-            )
+            parkingSpace.address.street?.let {
+                Text(text = it,
+                    fontSize = 18.sp
+                )
+            } // Modificato il testo
 
             Spacer(modifier = Modifier.height(4.dp)) // Aggiunto spazio
 
             Text(
-                text = parkingSpace.city,
+                text = parkingSpace.address.city ?: "",
                 fontSize = 18.sp // Ridotta la dimensione del font
             )
 
@@ -99,13 +95,7 @@ fun ParkingSpaceDetails(parkingSpace: ParkingSpace, pSpots: List<ParkingSpot>, v
                     parkingSpots = validSpots,
                     viewModel = viewModel,
                     onParkingSpaceSelected = { selectedParkingSpot ->
-                        if (selectedParkingSpot.free) {
-                            // Gestisci il caso del posto libero
-                            println("Posto auto selezionato: ${selectedParkingSpot.number}")
-                        } else {
-                            // Gestisci il caso del posto occupato
-                            println("Posto auto occupato!")
-                        }
+                        println("Posto auto selezionato: ${selectedParkingSpot.number}")
                     }
                 )
             } else {
@@ -167,7 +157,7 @@ fun ParkingSpaceItem(
                 shape = CircleShape
             )
             .clickable {
-                if (parkingSpot.free) {
+                if (true) { //parkingSpot.free
                     showDialog = true
                     onParkingSpaceSelected(parkingSpot)
                 }
@@ -233,7 +223,8 @@ fun ReservationDialog(
     var selectedPlate by remember { mutableStateOf<LicensePlate?>(null) }
     val plates by viewModel.licensePlates.collectAsState()
 
-    val price = Random.nextDouble(5.0 + (endDate.minute - startDate.minute) * 2, 80.0)
+    val price = parkingSpot.basePrice + ( (5 * parkingSpot.basePrice)/100) * (endDate.minute - startDate.minute)
+
     var startDatePickerDialog by remember { mutableStateOf(false) }
     var endDatePickerDialog by remember { mutableStateOf(false) }
 
@@ -285,13 +276,11 @@ fun ReservationDialog(
 
                 // Visualizzazione del prezzo
                 Text(
-                    text = "Prezzo: ${price.dec()} €", // Formatta il prezzo come preferisci
-                    style = MaterialTheme.typography// Personalizza lo stile del testo
-                    .bodyMedium
-                    .copy(fontWeight = FontWeight.Bold)
-
+                    text = "Totale: ${String.format(Locale.getDefault(), "%.2f", price)} €",
+                    style= MaterialTheme.typography
+                        .bodyMedium
+                        .copy(fontWeight = FontWeight.Bold)
                 )
-
 
                 // Mostra DateTimePickerDialog per Start e End
                 if (startDatePickerDialog) {

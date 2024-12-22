@@ -31,30 +31,31 @@ class ParkingViewModel(private val parkingSpaceRep : ParkingSpaceRep, private va
     private val _licensePlates = MutableStateFlow<List<LicensePlate>>(emptyList())
     val licensePlates: StateFlow<List<LicensePlate>> = _licensePlates.asStateFlow()
 
-    fun loadParkingSpaces(){
+    fun loadParkingSpaces() {
         viewModelScope.launch {
             try {
-                _parkingSpaces.value = parkingSpaceRep.getAllPS()
-                Log.d("Parking", "View Model Parking spaces loaded: ${_parkingSpaces.value}")
-
+                val spaces = parkingSpaceRep.getAllPS()
+                _parkingSpaces.value = spaces
+                Log.d("ParkingSpaces", "View Model Parking spaces loaded: ${spaces}")
             } catch (e: Exception) {
                 _parkingSpaces.value = emptyList()
+                Log.e("ParkingSpaces", "Error loading parking spaces", e)
             }
-
         }
     }
 
-    fun loadParkingSpots(idSpace: Long){
+    fun loadParkingSpots(idSpace: Long) {
         viewModelScope.launch {
             try {
-                val response = parkingSpotRep.getBySpaceId(idSpace, SessionManager.user!!.id)
-                _parkingSpots.value = response
-
+                val spots = parkingSpotRep.getBySpaceId(idSpace, SessionManager.user!!.id)
+                _parkingSpots.value = spots
+                Log.d("ParkingSpaces", "Parking spots loaded: ${spots}")
             } catch (e: Exception) {
-                println(e)
+                Log.e("ParkingSpaces", "Error loading parking spots", e)
             }
         }
     }
+
 
     fun loadLicensePlates(){
         viewModelScope.launch {
