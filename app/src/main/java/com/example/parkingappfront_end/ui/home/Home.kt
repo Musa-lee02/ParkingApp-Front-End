@@ -45,6 +45,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AddCircleOutline
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.ui.graphics.Color
@@ -57,7 +58,7 @@ import com.example.parkingappfront_end.ui.reservation.ParkingSpaceDetails
 
 @Composable
 fun HomeScreen(navController: NavController, viewModel: ParkingViewModel) {
-    val parkingSpaces by viewModel.parkingSpaces.collectAsState()
+    val parkingSpaces: List<ParkingSpace> by viewModel.parkingSpaces.collectAsState()
     val parkingSpots by viewModel.parkingSpots.collectAsState()
 
     var licensePlate by remember { mutableStateOf("") }
@@ -67,38 +68,56 @@ fun HomeScreen(navController: NavController, viewModel: ParkingViewModel) {
     }
 
 
+    var isLoading by remember { mutableStateOf(true) } // Stato di caricamento
 
-    LaunchedEffect(Unit) {
-        viewModel.loadParkingSpaces()
-        Log.d("Parking", "Home screen Parking spaces loaded: ${parkingSpaces}")
+    LaunchedEffect(viewModel) {
+        isLoading = true
+        try {
+            viewModel.loadParkingSpaces()
+            isLoading = false
+        } catch (e: Exception) {
+            isLoading = false // Anche in caso di errore, nascondi il loader
+        }
     }
 
-    LazyColumn(modifier = Modifier
-        .fillMaxSize()
-    )
-    {
-        item {
-            ParkingSpaceList(
-                parkingSpaces = parkingSpaces,
-                viewModel = viewModel,
-                selectedParkingSpace = selectedParkingSpace.value,
-                onParkingSpaceSelected = { parkingSpace ->
-                    selectedParkingSpace.value = parkingSpace.copy()
-                    parkingSpace.id.let { viewModel.loadParkingSpots(parkingSpace.id) }
-                }
-            )
+    LaunchedEffect(parkingSpaces) {
+        if (parkingSpaces.isNotEmpty()) {
+            val firstSpace = parkingSpaces.firstOrNull() ?: ParkingSpace.default()
+            selectedParkingSpace.value = firstSpace
+            firstSpace.id?.let { viewModel.loadParkingSpots(it) }
         }
-        selectedParkingSpace.value?.let { parkingSpace ->
-            if (parkingSpace != null) {
+    }
+
+
+    if (isLoading) {
+        // Mostra un indicatore di caricamento
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+    } else {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            item {
+                ParkingSpaceList(
+                    parkingSpaces = parkingSpaces,
+                    selectedParkingSpace = selectedParkingSpace.value,
+                    onParkingSpaceSelected = { parkingSpace ->
+                        selectedParkingSpace.value = parkingSpace.copy()
+                        parkingSpace.id?.let { viewModel.loadParkingSpots(it) }
+                    },
+                    viewModel = viewModel
+                )
+            }
+            selectedParkingSpace.value?.let { parkingSpace ->
                 item {
-                    ParkingSpaceDetails(pSpots = parkingSpots, parkingSpace = parkingSpace, viewModel = viewModel)
+                    ParkingSpaceDetails(
+                        parkingSpace = parkingSpace,
+                        pSpots = parkingSpots,
+                        viewModel = viewModel
+                    )
                 }
             }
         }
-
-
     }
-        
 }
 
 
@@ -116,15 +135,12 @@ fun ParkingSpaceList(parkingSpaces: List<ParkingSpace>, selectedParkingSpace: Pa
         horizontalArrangement = Arrangement.SpaceBetween,
         verticalAlignment = Alignment.CenterVertically
     ) {
-        selectedParkingSpace?.name?.let {
-            Text(
-                text = it,
+        Text(
+            text = "Lista Parcheggi",
 
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
-        }
-
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
 
     }
 

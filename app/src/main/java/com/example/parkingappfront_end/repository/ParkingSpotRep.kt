@@ -13,10 +13,11 @@ class ParkingSpotRep (private val pSpotApiService: ParkingSpotApiService) {
         return try {
             val response = pSpotApiService.getBySpaceId(idSpace = idSpace, idUser = idUser)
             if (response.isSuccessful) {
-                response.body()!!
+                Log.d("ParkingSpotRep", "Response body is not empty")
             } else {
-                emptyList()
+                Log.d("ParkingSpotRep", "Response body is empty")
             }
+            response.body()!!
         } catch (e: Exception) {
             emptyList()
         }

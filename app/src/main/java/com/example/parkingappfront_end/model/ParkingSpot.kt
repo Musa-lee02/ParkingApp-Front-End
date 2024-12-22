@@ -5,5 +5,5 @@ data class ParkingSpot (
     val number: String,
     val parkingSpaceId: Long,
     val reservations: List<Reservation>,
-    val free : Boolean
+    val basePrice: Double,
 )
