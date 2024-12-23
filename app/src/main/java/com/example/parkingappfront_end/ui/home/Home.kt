@@ -1,8 +1,5 @@
 package com.example.parkingappfront_end.ui.home
 
-import android.util.Log
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -13,15 +10,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.SnackbarDuration
-import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -30,19 +21,16 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.example.parkingappfront_end.R
 import com.example.parkingappfront_end.model.ParkingSpace
 import com.example.parkingappfront_end.viewmodels.ParkingViewModel
 import androidx.compose.runtime.collectAsState
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AddCircleOutline
+import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -52,68 +40,87 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
-import com.example.parkingappfront_end.model.ParkingSpot
+import com.example.parkingappfront_end.SessionManager
 import com.example.parkingappfront_end.ui.reservation.ParkingSpaceDetails
+import com.example.parkingappfront_end.viewmodels.ReservationViewModel
+import kotlin.math.pow
+import kotlin.math.sqrt
 
 
 @Composable
-fun HomeScreen(navController: NavController, viewModel: ParkingViewModel) {
-    val parkingSpaces: List<ParkingSpace> by viewModel.parkingSpaces.collectAsState()
-    val parkingSpots by viewModel.parkingSpots.collectAsState()
+fun HomeScreen(navController: NavController, parkingViewModel: ParkingViewModel, reservationViewModel: ReservationViewModel) {
+    val parkingSpacesWithDistances by parkingViewModel.sortedPSBy.collectAsState()
+    val parkingSpots by parkingViewModel.parkingSpots.collectAsState()
+    val userPosition = SessionManager.position
 
     var licensePlate by remember { mutableStateOf("") }
 
-    val selectedParkingSpace = remember(parkingSpaces) {
-        mutableStateOf(parkingSpaces.firstOrNull() ?: ParkingSpace.default())
+    val selectedParkingSpace = remember(parkingSpacesWithDistances) {
+        mutableStateOf(parkingSpacesWithDistances.firstOrNull()?.first ?: ParkingSpace.default())
     }
 
+    var isLoading by remember { mutableStateOf(true) }
+    var loadingParkingSpaces by remember { mutableStateOf(true) }
 
-    var isLoading by remember { mutableStateOf(true) } // Stato di caricamento
-
-    LaunchedEffect(viewModel) {
-        isLoading = true
+    LaunchedEffect(parkingViewModel) {
+        loadingParkingSpaces = true
         try {
-            viewModel.loadParkingSpaces()
-            isLoading = false
+            parkingViewModel.loadParkingSpaces()
+            loadingParkingSpaces = false
         } catch (e: Exception) {
-            isLoading = false // Anche in caso di errore, nascondi il loader
+            loadingParkingSpaces = false
         }
     }
 
-    LaunchedEffect(parkingSpaces) {
-        if (parkingSpaces.isNotEmpty()) {
-            val firstSpace = parkingSpaces.firstOrNull() ?: ParkingSpace.default()
+    LaunchedEffect(parkingSpacesWithDistances) {
+        if (parkingSpacesWithDistances.isNotEmpty()) {
+            val firstSpace = parkingSpacesWithDistances.firstOrNull()?.first ?: ParkingSpace.default()
             selectedParkingSpace.value = firstSpace
-            firstSpace.id?.let { viewModel.loadParkingSpots(it) }
+            firstSpace.id?.let { parkingViewModel.loadParkingSpots(it) }
         }
     }
 
+    LaunchedEffect(userPosition) {
+        userPosition?.let {
+            parkingViewModel.sortPSByDistance(it.latitude, it.longitude)
+        }
+    }
+
+    LaunchedEffect(loadingParkingSpaces, userPosition) {
+        if (!loadingParkingSpaces && userPosition != null) {
+            isLoading = false
+        }
+    }
 
     if (isLoading) {
-        // Mostra un indicatore di caricamento
-        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Box(modifier =Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
     } else {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             item {
                 ParkingSpaceList(
-                    parkingSpaces = parkingSpaces,
+                    parkingSpaces = parkingSpacesWithDistances.map { it.first },
                     selectedParkingSpace = selectedParkingSpace.value,
                     onParkingSpaceSelected = { parkingSpace ->
                         selectedParkingSpace.value = parkingSpace.copy()
-                        parkingSpace.id?.let { viewModel.loadParkingSpots(it) }
+                        parkingSpace.id?.let { parkingViewModel.loadParkingSpots(it) }
                     },
-                    viewModel = viewModel
+                    viewModel = parkingViewModel
                 )
             }
             selectedParkingSpace.value?.let { parkingSpace ->
                 item {
-                    ParkingSpaceDetails(
-                        parkingSpace = parkingSpace,
-                        pSpots = parkingSpots,
-                        viewModel = viewModel
-                    )
+                    val selectedPair = parkingSpacesWithDistances.firstOrNull { it.first == parkingSpace }
+                    selectedPair?.let {
+                        ParkingSpaceDetails(
+                            parkingSpace = it.first,
+                            sortCriteria = it.second,
+                            pSpots = parkingSpots,
+                            parkingViewModel = parkingViewModel,
+                            reservationViewModel = reservationViewModel,
+                        )
+                    }
                 }
             }
         }
@@ -122,11 +129,14 @@ fun HomeScreen(navController: NavController, viewModel: ParkingViewModel) {
 
 
 @Composable
-fun ParkingSpaceList(parkingSpaces: List<ParkingSpace>, selectedParkingSpace: ParkingSpace?, viewModel: ParkingViewModel,onParkingSpaceSelected: (ParkingSpace) -> Unit) {
-    /*
-    var showAddWishlistMain by remember { mutableStateOf(false) }
-    val isAdmin = user?.role == "ROLE_ADMIN"
-    val idUserSelectedByAdmin by viewModel.userSelectedByAdmin.collectAsState()*/
+fun ParkingSpaceList(
+    parkingSpaces: List<ParkingSpace>,
+    selectedParkingSpace: ParkingSpace?,
+    viewModel: ParkingViewModel,
+    onParkingSpaceSelected: (ParkingSpace) -> Unit
+) {
+
+    val sortByDistance by viewModel.sortedByDistance.collectAsState()
 
     Row(
         modifier = Modifier
@@ -137,14 +147,26 @@ fun ParkingSpaceList(parkingSpaces: List<ParkingSpace>, selectedParkingSpace: Pa
     ) {
         Text(
             text = "Lista Parcheggi",
-
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
-
+        IconButton(
+            onClick = {
+                if (sortByDistance) {
+                    viewModel.sortPSByPrice()
+                } else {
+                    viewModel.sortPSByDistance(SessionManager.position!!.latitude, SessionManager.position!!.longitude)
+                }
+            }
+        ) {
+            Icon(
+                imageVector = Icons.Default.Sort,
+                contentDescription = if (sortByDistance) "Ordina per prezzo" else "Ordina per distanza"
+            )
+        }
     }
 
-    if (parkingSpaces.isEmpty()) { // Controlla se la lista è vuota
+    if (parkingSpaces.isEmpty()){
         Spacer(modifier = Modifier.height(40.dp))
         Box(
             modifier = Modifier.fillMaxSize(),
@@ -156,24 +178,21 @@ fun ParkingSpaceList(parkingSpaces: List<ParkingSpace>, selectedParkingSpace: Pa
                 textAlign = TextAlign.Center
             )
         }
-    } else{
+    } else {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 8.dp)
         ) {
             items(
-                items =parkingSpaces,
-                //key = { item -> "${item.id}-${item.name}" }// Chiave a livello di items
+                items = parkingSpaces,
             ) { parkingSpace ->
-                var isFriendWishlist: Boolean? = null
                 ParkingSpaceThumbnail(
                     parkingSpace = parkingSpace,
                     onClick = {
                         onParkingSpaceSelected(parkingSpace)
                     },
                     isSelected = selectedParkingSpace == parkingSpace
-
                 )
             }
         }
@@ -182,6 +201,7 @@ fun ParkingSpaceList(parkingSpaces: List<ParkingSpace>, selectedParkingSpace: Pa
 
 @Composable
 fun ParkingSpaceThumbnail(parkingSpace : ParkingSpace, onClick: () -> Unit, isSelected: Boolean) {
+
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -214,8 +234,50 @@ fun ParkingSpaceThumbnail(parkingSpace : ParkingSpace, onClick: () -> Unit, isSe
                 //.align(Alignment.CenterVertically)
             )
             Spacer(modifier = Modifier.height(4.dp))
-            // Aggiungi eventuali altri dettagli della wishlist qui
+
         }
     }
+}
+
+
+fun calculateDistance(x1 : Double,y1 : Double, x2 : Double, y2 : Double) : Double {
+    return sqrt((x2 - x1).pow(2) + (y2 - y1).pow(2))
 
 }
+
+/* (41.9028, 12.4964):
+
+(41.92057, 12.50625)
+(41.90645, 12.49826)
+(41.92417, 12.25571)
+(41.85089, 12.41823)
+(41.90066, 12.49615)
+(42.02622, 12.66282)
+(41.81111, 12.77006)
+(41.87868, 12.65586)
+(41.73607, 12.61058)
+(41.81317, 12.51199) */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -12,7 +12,7 @@ class ReservationRep (private val reservationApiService: ReservationApiService){
 
     suspend fun getBySpot(idSpot: Long) = reservationApiService.getBySpot(idSpot)
 
-    suspend fun addReservation(idUser: UUID, reservation: Reservation) = reservationApiService.add(reservation, idUser)
+    suspend fun addReservation(idUser: UUID, reservation: Reservation) = reservationApiService.add(idUser, reservation )
 
 
 }

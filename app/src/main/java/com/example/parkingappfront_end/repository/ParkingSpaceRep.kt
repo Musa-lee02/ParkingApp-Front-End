@@ -61,9 +61,5 @@ class ParkingSpaceRep(private val pSpaceApiService : ParkingSpaceApiService) {
         return pSpaceApiService.add(parkingSpace).body()!!
     }
 
-    suspend fun addReservation(reservation: Reservation, idUser: UUID): Reservation {
-        return pSpaceApiService.addReservation(reservation, idUser).body()!!
-    }
-
 
 }

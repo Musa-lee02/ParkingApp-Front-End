@@ -54,6 +54,7 @@ import com.example.parkingappfront_end.repository.AdminRepository
 import com.example.parkingappfront_end.repository.AuthRepository
 import com.example.parkingappfront_end.repository.ParkingSpaceRep
 import com.example.parkingappfront_end.repository.ParkingSpotRep
+import com.example.parkingappfront_end.repository.ReservationRep
 import com.example.parkingappfront_end.ui.theme.ParkingAppFrontEndTheme
 import com.example.parkingappfront_end.ui.user.SignInUpScreen
 import com.example.parkingappfront_end.ui.home.HomeScreen
@@ -65,6 +66,7 @@ import com.example.parkingappfront_end.viewmodels.AdminViewModel
 import com.example.parkingappfront_end.viewmodels.LoginViewModel
 import com.example.parkingappfront_end.viewmodels.ParkingViewModel
 import com.example.parkingappfront_end.viewmodels.RegistrationViewModel
+import com.example.parkingappfront_end.viewmodels.ReservationViewModel
 import kotlinx.coroutines.async
 
 
@@ -96,6 +98,7 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
 
     // Usa remember per mantenere i ViewModel
     val accountRepository = remember { AccountRepository(RetrofitClient.userApiService) }
+    val reservationRepository = remember { ReservationRep(RetrofitClient.reservationApiService) }
 
     val adminViewModel = remember { AdminViewModel(repository = AdminRepository(RetrofitClient.adminApiService)) }
     val accountViewModel = remember { AccountViewModel(repository = accountRepository) } // AccountViewModel è una classe che serve a mantenere i dati dell'utente
@@ -103,7 +106,7 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
     val parkingRepository = ParkingSpaceRep(RetrofitClient.parkingSpaceApiService)
     val parkingSpotRepository = ParkingSpotRep(RetrofitClient.parkingSpotApiService)
     val parkingViewModel = ParkingViewModel(parkingSpaceRep =  parkingRepository, parkingSpotRep =parkingSpotRepository )  // ParkingViewModel è una classe che serve a mantenere i dati del parcheggio
-
+    val reservationViewModel = remember { ReservationViewModel(reservationRep = reservationRepository) } // ReservationViewModel è una classe che serve a mantenere i dati della prenotazione
 
     Scaffold(
         topBar = { TopBar(navController) }, // TopBar è una funzione che serve a creare la barra superiore
@@ -120,7 +123,7 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
                 LaunchedEffect(Unit) {
                     parkingViewModel.loadParkingSpaces()
                 }
-                HomeScreen(navController, parkingViewModel) // HomeScreen è una funzione che serve a creare la schermata Home
+                HomeScreen(navController, parkingViewModel, reservationViewModel) // HomeScreen è una funzione che serve a creare la schermata Home
             }
 
             composable("userAuth") {

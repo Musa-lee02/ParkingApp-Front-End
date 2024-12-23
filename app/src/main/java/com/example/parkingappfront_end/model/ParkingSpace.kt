@@ -11,6 +11,6 @@ data class ParkingSpace (
 ) {
     companion object {
         fun default() = ParkingSpace( 0, UserId(UUID.randomUUID()), emptyList(), "", Address(
-            0, "Via roma","Cosenz", 0.0, 0.0), )
+            0, "Via roma","Cosenza Default", 0.0, 0.0), )
     }
 }
