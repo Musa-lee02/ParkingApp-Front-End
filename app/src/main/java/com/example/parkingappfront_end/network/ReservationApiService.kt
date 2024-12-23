@@ -7,6 +7,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 import java.util.UUID
 
@@ -24,7 +25,7 @@ interface ReservationApiService {
     @RequiresAuth
     suspend fun getBySpot(@Path ("idSpot") idSpot: Long): Response<List<Reservation>>
 
-    @POST("reservations/add")
+    @PUT("reservations/add/{idUser}")
     @RequiresAuth
-    suspend fun add(@Body reservation: Reservation, @Path ("idUser") idUser: UUID): Response<Reservation>
+    suspend fun add( @Path ("idUser") idUser: UUID, @Body reservation: Reservation): Response<Reservation>
 }
