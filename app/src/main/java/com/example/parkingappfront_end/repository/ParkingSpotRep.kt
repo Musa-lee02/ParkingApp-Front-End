@@ -1,7 +1,6 @@
 package com.example.parkingappfront_end.repository
 
 import android.util.Log
-import com.example.parkingappfront_end.model.LicensePlate
 import com.example.parkingappfront_end.model.ParkingSpot
 import com.example.parkingappfront_end.model.Reservation
 import com.example.parkingappfront_end.network.ParkingSpotApiService
@@ -27,20 +26,6 @@ class ParkingSpotRep (private val pSpotApiService: ParkingSpotApiService) {
         return pSpotApiService.addParkingSpot(parkingSpot, idUser).body()!!
     }
 
-    suspend fun getLicensePlates(idUser: UUID): List<LicensePlate> {
-        return try {
-            val response = pSpotApiService.getLicensePlates(idUser)
-            if (response.isEmpty()) {
-                Log.d("ParkingSpotRep", "Response body is empty")
-            }
-            else {
-                Log.d("ParkingSpotRep", "Response body is not empty")
-            }
-            response
-        } catch (e: Exception) {
-            emptyList()
-        }
-    }
 
 
 }

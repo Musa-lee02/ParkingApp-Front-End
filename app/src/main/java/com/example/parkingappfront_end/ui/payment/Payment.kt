@@ -43,7 +43,7 @@ fun PaymentScreen(navController: NavController) {
         )
         Spacer(modifier = Modifier.height(16.dp))
         Button(onClick = {
-            navController.navigate("home")
+            navController.navigate("search")
         }) {
             Text("Torna alla Home")
         }
