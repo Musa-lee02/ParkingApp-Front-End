@@ -70,8 +70,8 @@ fun SignInUpScreen(loginViewModel: LoginViewModel, registrationViewModel: Regist
             0 -> LoginPage(
                 loginViewModel = loginViewModel,
                 onLoginSuccess = {
-                    navController.navigate("home") { //Se il login ha successo naviga alla schermata home
-                        popUpTo("home") { inclusive = true } //Chiude tutte le schermate precedenti
+                    navController.navigate("search") { //Se il login ha successo naviga alla schermata home
+                        popUpTo("search") { inclusive = true } //Chiude tutte le schermate precedenti
                     }
                 }
             )

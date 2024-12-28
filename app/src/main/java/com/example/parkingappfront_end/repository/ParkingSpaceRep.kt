@@ -1,7 +1,6 @@
 package com.example.parkingappfront_end.repository
 
 import android.util.Log
-import com.example.parkingappfront_end.model.LicensePlate
 import com.example.parkingappfront_end.model.ParkingSpace
 import com.example.parkingappfront_end.model.Reservation
 import com.example.parkingappfront_end.network.ParkingSpaceApiService
@@ -28,10 +27,10 @@ class ParkingSpaceRep(private val pSpaceApiService : ParkingSpaceApiService) {
 
     }
 
-    suspend fun getPSpaceByUser(idUser: UUID): List<ParkingSpace> {
+    suspend fun getParkingSpacesBySearch(city: String, startDate: String, endDate: String): List<ParkingSpace> {
         return try {
-            val response = pSpaceApiService.getParkingSpaceByUser(idUser)
-           if (response.isEmpty()){
+            val response = pSpaceApiService.getParkingSpacesBySearch(city, startDate, endDate)
+            if (response.isEmpty()){
                 println("No parking spaces found")
             }
             else {
@@ -42,14 +41,15 @@ class ParkingSpaceRep(private val pSpaceApiService : ParkingSpaceApiService) {
             emptyList()
         }
     }
-    suspend fun getLicensePlates(idUser: UUID): List<LicensePlate> {
+
+    suspend fun getPSpaceByUser(idUser: UUID): List<ParkingSpace> {
         return try {
-            val response = pSpaceApiService.getLicensePlates(idUser)
-            if (response.isEmpty()){
-                println("No license plates found")
+            val response = pSpaceApiService.getParkingSpaceByUser(idUser)
+           if (response.isEmpty()){
+                println("No parking spaces found")
             }
             else {
-                println("License plates found")
+                println("Parking spaces found")
             }
             response
         } catch (e: Exception) {

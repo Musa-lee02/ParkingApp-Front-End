@@ -1,6 +1,5 @@
 package com.example.parkingappfront_end.network
 
-import com.example.parkingappfront_end.model.LicensePlate
 import com.example.parkingappfront_end.model.ParkingSpace
 import com.example.parkingappfront_end.model.RequiresAuth
 import com.example.parkingappfront_end.model.Reservation
@@ -17,14 +16,13 @@ interface ParkingSpaceApiService {
     @RequiresAuth
     suspend fun getAllParkingSpaces(): List<ParkingSpace>
 
+    @GET("parkingSpaces/getBySearch/{city}/{startDate}/{endDate}")
+    @RequiresAuth
+    suspend fun getParkingSpacesBySearch(@Path("city") city: String, @Path("startDate") startDate: String, @Path("endDate") endDate: String): List<ParkingSpace>
+
     @GET("parkingSpaces/getByUser/{idUser}")
     @RequiresAuth
     suspend fun getParkingSpaceByUser(@Path("idUser") idUser: UUID): List<ParkingSpace>
-
-    @GET("parkingSpaces/getLicensePlates/{idUser}")
-    @RequiresAuth
-    suspend fun getLicensePlates(@Path("idUser") idUser: UUID): List<LicensePlate>
-
 
     @POST("parkingSpaces/add")
     @RequiresAuth

@@ -7,7 +7,7 @@ data class Reservation(
     val user: User,
     val price: Double,
     val parkingSpotId: Long,
-    val licensePlateId: Long,
+    val licensePlate: String,
     val startDate: LocalDateTime,
     val endDate: LocalDateTime
 )

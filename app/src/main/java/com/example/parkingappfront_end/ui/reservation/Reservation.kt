@@ -3,6 +3,7 @@ package com.example.parkingappfront_end.ui.reservation
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.util.Log
+import android.widget.Button
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -15,13 +16,20 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -39,15 +47,20 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.example.parkingappfront_end.SessionManager
-import com.example.parkingappfront_end.model.LicensePlate
 import com.example.parkingappfront_end.model.ParkingSpace
 import com.example.parkingappfront_end.model.ParkingSpot
 import com.example.parkingappfront_end.model.Reservation
+import com.example.parkingappfront_end.model.SearchParams
 import com.example.parkingappfront_end.model.SpacesSortCriterias
 import com.example.parkingappfront_end.viewmodels.ParkingViewModel
 import com.example.parkingappfront_end.viewmodels.ReservationViewModel
@@ -61,8 +74,176 @@ import java.util.Locale
 
 
 @Composable
-fun ParkingSpaceDetails(parkingSpace: ParkingSpace, sortCriteria: SpacesSortCriterias, pSpots: List<ParkingSpot>,
-                        parkingViewModel: ParkingViewModel, reservationViewModel: ReservationViewModel) {
+fun MainSpaceResults(navController: NavController, viewModel: ParkingViewModel, reservationViewModel: ReservationViewModel,
+                     searchCriteria: SearchParams){
+    val isSortedByDistance by viewModel.isSortedByDistance.collectAsState()
+    val sortedPS by viewModel.sortedPSBy.collectAsState()
+
+    val selectedParkingSpace = remember(sortedPS){
+        sortedPS.firstOrNull()?.let { mutableStateOf(it.first) }
+    }
+
+    val isLoading by viewModel.isLoading.collectAsState()
+
+    LaunchedEffect(sortedPS){
+        if (sortedPS.isNotEmpty()){
+           val firstSpace = sortedPS.first().first
+            selectedParkingSpace?.value ?: firstSpace
+        }
+        else {
+            viewModel.loadParkingSpacesBySearch(searchCriteria.city, searchCriteria.startDate.toString(), searchCriteria.endDate.toString())
+        }
+    }
+
+
+    if (isLoading){
+        Box( modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center ){
+            CircularProgressIndicator()
+        }
+    } else {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            item {
+                ParkingSpaceList(
+                    selectedParkingSpace = selectedParkingSpace?.value,
+                    onParkingSpaceSelected = { parkingSpace ->
+                        selectedParkingSpace?.value ?: parkingSpace.copy()
+                    },
+                    viewModel = viewModel
+                )
+            }
+            selectedParkingSpace?.value?.let { parkingSpace ->
+                item {
+                    val selectedPair = sortedPS.firstOrNull { it.first == parkingSpace }
+                    selectedPair?.let {
+                        ParkingSpaceDetails(
+                            parkingSpace = it.first,
+                            searchCriteria = searchCriteria ,
+                            sortCriteria = it.second,
+                            parkingViewModel = viewModel,
+                            reservationViewModel = reservationViewModel,
+                        )
+                    }
+                }
+            }
+        }
+    }
+
+
+
+}
+@Composable
+fun ParkingSpaceList(
+    selectedParkingSpace: ParkingSpace?,
+    viewModel: ParkingViewModel,
+    onParkingSpaceSelected: (ParkingSpace) -> Unit
+) {
+    val sortByDistance by viewModel.isSortedByDistance.collectAsState()
+    val sortedPS by viewModel.sortedPSBy.collectAsState()
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = "Lista Parcheggi",
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
+        IconButton(
+            onClick = {
+                if (sortByDistance) {
+                    viewModel.sortPSByPrice()
+                } else {
+                    viewModel.sortPSByDistance()
+                }
+            }
+        ) {
+            Icon(
+                imageVector = Icons.Default.Sort,
+                contentDescription = if (sortByDistance) "Ordina per prezzo" else "Ordina per distanza"
+            )
+        }
+    }
+
+    Log.d("ParkingSpaces", "Reservation: ${sortedPS.firstOrNull()?.first}")
+    if (sortedPS.isEmpty()) {
+        Spacer(modifier = Modifier.height(40.dp))
+        Box(
+            modifier = Modifier.fillMaxSize(),
+            contentAlignment = Alignment.Center
+        ) {
+            Text(
+                text = "Nessun parcheggio disponibile",
+                fontSize = 18.sp,
+                textAlign = TextAlign.Center
+            )
+        }
+    } else {
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 8.dp)
+        ) {
+            items(
+                items = sortedPS,
+            ) { parkingSpace ->
+
+                ParkingSpaceThumbnail(
+                    parkingSpace = parkingSpace.first,
+                    onClick = {
+                        onParkingSpaceSelected(parkingSpace.first)
+                    },
+                    isSelected = selectedParkingSpace == parkingSpace.first
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun ParkingSpaceThumbnail(parkingSpace: ParkingSpace, onClick: () -> Unit, isSelected: Boolean) {
+    Card(
+        modifier = Modifier
+            .padding(8.dp)
+            .width(150.dp)
+            .height(70.dp)
+            .clickable { onClick() },
+        shape = RoundedCornerShape(8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = if (isSelected) Color(0xFFE0E0E0) else Color.White
+        ),
+    ) {
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(8.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = parkingSpace.name,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.weight(1f),
+                textAlign = TextAlign.Center
+            )
+            Spacer(modifier = Modifier.height(4.dp))
+        }
+    }
+}
+
+@Composable
+fun ParkingSpaceDetails(
+    parkingSpace: ParkingSpace,
+    searchCriteria: SearchParams,
+    sortCriteria: SpacesSortCriterias,
+    parkingViewModel: ParkingViewModel,
+    reservationViewModel: ReservationViewModel
+) {
     Column(modifier= Modifier.padding(16.dp)) {
         // Titolo e distanza
         Row(
@@ -108,7 +289,6 @@ fun ParkingSpaceDetails(parkingSpace: ParkingSpace, sortCriteria: SpacesSortCrit
         // Sezione Privacy
         Column {
 
-
             Text(
                 text = parkingSpace.address.city ?: "",
                 fontSize = 18.sp
@@ -124,6 +304,7 @@ fun ParkingSpaceDetails(parkingSpace: ParkingSpace, sortCriteria: SpacesSortCrit
                         parkingSpots = validSpots,
                         parkingViewModel = parkingViewModel,
                         reservationViewModel = reservationViewModel,
+                        searchCriteria = searchCriteria,
                         onParkingSpaceSelected = { selectedParkingSpot ->
                             println("Posto auto selezionato: ${selectedParkingSpot.number}")
                         }
@@ -143,35 +324,43 @@ fun ParkingSpaceDetails(parkingSpace: ParkingSpace, sortCriteria: SpacesSortCrit
     }
 }
 
-
 @Composable
 fun ParkingSpaceGrid(
     parkingSpots: List<ParkingSpot>,
     onParkingSpaceSelected: (ParkingSpot) -> Unit,
+    searchCriteria: SearchParams,
     parkingViewModel: ParkingViewModel,
     reservationViewModel: ReservationViewModel
 ) {
-    val chunkedParkingSpots = parkingSpots.chunked(4) // Divide la lista in gruppi di 4 elementi (colonne)
+    val chunkedParkingSpots = parkingSpots.chunked(4)
 
-    LaunchedEffect(key1 = parkingSpots) {
-        parkingViewModel.loadLicensePlates()
-    }
 
     Column(modifier = Modifier.padding(8.dp)) {
         chunkedParkingSpots.forEach { rowParkingSpots ->
-            Row(modifier = Modifier.fillMaxWidth()) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(8.dp),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
                 rowParkingSpots.forEach { parkingSpot ->
-                    ParkingSpaceItem(parkingSpot, onParkingSpaceSelected, parkingViewModel, reservationViewModel )
+                    ParkingSpaceItem(
+                        parkingSpot = parkingSpot,
+                        onParkingSpaceSelected = onParkingSpaceSelected,
+                        searchCriteria = searchCriteria,
+                        parkingViewModel = parkingViewModel,
+                        reservationViewModel = reservationViewModel
+                    )
                 }
             }
         }
     }
 }
 
-
 @Composable
 fun ParkingSpaceItem(
     parkingSpot: ParkingSpot,
+    searchCriteria: SearchParams,
     onParkingSpaceSelected: (ParkingSpot) -> Unit,
     parkingViewModel: ParkingViewModel,
     reservationViewModel: ReservationViewModel
@@ -208,6 +397,7 @@ fun ParkingSpaceItem(
             parkingSpot = parkingSpot,
             parkingViewModel = parkingViewModel,
             reservationViewModel = reservationViewModel,
+            searchCriteria = searchCriteria,
             onDismiss = { showDialog = false },
             onConfirm = { reservation ->
                 reservationViewModel.addReservation(reservation)
@@ -243,119 +433,57 @@ fun ParkingSpaceItem(
     }
 }
 
-
-
 @Composable
 fun ReservationDialog(
     parkingSpot: ParkingSpot,
-    onDismiss: () -> Unit,
-    onConfirm: (Reservation) -> Unit,
+    searchCriteria: SearchParams,
     parkingViewModel: ParkingViewModel,
-    reservationViewModel: ReservationViewModel
+    reservationViewModel: ReservationViewModel,
+    onDismiss: () -> Unit,
+    onConfirm: (Reservation) -> Unit
 ) {
-
-    var startDate by remember { mutableStateOf(Instant.now().atZone(ZoneId.of("Europe/Rome")).plusMinutes(10).toLocalDateTime()   ) }
-    var endDate by remember { mutableStateOf(startDate.plusHours(1)) }
-
-    var selectedPlate by remember { mutableStateOf<LicensePlate?>(null) }
-
-    val plates by parkingViewModel.licensePlates.collectAsState()
-
-    val price = parkingSpot.basePrice + ( (5 * parkingSpot.basePrice)/100) * (endDate.minute - startDate.minute)
-
-    var startDatePickerDialog by remember { mutableStateOf(false) }
-    var endDatePickerDialog by remember { mutableStateOf(false) }
+    var price = parkingSpot.basePrice
+    var licensePlate by remember { mutableStateOf(TextFieldValue("")) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Prenota posto auto ${parkingSpot.number}") },
+        title = { Text("Conferma Prenotazione") },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-
-                // Date Picker per Start Date
-                Button(onClick = { startDatePickerDialog = true }) {
-                    Text("Inizio: ${startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}")
-                }
-
-                // Date Picker per End Date
-                Button(onClick = { endDatePickerDialog = true }) {
-                    Text("Fine: ${endDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}")
-                }
-
-                // DropdownMenu per selezionare la targa
-                var expanded by remember { mutableStateOf(false) }
+            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                Text("Posto auto: ${parkingSpot.number}")
+                Text("Data inizio: ${searchCriteria.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}")
+                Text("Data fine: ${searchCriteria.endDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}")
                 OutlinedTextField(
-                    value = selectedPlate?.lpNumber ?: "Seleziona targa",
-                    onValueChange = { },
+                    value = licensePlate,
+                    onValueChange = { licensePlate = it },
                     label = { Text("Targa") },
-                    trailingIcon = {
-                        IconButton(onClick = { expanded = true }) {
-                            Icon(Icons.Filled.ArrowDropDown, contentDescription = "Espandi")
-                        }
-                    },
-                    readOnly = true
-                )
-
-                DropdownMenu(
-                    expanded = expanded,
-                    onDismissRequest = { expanded = false }
-                ) {
-                    plates.forEach { plate ->
-                        DropdownMenuItem(
-                            text = { Text(plate.lpNumber) },
-                            onClick = {
-                                selectedPlate = plate
-                                expanded = false
-                            }
-                        )
-                    }
-                }
-                Spacer(modifier = Modifier.height(16.dp))
-
-                // Visualizzazione del prezzo
-                Text(
-                    text = "Totale: ${String.format(Locale.getDefault(), "%.2f", price)} €",
-                    style= MaterialTheme.typography
-                        .bodyMedium
-                        .copy(fontWeight = FontWeight.Bold)
-                )
-
-                // Mostra DateTimePickerDialog per Start e End
-                if (startDatePickerDialog) {
-                    DateTimePickerDialog(
-                        initialDateTime = startDate,
-                        onDateTimeSelected = { newDateTime ->
-                            startDate = newDateTime
-                            startDatePickerDialog = false
-                        },
-                        onDismiss = { startDatePickerDialog = false }
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Text,
+                        imeAction = ImeAction.Done
+                    ),
+                    singleLine = true,
+                    modifier = Modifier.fillMaxWidth(),
+                    textStyle = TextStyle(
+                        color = Color.Black,
+                        fontWeight = FontWeight.Normal,
+                        fontSize = 16.sp
                     )
-                }
-                if (endDatePickerDialog) {
-                    DateTimePickerDialog(
-                        initialDateTime = endDate,
-                        onDateTimeSelected = { newDateTime ->
-                            endDate = newDateTime
-                            endDatePickerDialog = false
-                        },
-                        onDismiss = { endDatePickerDialog = false }
-                    )
-                }
+                )
+                Text("Prezzo: €${String.format("%.2f", price)}")
             }
         },
         confirmButton = {
             Button(onClick = {
                 val reservation = Reservation(
-                    id = null, // Sostituisci con l'ID della prenotazione
+                    id = null,
                     user = SessionManager.user!!,
                     price = price,
                     parkingSpotId = parkingSpot.id,
-                    licensePlateId = selectedPlate?.id ?: -1L, // Gestione ID della targa
-                    startDate = startDate,
-                    endDate = endDate,
+                    licensePlate = licensePlate.text,
+                    startDate = searchCriteria.startDate,
+                    endDate = searchCriteria.endDate,
                 )
                 onConfirm(reservation)
-                onDismiss()
             }) {
                 Text("Conferma")
             }
@@ -368,7 +496,9 @@ fun ReservationDialog(
     )
 }
 
-@Composable
+
+
+    @Composable
 fun DateTimePickerDialog(
     initialDateTime: LocalDateTime,
     onDateTimeSelected: (LocalDateTime) -> Unit,

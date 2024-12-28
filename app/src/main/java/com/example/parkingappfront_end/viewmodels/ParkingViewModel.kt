@@ -8,7 +8,6 @@ import com.example.parkingappfront_end.repository.ParkingSpotRep
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.parkingappfront_end.SessionManager
-import com.example.parkingappfront_end.model.LicensePlate
 import com.example.parkingappfront_end.model.SpacesSortCriterias
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,17 +27,17 @@ class ParkingViewModel(private val parkingSpaceRep : ParkingSpaceRep, private va
     private val _sortedPSBy = MutableStateFlow<List<Pair<ParkingSpace, SpacesSortCriterias>>>(emptyList())
     val sortedPSBy: StateFlow<List<Pair<ParkingSpace,SpacesSortCriterias>>> = _sortedPSBy.asStateFlow()
 
-    private val _sortedByDistance = MutableStateFlow<Boolean>(false)
-    val sortedByDistance: StateFlow<Boolean> = _sortedByDistance.asStateFlow()
+    private val _isSortedByDistance = MutableStateFlow<Boolean>(false)
+    val isSortedByDistance: StateFlow<Boolean> = _isSortedByDistance.asStateFlow()
 
-    private val _sortedByPrice = MutableStateFlow<Boolean>(false)
-    val sortedByPrice: StateFlow<Boolean> = _sortedByPrice.asStateFlow()
+    private val _isSortedByPrice = MutableStateFlow<Boolean>(false)
+    val sortedByPrice: StateFlow<Boolean> = _isSortedByPrice.asStateFlow()
 
     private val _parkingSpots = MutableStateFlow<List<ParkingSpot>>(emptyList())
     val parkingSpots: StateFlow<List<ParkingSpot>> = _parkingSpots.asStateFlow()
 
-    private val _licensePlates = MutableStateFlow<List<LicensePlate>>(emptyList())
-    val licensePlates: StateFlow<List<LicensePlate>> = _licensePlates.asStateFlow()
+    private val _isLoading = MutableStateFlow<Boolean>(false)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
 
     fun loadParkingSpaces() {
@@ -58,6 +57,31 @@ class ParkingViewModel(private val parkingSpaceRep : ParkingSpaceRep, private va
             }
         }
     }
+
+    fun loadParkingSpacesBySearch(city: String, startDate: String, endDate: String) {
+        viewModelScope.launch {
+            try {
+                _isLoading.value = true
+                val spaces = parkingSpaceRep.getParkingSpacesBySearch(city, startDate, endDate)
+                _parkingSpaces.value = spaces
+                Log.d("ParkingSpaces", "View Model Parking spaces loaded: $spaces")
+                // Calcola le distanze dopo aver caricato i parcheggi
+                if (SessionManager.position != null) {
+                    Log.d("ParkingSpaces", "Assigning criterias")
+                    assignCriterias()
+                    sortPSByDistance()
+                    Log.d("ParkingSpaces", "Criterias assigned")
+                    Log.d("ParkingSpaces", "Parking spaces sorted with distances: ${_sortedPSBy.value}")
+                }
+                _isLoading.value = false
+            } catch (e: Exception) {
+                _parkingSpaces.value = emptyList()
+                Log.e("ParkingSpaces", "Error loading parking spaces", e)
+                _isLoading.value = false
+            }
+        }
+    }
+
     fun assignCriterias(){
         viewModelScope.launch {
             val sorted = _parkingSpaces.value.map { parkingSpace ->
@@ -78,8 +102,8 @@ class ParkingViewModel(private val parkingSpaceRep : ParkingSpaceRep, private va
            val sorted = _sortedPSBy.value.sortedBy { it.second.minPrice }
 
             _sortedPSBy.value = sorted
-            _sortedByDistance.value = false
-            _sortedByPrice.value = true
+            _isSortedByDistance.value = false
+            _isSortedByPrice.value = true
             Log.d("ParkingSpaces", "Parking spaces sorted with prices: $sorted")
         }
     }
@@ -88,8 +112,8 @@ class ParkingViewModel(private val parkingSpaceRep : ParkingSpaceRep, private va
         viewModelScope.launch {
             val sorted = _sortedPSBy.value.sortedBy { it.second.distance }
             _sortedPSBy.value = sorted
-            _sortedByDistance.value = true
-            _sortedByPrice.value = false
+            _isSortedByDistance.value = true
+            _isSortedByPrice.value = false
             Log.d("ParkingSpaces", "Parking spaces sorted with distances: $sorted")
         }
     }
@@ -139,16 +163,6 @@ class ParkingViewModel(private val parkingSpaceRep : ParkingSpaceRep, private va
         }
     }
 
-
-    fun loadLicensePlates(){
-        viewModelScope.launch {
-            try {
-                _licensePlates.value = parkingSpaceRep.getLicensePlates(SessionManager.user!!.id)
-            } catch (e: Exception) {
-                println(e)
-            }
-        }
-    }
 
 
 

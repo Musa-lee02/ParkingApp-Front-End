@@ -165,7 +165,7 @@ fun Buttons(viewModel: AccountViewModel, navHostController: NavHostController, o
                     SessionManager.clearSession()
                     })
                 }
-                navHostController.navigate("home"){
+                navHostController.navigate("userAuth"){
                     popUpTo(0) {inclusive= true}
                 }
             }) {
