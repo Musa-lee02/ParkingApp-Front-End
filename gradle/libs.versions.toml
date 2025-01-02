@@ -1,45 +1,71 @@
 [versions]
-activityComposeVersion = "1.8.1"
-agp = "8.5.1"
-androidxComposeBom = "2024.11.00"
-androidxJunit = "1.1.5"
-composeBomVersion = "2023.03.00"
-coreKtxVersion = "1.9.0"
-espressoCoreVersion = "3.5.1"
-kotlin = "1.8.10"
+accompanistPermissions = "0.32.0"
+agp = "8.5.2"
+androidxMaterialVersion = "1.7.6"
+androidxMaterial = "1.7.6"
+coilCompose = "2.4.0"
+coilComposeCore = "3.0.0-alpha06"
+coilComposeVersion = "2.7.0"
+coilKtCoilCompose = "2.4.0"
+converterGson = "2.9.0"
+glide = "4.15.1"
+googleGson = "2.10.1"
+googleMaterial = "1.12.0"
+gson = "2.10.1"
+gsonVersion = "2.8.2"
+jacksonAnnotations = "2.18.0"
+jwtdecode = "2.0.1"
+kotlin = "1.9.23"
 coreKtx = "1.13.1"
 junit = "4.13.2"
 junitVersion = "1.2.1"
 espressoCore = "3.6.1"
-lifecycleRuntimeKtx = "2.8.6"
-activityCompose = "1.9.3"
-composeBom = "2024.04.01"
-lifecycleRuntimeKtxVersion = "2.6.2"
-material = "libs.versions.compose.get()"
-material3 = "1.3.1"
-navigationCompose = "2.8.4"
-navigationComposeVersion = "2.7.0"
-runtime = "1.7.5"
-securityCryptoKtx = "1.0.0"
-securityCryptoKtxVersion = "1.1.0-alpha06"
-ui = "1.7.5"
+ktorClientCio = "2.3.4"
+ktorClientCioVersion = "2.3.4"
+ktorClientCore = "2.3.4"
+ktorClientCoreVersion = "2.3.4"
+ktorClientLogging = "2.3.4"
+ktorClientLoggingVersion = "2.3.4"
+ktorClientSerialization = "2.3.4"
+ktorClientSerializationVersion = "2.3.4"
+lifecycleRuntimeKtx = "2.8.4"
+activityCompose = "1.9.1"
+composeBom = "2024.06.00"
+loggingInterceptor = "4.10.0"
+material3 = "1.1.0"
+materialVersion = "1.4.0"
+roomVersion = "2.6.1"
+navigationRuntimeKtx = "2.7.7"
+browser = "1.8.0"
+material = "1.12.0"
+places = "3.5.0"
+coreI18n = "1.0.0-alpha01"
+
+firebaseFirestoreKtx = "25.0.0"
+lifecycleRuntimeComposeAndroid = "2.8.4"
+securityCrypto = "1.1.0-alpha06"
+volley = "1.2.1"
+lifecycleRuntimeComposeAndroidVersion = "2.8.7"
+billingKtx = "7.1.1"
+
 
 [libraries]
-androidx-activity-compose-v181 = { module = "androidx.activity:activity-compose", version.ref = "activityComposeVersion" }
-androidx-compose-bom-v20230300 = { module = "androidx.compose:compose-bom", version.ref = "composeBomVersion" }
-androidx-compose-bom-v20241100 = { module = "androidx.compose:compose-bom", version.ref = "androidxComposeBom" }
-androidx-compose-material3-material3 = { module = "androidx.compose.material3:material3" }
-androidx-compose-ui-ui = { module = "androidx.compose.ui:ui" }
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-core-ktx-v190 = { module = "androidx.core:core-ktx", version.ref = "coreKtxVersion" }
-androidx-espresso-core-v351 = { module = "androidx.test.espresso:espresso-core", version.ref = "espressoCoreVersion" }
-androidx-junit-v115 = { module = "androidx.test.ext:junit", version.ref = "androidxJunit" }
-androidx-lifecycle-runtime-ktx-v262 = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycleRuntimeKtxVersion" }
-androidx-material = { module = "androidx.compose.material:material", version.ref = "material" }
-androidx-navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "navigationCompose" }
-androidx-navigation-compose-v270 = { module = "androidx.navigation:navigation-compose", version.ref = "navigationComposeVersion" }
-androidx-runtime = { module = "androidx.compose.runtime:runtime", version.ref = "runtime" }
-androidx-security-crypto-ktx-v110alpha06 = { module = "androidx.security:security-crypto-ktx", version.ref = "securityCryptoKtxVersion" }
+androidx-material = { module = "androidx.compose.material:material", version.ref = "androidxMaterial" }
+androidx-material-v143 = { module = "androidx.compose.material:material", version.ref = "androidxMaterialVersion" }
+androidx-material3-v110 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+androidx-security-crypto = { module = "androidx.security:security-crypto", version.ref = "securityCrypto" }
+coil-compose-v240 = { module = "io.coil-kt:coil-compose", version.ref = "coilKtCoilCompose" }
+coil-kt-coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilComposeVersion" }
+coil = { module = "io.coil-kt:coil", version.ref = "coilComposeVersion" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilComposeVersion" }
+converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
+glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+gson-v2101 = { module = "com.google.code.gson:gson", version.ref = "googleGson" }
+gson-v282 = { module = "com.google.code.gson:gson", version.ref = "gsonVersion" }
+jackson-annotations = { module = "com.fasterxml.jackson.core:jackson-annotations", version.ref = "jacksonAnnotations" }
+jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jacksonAnnotations" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
@@ -50,19 +76,40 @@ androidx-ui = { group = "androidx.compose.ui", name = "ui" }
 androidx-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
 androidx-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
+androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest", version = "1.6.7" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
-androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
-androidx-security-crypto-ktx = { group = "androidx.security", name = "security-crypto-ktx", version.ref = "securityCryptoKtx" }
-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
-ui = { module = "androidx.compose.ui:ui", version.ref = "ui" }
-ui-graphics = { module = "androidx.compose.ui:ui-graphics" }
-ui-test-junit4 = { module = "androidx.compose.ui:ui-test-junit4" }
-ui-test-manifest = { module = "androidx.compose.ui:ui-test-manifest" }
+androidx-material3 = { group = "androidx.compose.material3", name = "material3", version = "1.2.1" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version = "2.7.7"}
+androidx-navigation-runtime-ktx = { group = "androidx.navigation", name = "navigation-runtime-ktx", version.ref =  "navigationRuntimeKtx" }
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "roomVersion" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomVersion" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "roomVersion" }
+androidx-compose-material = { group = "androidx.compose.material", name = "material-icons-extended", version = "1.6.7" }
+androidx-activity = { group = "androidx.activity", name="activity", version.ref="activityCompose"}
+androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
+
+firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
+jwtdecode = { module = "com.auth0.android:jwtdecode", version.ref = "jwtdecode" }
+ktor-client-cio = { module = "io.ktor:ktor-client-cio", version.ref = "ktorClientCioVersion" }
+ktor-client-core = { module = "io.ktor:ktor-client-core", version.ref = "ktorClientCoreVersion" }
+ktor-client-logging = { module = "io.ktor:ktor-client-logging", version.ref = "ktorClientLoggingVersion" }
+ktor-client-serialization = { module = "io.ktor:ktor-client-serialization", version.ref = "ktorClientSerializationVersion" }
+logging-interceptor = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "loggingInterceptor" }
+material = { module = "com.google.android.material:material", version.ref = "materialVersion" }
+material-v1120 = { module = "com.google.android.material:material", version.ref = "googleMaterial" }
+retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "converterGson" }
+androidx-lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroid" }
 ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
+volley = { group = "com.android.volley", name = "volley", version.ref = "volley" }
+
+places = { group = "com.google.android.libraries.places", name = "places", version.ref = "places" }
+androidx-core-i18n = { group = "androidx.core", name = "core-i18n", version.ref = "coreI18n" }
+lifecycle-runtime-compose-android = { group = "androidx.lifecycle", name = "lifecycle-runtime-compose-android", version.ref = "lifecycleRuntimeComposeAndroidVersion" }
+billing-ktx = { group = "com.android.billingclient", name = "billing-ktx", version.ref = "billingKtx" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+com-google-devtools-ksp = { id = "com.google.devtools.ksp", version = "1.9.23-1.0.20"}
 
