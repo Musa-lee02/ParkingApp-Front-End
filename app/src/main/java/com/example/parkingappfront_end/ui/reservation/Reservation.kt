@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -23,7 +25,10 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Divider
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.DoubleArrow
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -33,6 +38,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -56,7 +62,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.android.billingclient.api.Purchase
 import com.example.parkingappfront_end.SessionManager
+import com.example.parkingappfront_end.model.Address
 import com.example.parkingappfront_end.model.ParkingSpace
 import com.example.parkingappfront_end.model.ParkingSpot
 import com.example.parkingappfront_end.model.Reservation
@@ -69,67 +77,170 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
+import java.time.temporal.ChronoUnit
 import java.util.Locale
 
 
 @Composable
-fun MainSpaceResults(navController: NavController, viewModel: ParkingViewModel, reservationViewModel: ReservationViewModel,
-                     searchCriteria: SearchParams){
-    val isSortedByDistance by viewModel.isSortedByDistance.collectAsState()
+fun MainSpaceResults(
+    navController: NavController,
+    viewModel: ParkingViewModel,
+    reservationViewModel: ReservationViewModel,
+    searchCriteria: SearchParams
+) {
     val sortedPS by viewModel.sortedPSBy.collectAsState()
-
-    val selectedParkingSpace = remember(sortedPS){
-        sortedPS.firstOrNull()?.let { mutableStateOf(it.first) }
-    }
-
+    val selectedParkingSpace = remember { mutableStateOf<ParkingSpace?>(null) }
     val isLoading by viewModel.isLoading.collectAsState()
 
-    LaunchedEffect(sortedPS){
-        if (sortedPS.isNotEmpty()){
-           val firstSpace = sortedPS.first().first
-            selectedParkingSpace?.value ?: firstSpace
-        }
-        else {
-            viewModel.loadParkingSpacesBySearch(searchCriteria.city, searchCriteria.startDate.toString(), searchCriteria.endDate.toString())
+    LaunchedEffect(sortedPS) {
+        if (sortedPS.isNotEmpty()) {
+            selectedParkingSpace.value = selectedParkingSpace.value ?: sortedPS.first().first
+        } else {
+            viewModel.loadParkingSpacesBySearch(
+                searchCriteria.city,
+                searchCriteria.startDate.toString(),
+                searchCriteria.endDate.toString()
+            )
         }
     }
 
-
-    if (isLoading){
-        Box( modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center ){
+    if (isLoading) {
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
             CircularProgressIndicator()
         }
     } else {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            item {
-                ParkingSpaceList(
-                    selectedParkingSpace = selectedParkingSpace?.value,
-                    onParkingSpaceSelected = { parkingSpace ->
-                        selectedParkingSpace?.value ?: parkingSpace.copy()
-                    },
-                    viewModel = viewModel
-                )
-            }
-            selectedParkingSpace?.value?.let { parkingSpace ->
-                item {
-                    val selectedPair = sortedPS.firstOrNull { it.first == parkingSpace }
-                    selectedPair?.let {
-                        ParkingSpaceDetails(
-                            parkingSpace = it.first,
-                            searchCriteria = searchCriteria ,
-                            sortCriteria = it.second,
-                            parkingViewModel = viewModel,
-                            reservationViewModel = reservationViewModel,
-                        )
-                    }
+        Column(modifier = Modifier.fillMaxSize()) {
+            ParkingSpaceList(
+                selectedParkingSpace = selectedParkingSpace.value,
+                onParkingSpaceSelected = { parkingSpace ->
+                    selectedParkingSpace.value = parkingSpace
+                },
+                viewModel = viewModel
+            )
+
+            selectedParkingSpace.value?.let { parkingSpace ->
+                val selectedPair = sortedPS.firstOrNull { it.first == parkingSpace }
+                selectedPair?.let {
+                    ParkingSpaceDetails(
+                        parkingSpace = it.first,
+                        searchCriteria = searchCriteria,
+                        sortCriteria = it.second,
+                        parkingViewModel = viewModel,
+                        reservationViewModel = reservationViewModel
+                    )
                 }
             }
         }
     }
+}
 
+@Composable
+fun ParkingSpaceDetails(
+    parkingSpace: ParkingSpace,
+    searchCriteria: SearchParams,
+    sortCriteria: SpacesSortCriterias,
+    parkingViewModel: ParkingViewModel,
+    reservationViewModel: ReservationViewModel
+) {
 
+    val isSortedByDistance by parkingViewModel.isSortedByDistance.collectAsState()
 
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        // Nome e distanza
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = parkingSpace.name,
+                fontSize = 24.sp,
+                fontWeight = FontWeight.Bold
+            )
+            sortCriteria.distance?.let {
+                Text(
+                    text = String.format(Locale.getDefault(), "%.2f km", it),
+                    fontSize = 18.sp,
+                    fontWeight = if (isSortedByDistance) FontWeight.Bold else FontWeight.Normal,
+                    color = if (isSortedByDistance) Color.Blue else Color.Unspecified
+                )
+            }
+        }
+
+        // Via e prezzo
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            parkingSpace.address.street?.let {
+                Text(
+                    text = it,
+                    fontSize = 18.sp
+                )
+            }
+            Text(
+                text = String.format(
+                    Locale.getDefault(),
+                    "%.0f€ - %.0f€",
+                    sortCriteria.minPrice,
+                    sortCriteria.maxPrice
+                ),
+                fontSize = 18.sp,
+                fontWeight = if (!isSortedByDistance) FontWeight.Bold else FontWeight.Normal,
+                color = if (!isSortedByDistance) Color.Blue else Color.Unspecified
+            )
+        }
+
+        // Città
+        Text(
+            text = parkingSpace.address.city ?: "",
+            fontSize = 18.sp
+        )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Lista posti auto
+        parkingSpace.parkingSpots?.let { spots ->
+            if (spots.isNotEmpty()) {
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(400.dp)
+                ) {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        items(spots) { spot ->
+                            ParkingSpaceListItem(
+                                parkingSpot = spot,
+                                onParkingSpaceSelected = {},
+                                searchCriteria = searchCriteria,
+                                parkingViewModel = parkingViewModel,
+                                reservationViewModel = reservationViewModel
+                            )
+                        }
+                    }
+                }
+            } else {
+                Text(
+                    text = "Nessun posto disponibile",
+                    modifier = Modifier.padding(16.dp),
+                    fontSize = 18.sp,
+                    textAlign = TextAlign.Center
+                )
+            }
+        }
+    }
 }
 @Composable
 fun ParkingSpaceList(
@@ -148,7 +259,7 @@ fun ParkingSpaceList(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Lista Parcheggi",
+            text = "Risultati",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
@@ -214,7 +325,7 @@ fun ParkingSpaceThumbnail(parkingSpace: ParkingSpace, onClick: () -> Unit, isSel
         shape = RoundedCornerShape(8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
-            containerColor = if (isSelected) Color(0xFFE0E0E0) else Color.White
+            containerColor = if (isSelected)  Color.White else Color(0xFFE0E0E0)
         ),
     ) {
         Column(
@@ -236,129 +347,9 @@ fun ParkingSpaceThumbnail(parkingSpace: ParkingSpace, onClick: () -> Unit, isSel
     }
 }
 
-@Composable
-fun ParkingSpaceDetails(
-    parkingSpace: ParkingSpace,
-    searchCriteria: SearchParams,
-    sortCriteria: SpacesSortCriterias,
-    parkingViewModel: ParkingViewModel,
-    reservationViewModel: ReservationViewModel
-) {
-    Column(modifier= Modifier.padding(16.dp)) {
-        // Titolo e distanza
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = parkingSpace.name,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
-            sortCriteria.distance?.let {
-                Text(
-                    text = String.format(Locale.getDefault(), "%.2f km", it),
-                    fontSize = 18.sp,
-                    modifier = Modifier.align(Alignment.CenterVertically)
-                )
-            }
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            parkingSpace.address.street?.let {
-                Text(
-                    text = it,
-                    fontSize = 18.sp
-                )
-            }
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Text(text = String.format(Locale.getDefault(), "%.0f", sortCriteria.minPrice) + "€"
-                    + " - " + String.format(Locale.getDefault(), "%.0f", sortCriteria.maxPrice) + "€",
-                fontSize = 18.sp
-            )
-        }
-
-
-        Spacer(modifier = Modifier.height(8.dp)) // Aggiunto spazio
-
-        // Sezione Privacy
-        Column {
-
-            Text(
-                text = parkingSpace.address.city ?: "",
-                fontSize = 18.sp
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            val validSpots = parkingSpace.parkingSpots
-
-            if (validSpots != null) {
-                if (validSpots.isNotEmpty()) {
-                    ParkingSpaceGrid(
-                        parkingSpots = validSpots,
-                        parkingViewModel = parkingViewModel,
-                        reservationViewModel = reservationViewModel,
-                        searchCriteria = searchCriteria,
-                        onParkingSpaceSelected = { selectedParkingSpot ->
-                            println("Posto auto selezionato: ${selectedParkingSpot.number}")
-                        }
-                    )
-                } else {
-                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                        Text(
-                            text= "No available parking spots.",
-                            fontSize = 18.sp,
-                            textAlign = TextAlign.Center,
-                            color = Color.Gray
-                        )
-                    }
-                }
-            }
-        }
-    }
-}
 
 @Composable
-fun ParkingSpaceGrid(
-    parkingSpots: List<ParkingSpot>,
-    onParkingSpaceSelected: (ParkingSpot) -> Unit,
-    searchCriteria: SearchParams,
-    parkingViewModel: ParkingViewModel,
-    reservationViewModel: ReservationViewModel
-) {
-    val chunkedParkingSpots = parkingSpots.chunked(4)
-
-
-    Column(modifier = Modifier.padding(8.dp)) {
-        chunkedParkingSpots.forEach { rowParkingSpots ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                rowParkingSpots.forEach { parkingSpot ->
-                    ParkingSpaceItem(
-                        parkingSpot = parkingSpot,
-                        onParkingSpaceSelected = onParkingSpaceSelected,
-                        searchCriteria = searchCriteria,
-                        parkingViewModel = parkingViewModel,
-                        reservationViewModel = reservationViewModel
-                    )
-                }
-            }
-        }
-    }
-}
-
-@Composable
-fun ParkingSpaceItem(
+fun ParkingSpaceListItem(
     parkingSpot: ParkingSpot,
     searchCriteria: SearchParams,
     onParkingSpaceSelected: (ParkingSpot) -> Unit,
@@ -369,35 +360,59 @@ fun ParkingSpaceItem(
     var showConfirmationDialog by remember { mutableStateOf(false) }
     var confirmedReservation by remember { mutableStateOf<Reservation?>(null) }
 
-    Log.d("ParkingSpaceItem", "Parking spot: ${parkingSpot}")
-    Box(
+    Card(
         modifier = Modifier
-            .padding(4.dp)
-            .size(50.dp)
-            .background(
-                if (isFreeNow(parkingSpot.reservations)) Color.Green else Color.Yellow,
-                shape = CircleShape
-            )
-            .clickable {
-                if (true) { //parkingSpot.free
-                    showDialog = true
-                    onParkingSpaceSelected(parkingSpot)
-                }
-            },
-        contentAlignment = Alignment.Center
+            .fillMaxWidth()
+            .padding(8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.secondary,
+        ),
     ) {
-        Text(
-            text = parkingSpot.number.toString(),
-            color = Color.Black
-        )
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Column {
+                // Numero del posto
+                Text(
+                    text = "Posto Auto #${parkingSpot.number}",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 18.sp
+                )
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Prezzo
+                Text(text = "€${String.format("%.2f", calculatePrice(searchCriteria.startDate, searchCriteria.endDate, parkingSpot.basePrice))}",
+                    fontSize = 16.sp
+                )
+            }
+            IconButton(
+                onClick = {
+                    onParkingSpaceSelected(parkingSpot)
+                    showDialog = true
+                },
+                modifier = Modifier.align(Alignment.CenterVertically)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.ShoppingCart,
+                    contentDescription = "Acquista",
+                    tint = Color.Green
+                )
+            }
+        }
     }
 
+    // Mostra il dialogo di prenotazione quando il posto viene selezionato
     if (showDialog) {
         ReservationDialog(
             parkingSpot = parkingSpot,
+            searchCriteria = searchCriteria,
             parkingViewModel = parkingViewModel,
             reservationViewModel = reservationViewModel,
-            searchCriteria = searchCriteria,
             onDismiss = { showDialog = false },
             onConfirm = { reservation ->
                 reservationViewModel.addReservation(reservation)
@@ -433,6 +448,8 @@ fun ParkingSpaceItem(
     }
 }
 
+
+
 @Composable
 fun ReservationDialog(
     parkingSpot: ParkingSpot,
@@ -442,21 +459,64 @@ fun ReservationDialog(
     onDismiss: () -> Unit,
     onConfirm: (Reservation) -> Unit
 ) {
-    var price = parkingSpot.basePrice
+    var price = calculatePrice(searchCriteria.startDate, searchCriteria.endDate, parkingSpot.basePrice)
     var licensePlate by remember { mutableStateOf(TextFieldValue("")) }
 
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Conferma Prenotazione") },
+        title = {
+            Column(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    "Conferma Prenotazione",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    textAlign = TextAlign.Center
+                )
+                Text(
+                    "Posto #${parkingSpot.number}",
+                    fontSize = 16.sp,
+                    color = Color.Gray,
+                    textAlign = TextAlign.Center
+                )
+            }
+        },
         text = {
-            Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
-                Text("Posto auto: ${parkingSpot.number}")
-                Text("Data inizio: ${searchCriteria.startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}")
-                Text("Data fine: ${searchCriteria.endDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"))}")
+            Column(
+                modifier = Modifier.padding(8.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                // Date e orari
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(12.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        DateTimeRow(
+                            label = "Check-in",
+                            date = searchCriteria.startDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                            time = searchCriteria.startDate.format(DateTimeFormatter.ofPattern("HH:mm"))
+                        )
+                        Divider()
+
+                        DateTimeRow(
+                            label = "Check-out",
+                            date = searchCriteria.endDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                            time = searchCriteria.endDate.format(DateTimeFormatter.ofPattern("HH:mm"))
+                        )
+                    }
+                }
+
+                // Targa
                 OutlinedTextField(
                     value = licensePlate,
                     onValueChange = { licensePlate = it },
-                    label = { Text("Targa") },
+                    label = { Text("Targa veicolo") },
                     keyboardOptions = KeyboardOptions(
                         keyboardType = KeyboardType.Text,
                         imeAction = ImeAction.Done
@@ -464,41 +524,102 @@ fun ReservationDialog(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     textStyle = TextStyle(
-                        color = Color.Black,
-                        fontWeight = FontWeight.Normal,
                         fontSize = 16.sp
                     )
                 )
-                Text("Prezzo: €${String.format("%.2f", price)}")
+
+                // Prezzo
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                ) {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(12.dp),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+                        Text("Totale", fontSize = 16.sp)
+                        Text(
+                            "€${String.format("%.2f", price)}",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
             }
         },
         confirmButton = {
-            Button(onClick = {
-                val reservation = Reservation(
-                    id = null,
-                    user = SessionManager.user!!,
-                    price = price,
-                    parkingSpotId = parkingSpot.id,
-                    licensePlate = licensePlate.text,
-                    startDate = searchCriteria.startDate,
-                    endDate = searchCriteria.endDate,
-                )
-                onConfirm(reservation)
-            }) {
-                Text("Conferma")
+            Button(
+                onClick = {
+                    val reservation = Reservation(
+                        id = null,
+                        user = SessionManager.user!!,
+                        price = price,
+                        parkingSpotId = parkingSpot.id,
+                        licensePlate = licensePlate.text,
+                        startDate = searchCriteria.startDate,
+                        endDate = searchCriteria.endDate,
+                    )
+                    onConfirm(reservation)
+                },
+                enabled = licensePlate.text.isNotEmpty() && licensePlate.text.length >= 6,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            ) {
+                Text("Conferma prenotazione")
             }
         },
         dismissButton = {
-            Button(onClick = onDismiss) {
+            OutlinedButton(
+                onClick = onDismiss,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            ) {
                 Text("Annulla")
             }
         }
     )
 }
 
+@Composable
+private fun DateTimeRow(
+    label: String,
+    date: String,
+    time: String
+) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = label,
+            fontSize = 14.sp,
+            color = Color.Gray
+        )
+        Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+            Text(
+                text = date,
+                fontSize = 16.sp
+            )
+            Text(
+                text = time,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Bold
+            )
+        }
+    }
+}
 
 
-    @Composable
+fun calculatePrice(startDate: LocalDateTime, endDate: LocalDateTime, basePrice: Double): Double {
+    val minutes = ChronoUnit.MINUTES.between(startDate, endDate)
+
+    val finalPrice = basePrice + minutes * (0.01 * basePrice)
+    return  finalPrice
+}
+
+
+@Composable
 fun DateTimePickerDialog(
     initialDateTime: LocalDateTime,
     onDateTimeSelected: (LocalDateTime) -> Unit,

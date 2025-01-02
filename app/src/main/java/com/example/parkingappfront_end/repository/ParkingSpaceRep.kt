@@ -1,6 +1,7 @@
 package com.example.parkingappfront_end.repository
 
 import android.util.Log
+import com.example.parkingappfront_end.model.Address
 import com.example.parkingappfront_end.model.ParkingSpace
 import com.example.parkingappfront_end.model.Reservation
 import com.example.parkingappfront_end.network.ParkingSpaceApiService
@@ -35,6 +36,21 @@ class ParkingSpaceRep(private val pSpaceApiService : ParkingSpaceApiService) {
             }
             else {
                 println("Parking spaces found")
+            }
+            response
+        } catch (e: Exception) {
+            emptyList()
+        }
+    }
+
+    suspend fun getAllAddresses(): List<Address> {
+        return try {
+            val response = pSpaceApiService.getAllAddresses()
+            if (response.isEmpty()){
+                println("No addresses found")
+            }
+            else {
+                println("Addresses found")
             }
             response
         } catch (e: Exception) {

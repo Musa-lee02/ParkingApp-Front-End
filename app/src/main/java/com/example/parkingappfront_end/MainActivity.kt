@@ -100,6 +100,7 @@ class MainActivity : ComponentActivity() { // ComponentActivity è una classe di
     }
 }
 
+
 @Composable // @Composable è un'annotazione che serve a creare un'interfaccia utente
 fun NavigationView(navController: NavHostController) { // NavigationView è una funzione che serve a creare la navigazione
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route

@@ -8,6 +8,7 @@ import com.example.parkingappfront_end.repository.ParkingSpotRep
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.parkingappfront_end.SessionManager
+import com.example.parkingappfront_end.model.Address
 import com.example.parkingappfront_end.model.SpacesSortCriterias
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -33,6 +34,9 @@ class ParkingViewModel(private val parkingSpaceRep : ParkingSpaceRep, private va
     private val _isSortedByPrice = MutableStateFlow<Boolean>(false)
     val sortedByPrice: StateFlow<Boolean> = _isSortedByPrice.asStateFlow()
 
+    private val _allAddresses = MutableStateFlow<List<Address>>(emptyList())
+    val allAddresses: StateFlow<List<Address>> = _allAddresses.asStateFlow()
+
     private val _parkingSpots = MutableStateFlow<List<ParkingSpot>>(emptyList())
     val parkingSpots: StateFlow<List<ParkingSpot>> = _parkingSpots.asStateFlow()
 
@@ -54,6 +58,19 @@ class ParkingViewModel(private val parkingSpaceRep : ParkingSpaceRep, private va
             } catch (e: Exception) {
                 _parkingSpaces.value = emptyList()
                 Log.e("ParkingSpaces", "Error loading parking spaces", e)
+            }
+        }
+    }
+
+    fun loadAddresses() {
+        viewModelScope.launch {
+            try {
+                val addresses = parkingSpaceRep.getAllAddresses()
+                _allAddresses.value = addresses
+                Log.d("ParkingSpaces", "View Model Addresses loaded: $addresses")
+            } catch (e: Exception) {
+                _allAddresses.value = emptyList()
+                Log.e("ParkingSpaces", "Error loading addresses", e)
             }
         }
     }
@@ -81,6 +98,7 @@ class ParkingViewModel(private val parkingSpaceRep : ParkingSpaceRep, private va
             }
         }
     }
+
 
     fun assignCriterias(){
         viewModelScope.launch {

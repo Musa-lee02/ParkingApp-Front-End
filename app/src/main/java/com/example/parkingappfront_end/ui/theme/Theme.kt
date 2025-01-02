@@ -19,27 +19,38 @@ import androidx.core.view.WindowCompat
 
 
 //  Tema Terracotta e Crema
-private val DarkColorScheme = darkColorScheme(
-    primary = Blue40,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
-)
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+private val Blue80 = Color(0xFF3772E7)
+private val Blue402 = Color(0xFF0047AB)
+private val BlueGrey10 = Color(0xFFECEFF1)
+private val BlueGrey90 = Color(0xFF263238)
 
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
+
+private val DarkBlueColorScheme = darkColorScheme(
+    primary = Blue80,secondary = Blue402,
+    tertiary = BlueGrey90,
+    background = BlueGrey90,
+    surface = BlueGrey90,
     onPrimary = Color.White,
     onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    onTertiary = BlueGrey10,
+    onBackground = BlueGrey10,
+    onSurface = BlueGrey10,
 )
+
+
+private val LightBlueColorScheme = lightColorScheme(
+    primary = Blue402,
+    secondary = Blue80,
+    tertiary = BlueGrey10,
+    background = Color.White,
+    surface = Color.White,
+    onPrimary = Color.White,onSecondary = Color.White,
+    onTertiary = BlueGrey90,
+    onBackground = BlueGrey90,
+    onSurface = BlueGrey90,
+)
+
 private val ParkingAppColorScheme = lightColorScheme(
     primary = Color(0xFF007BFF), // Blu principale
     onPrimary = Color.White,
@@ -142,8 +153,8 @@ fun ParkingAppFrontEndTheme(
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        darkTheme -> DarkBlueColorScheme
+        else -> LightBlueColorScheme
     }
     val view = LocalView.current
     if (!view.isInEditMode) {

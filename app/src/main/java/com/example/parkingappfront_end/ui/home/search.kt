@@ -1,75 +1,57 @@
 package com.example.parkingappfront_end.ui.home
 
 import android.content.Context
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
-import com.example.parkingappfront_end.model.ParkingSpace
-import com.example.parkingappfront_end.viewmodels.ParkingViewModel
-import androidx.compose.runtime.collectAsState
-import androidx.compose.foundation.lazy.LazyRow
-import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Sort
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.parkingappfront_end.SessionManager
-import com.example.parkingappfront_end.ui.reservation.ParkingSpaceDetails
-import com.example.parkingappfront_end.viewmodels.ReservationViewModel
-import kotlin.math.pow
-import kotlin.math.sqrt
-
-import androidx.compose.foundation.layout.*
-import androidx.compose.material.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.AccessTime
-import androidx.compose.ui.graphics.vector.ImageVector
-import java.time.Instant
-import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.LocalTime
 import java.time.ZoneId
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.ui.res.colorResource
+import com.example.parkingappfront_end.R
+import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Button
+import androidx.compose.material3.Icon
+import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.filled.AccessTime
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.ui.platform.LocalContext
+import com.example.parkingappfront_end.viewmodels.ParkingViewModel
+import com.example.parkingappfront_end.viewmodels.ReservationViewModel
+import java.lang.reflect.Array.set
+import java.time.LocalTime
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.material3.IconButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Modifier
+import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
+import android.app.DatePickerDialog
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.window.Dialog
+
 
 @Composable
 fun ParkingSearchScreen(
-    onSearch: (String, LocalDateTime, LocalDateTime) -> Unit,
     parkingViewModel: ParkingViewModel,
-    reservationViewModel: ReservationViewModel
+    reservationViewModel: ReservationViewModel,
+    onSearch: (String, LocalDateTime, LocalDateTime) -> Unit
 ) {
     var city by remember { mutableStateOf("") }
     val romeZone = ZoneId.of("Europe/Rome")
@@ -78,38 +60,47 @@ fun ParkingSearchScreen(
     var endDate by remember { mutableStateOf(startDate.plusHours(1)) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
+    LaunchedEffect(Unit) {
+
+    }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
         Text(
             text = "Trova il tuo parcheggio",
-            fontSize = 20.sp,
+            fontSize = 24.sp,
             fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(bottom = 16.dp)
+            modifier = Modifier.padding(bottom = 24.dp)
         )
 
         OutlinedTextField(
             value = city,
             onValueChange = { city = it },
             label = { Text("Città") },
-            modifier = Modifier.fillMaxWidth(),
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp),
             leadingIcon = {
                 Icon(
                     imageVector = Icons.Filled.LocationOn,
                     contentDescription = "City Icon"
                 )
-            }
+            },
+            shape = RoundedCornerShape(12.dp)
         )
-        Spacer(modifier = Modifier.height(16.dp))
 
-        // Prima riga: Data di inizio e ora di inizio
+        Spacer(modifier = Modifier.height(24.dp))
+
+        // Riga: Data e ora di inizio
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp),
+                .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             DateSelector(
@@ -118,7 +109,8 @@ fun ParkingSearchScreen(
                 onDateSelected = { date ->
                     startDate = LocalDateTime.of(date, startDate.toLocalTime())
                 },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(12.dp)
             )
 
             TimeSelector(
@@ -127,65 +119,64 @@ fun ParkingSearchScreen(
                 onTimeSelected = { time ->
                     startDate = LocalDateTime.of(startDate.toLocalDate(), time)
                 },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(0.8f),
+                shape = RoundedCornerShape(12.dp)
             )
         }
 
-        // Seconda riga: Data di fine e ora di fine
+        Spacer(modifier = Modifier.height(16.dp))
+
+        // Riga: Data e ora di fine
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(bottom = 16.dp),
+                .padding(horizontal = 16.dp),
             horizontalArrangement = Arrangement.spacedBy(16.dp)
         ) {
             DateSelector(
                 label = "Data di fine",
                 selectedDate = endDate.toLocalDate(),
                 onDateSelected = { date ->
-                    if (date.isAfter(startDate.toLocalDate())) {
-                        endDate = LocalDateTime.of(date, endDate.toLocalTime())
-                        errorMessage = null
-                    } else {
-                        errorMessage = "La data di fine deve essere successiva alla data di inizio"
-                    }
+                    endDate = LocalDateTime.of(date, endDate.toLocalTime())
                 },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(1f),
+                shape = RoundedCornerShape(12.dp)
             )
 
             TimeSelector(
                 label = "Ora di fine",
                 selectedTime = endDate.toLocalTime(),
                 onTimeSelected = { time ->
-                    if (LocalDateTime.of(endDate.toLocalDate(), time).isAfter(startDate)) {
-                        endDate = LocalDateTime.of(endDate.toLocalDate(), time)
-                        errorMessage = null
-                    } else {
-                        errorMessage = "L'ora di fine deve essere successiva all'ora di inizio"
-                    }
+                    endDate = LocalDateTime.of(endDate.toLocalDate(), time)
                 },
-                modifier = Modifier.weight(1f)
+                modifier = Modifier.weight(0.8f),
+                shape = RoundedCornerShape(12.dp)
             )
         }
 
-        errorMessage?.let {
-            Text(
-                text = it,
-                color = MaterialTheme.colors.error,
-                fontSize = 14.sp,
-                modifier = Modifier.padding(bottom = 16.dp)
-            )
-        }
+        Spacer(modifier = Modifier.height(24.dp))
 
+        // Pulsante di ricerca
         Button(
             onClick = {
-                if (city.isNotEmpty() && startDate.isBefore(endDate)) {
+                if (city.isNotEmpty() && startDate.isBefore(endDate) && startDate.isAfter(nowInRome)
+                    && endDate.isAfter(nowInRome)
+                    ) {
                     onSearch(city, startDate, endDate)
                 } else {
-                    errorMessage = "Completa tutti i campi correttamente"
+                    errorMessage = "Completa tutti i campi correttamente, la data di inizio deve essere antecedente a quella di fine e nel futuro"
                 }
             },
-            modifier = Modifier.fillMaxWidth(),
-            contentPadding = PaddingValues(16.dp)
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 16.dp)
+                .height(56.dp),
+            contentPadding = PaddingValues(16.dp),
+            shape = RoundedCornerShape(12.dp),
+            colors = ButtonDefaults.buttonColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                contentColor = Color.White
+            )
         ) {
             Icon(
                 imageVector = Icons.Filled.Search,
@@ -193,6 +184,16 @@ fun ParkingSearchScreen(
                 modifier = Modifier.padding(end = 8.dp)
             )
             Text("Cerca Parcheggio")
+        }
+
+        // Messaggio di errore
+        errorMessage?.let {
+            Text(
+                text = it,
+                color = MaterialTheme.colorScheme.error,
+                fontSize = 14.sp,
+                modifier = Modifier.padding(top = 16.dp)
+            )
         }
     }
 }
@@ -202,7 +203,8 @@ fun DateSelector(
     label: String,
     selectedDate: LocalDate,
     onDateSelected: (LocalDate) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    shape: RoundedCornerShape
 ) {
     val context = LocalContext.current
     var showDialog by remember { mutableStateOf(false) }
@@ -219,47 +221,13 @@ fun DateSelector(
             }
         }
     )
+
     if (showDialog) {
         DatePickerDialog(
             context = context,
             selectedDate = selectedDate,
             onDateSelected = {
                 onDateSelected(it)
-                showDialog = false
-            },
-            onDismiss = { showDialog = false }
-        )
-    }
-}
-
-@Composable
-fun TimeSelector(
-    label: String,
-    selectedTime: LocalTime,
-    onTimeSelected: (LocalTime) -> Unit,
-    modifier: Modifier = Modifier
-) {
-    val context = LocalContext.current
-    var showDialog by remember { mutableStateOf(false) }
-
-    OutlinedTextField(
-        value = selectedTime.format(DateTimeFormatter.ofPattern("HH:mm")),
-        onValueChange = {},
-        label = { Text(label) },
-        modifier = modifier,
-        readOnly = true,
-        trailingIcon = {
-            IconButton(onClick = { showDialog = true }) {
-                Icon(Icons.Filled.AccessTime, contentDescription = "Time Icon")
-            }
-        }
-    )
-    if (showDialog) {
-        TimePickerDialog(
-            context = context,
-            selectedTime = selectedTime,
-            onTimeSelected = {
-                onTimeSelected(it)
                 showDialog = false
             },
             onDismiss = { showDialog = false }
@@ -276,19 +244,65 @@ fun DatePickerDialog(
     val calendar = Calendar.getInstance().apply {
         set(selectedDate.year, selectedDate.monthValue - 1, selectedDate.dayOfMonth)
     }
-    android.app.DatePickerDialog(
+
+    val datePickerDialog = DatePickerDialog(
         context,
-        { _, year, month, day ->
-            onDateSelected(LocalDate.of(year, month + 1, day))
+        { _, year, month, dayOfMonth ->
+            onDateSelected(LocalDate.of(year, month + 1, dayOfMonth))
         },
         calendar.get(Calendar.YEAR),
         calendar.get(Calendar.MONTH),
         calendar.get(Calendar.DAY_OF_MONTH)
-    ).apply {
+    )
+
+    // Imposta la data minima alla data odierna
+    datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+
+    datePickerDialog.apply {
         setOnDismissListener { onDismiss() }
         show()
     }
 }
+
+
+
+@Composable
+fun TimeSelector(
+    label: String,
+    selectedTime: LocalTime,
+    onTimeSelected: (LocalTime) -> Unit,
+    modifier: Modifier = Modifier,
+    shape: RoundedCornerShape
+) {
+    val context = LocalContext.current
+    var showDialog by remember { mutableStateOf(false) }
+
+    OutlinedTextField(
+        value = selectedTime.format(DateTimeFormatter.ofPattern("HH:mm")),
+        onValueChange = {},
+        label = { Text(label) },
+        modifier = modifier,
+        readOnly = true,
+        trailingIcon = {
+            IconButton(onClick = { showDialog = true }) {
+                Icon(Icons.Filled.AccessTime, contentDescription = "Time Icon")
+            }
+        }
+    )
+
+    if (showDialog) {
+        TimePickerDialog(
+            context = context,
+            selectedTime = selectedTime,
+            onTimeSelected = {
+                onTimeSelected(it)
+                showDialog = false
+            },
+            onDismiss = { showDialog = false }
+        )
+    }
+}
+
 
 fun TimePickerDialog(
     context: Context,
@@ -314,13 +328,6 @@ fun TimePickerDialog(
     }
 }
 
-
-
-
-fun calculateDistance(x1 : Double,y1 : Double, x2 : Double, y2 : Double) : Double {
-    return sqrt((x2 - x1).pow(2) + (y2 - y1).pow(2))
-
-}
 
 /* (41.9028, 12.4964):
 

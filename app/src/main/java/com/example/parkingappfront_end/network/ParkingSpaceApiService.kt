@@ -1,5 +1,6 @@
 package com.example.parkingappfront_end.network
 
+import com.example.parkingappfront_end.model.Address
 import com.example.parkingappfront_end.model.ParkingSpace
 import com.example.parkingappfront_end.model.RequiresAuth
 import com.example.parkingappfront_end.model.Reservation
@@ -28,9 +29,12 @@ interface ParkingSpaceApiService {
     @RequiresAuth
     suspend fun add(@Body parkingSpace: ParkingSpace): Response<ParkingSpace>
 
-    @POST("parkingSpots/addReservation/{idUser}")
+    @GET("parkingSpaces/getAllAddresses")
     @RequiresAuth
-    suspend fun addReservation(@Body reservation: Reservation, @Path("idUser") idUser: UUID): Response<Reservation>
+    suspend fun getAllAddresses(): List<Address>
+
+
+
 
 
 
