@@ -9,7 +9,10 @@ color teal_700
 color white
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable marker_background
 drawable parcheggio
+id tvContent
+layout marker_view
 mipmap ic_launcher
 mipmap ic_launcher_round
 raw your_certificate

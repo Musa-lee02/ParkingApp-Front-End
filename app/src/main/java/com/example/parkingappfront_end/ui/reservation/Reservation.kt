@@ -3,31 +3,26 @@ package com.example.parkingappfront_end.ui.reservation
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.util.Log
-import android.widget.Button
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.DoubleArrow
+import androidx.compose.material.icons.filled.AddCircleOutline
+import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.AlertDialog
@@ -62,9 +57,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.android.billingclient.api.Purchase
 import com.example.parkingappfront_end.SessionManager
-import com.example.parkingappfront_end.model.Address
 import com.example.parkingappfront_end.model.ParkingSpace
 import com.example.parkingappfront_end.model.ParkingSpot
 import com.example.parkingappfront_end.model.Reservation
@@ -77,18 +70,17 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.time.ZoneId
-import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoUnit
 import java.util.Locale
 
 
 @Composable
-fun MainSpaceResults(
+fun MainSearchResults(
     navController: NavController,
     viewModel: ParkingViewModel,
     reservationViewModel: ReservationViewModel,
-    searchCriteria: SearchParams
+    searchCriteria: SearchParams?
 ) {
     val sortedPS by viewModel.sortedPSBy.collectAsState()
     val selectedParkingSpace = remember { mutableStateOf<ParkingSpace?>(null) }
@@ -98,11 +90,17 @@ fun MainSpaceResults(
         if (sortedPS.isNotEmpty()) {
             selectedParkingSpace.value = selectedParkingSpace.value ?: sortedPS.first().first
         } else {
-            viewModel.loadParkingSpacesBySearch(
-                searchCriteria.city,
-                searchCriteria.startDate.toString(),
-                searchCriteria.endDate.toString()
-            )
+            if (searchCriteria != null) {
+                viewModel.loadParkingSpacesBySearch(
+                    searchCriteria.city,
+                    searchCriteria.startDate.toString(),
+                    searchCriteria.endDate.toString()
+                )
+            }
+            else if (SessionManager.user?.role == "ROLE_OWNER") {
+                viewModel.loadParkingSpacesByOwner()
+            }
+
         }
     }
 
@@ -123,13 +121,25 @@ fun MainSpaceResults(
             selectedParkingSpace.value?.let { parkingSpace ->
                 val selectedPair = sortedPS.firstOrNull { it.first == parkingSpace }
                 selectedPair?.let {
-                    ParkingSpaceDetails(
-                        parkingSpace = it.first,
-                        searchCriteria = searchCriteria,
-                        sortCriteria = it.second,
-                        parkingViewModel = viewModel,
-                        reservationViewModel = reservationViewModel
-                    )
+                    if (searchCriteria != null) {
+                        ParkingSpaceDetails(
+                            parkingSpace = it.first,
+                            searchCriteria = searchCriteria,
+                            sortCriteria = it.second,
+                            parkingViewModel = viewModel,
+                            reservationViewModel = reservationViewModel
+                        )
+                    }
+                    else if (SessionManager.user?.role == "ROLE_OWNER") {
+                        ParkingSpaceDetails(
+                            parkingSpace = it.first,
+                            searchCriteria = SearchParams( "", LocalDateTime.now(), LocalDateTime.now()),
+                            sortCriteria = it.second,
+                            parkingViewModel = viewModel,
+                            reservationViewModel = reservationViewModel
+                        )
+                    }
+
                 }
             }
         }
@@ -200,15 +210,30 @@ fun ParkingSpaceDetails(
             )
         }
 
-        // Città
-        Text(
-            text = parkingSpace.address.city ?: "",
-            fontSize = 18.sp
-        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                text = parkingSpace.address.city ?: "",
+                fontSize = 18.sp
+            )
+
+            Text(
+                text = parkingSpace.parkingSpots?.size.toString() + " posti",
+                fontSize = 18.sp,
+                fontWeight = if (!isSortedByDistance) FontWeight.Bold else FontWeight.Normal,
+                color = if (!isSortedByDistance) Color.Blue else Color.Unspecified
+            )
+        }
+
 
         Spacer(modifier = Modifier.height(16.dp))
 
         // Lista posti auto
+
+        Log.d("ParkingSpaceDetails", "ParkingSpots: ${parkingSpace.parkingSpots}")
         parkingSpace.parkingSpots?.let { spots ->
             if (spots.isNotEmpty()) {
                 Box(
@@ -228,6 +253,7 @@ fun ParkingSpaceDetails(
                                 parkingViewModel = parkingViewModel,
                                 reservationViewModel = reservationViewModel
                             )
+
                         }
                     }
                 }
@@ -248,8 +274,13 @@ fun ParkingSpaceList(
     viewModel: ParkingViewModel,
     onParkingSpaceSelected: (ParkingSpace) -> Unit
 ) {
+
+    var showAddParkingSpace by remember {
+        mutableStateOf(false)
+    }
     val sortByDistance by viewModel.isSortedByDistance.collectAsState()
     val sortedPS by viewModel.sortedPSBy.collectAsState()
+
 
     Row(
         modifier = Modifier
@@ -259,24 +290,51 @@ fun ParkingSpaceList(
         verticalAlignment = Alignment.CenterVertically
     ) {
         Text(
-            text = "Risultati",
+            text = if (SessionManager.user?.role == "ROLE_OWNER") "I tuoi parcheggi" else "Risultati ricerca",
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
-        IconButton(
-            onClick = {
-                if (sortByDistance) {
-                    viewModel.sortPSByPrice()
-                } else {
-                    viewModel.sortPSByDistance()
+        if (SessionManager.user?.role == "ROLE_OWNER") {
+            IconButton(
+                onClick = {
+                    showAddParkingSpace = true
                 }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.AddCircleOutline,
+                    contentDescription = if (sortByDistance) "Ordina per prezzo" else "Ordina per distanza"
+                )
             }
-        ) {
-            Icon(
-                imageVector = Icons.Default.Sort,
-                contentDescription = if (sortByDistance) "Ordina per prezzo" else "Ordina per distanza"
-            )
+
         }
+        else{
+            IconButton(
+                onClick = {
+                    if (sortByDistance) {
+                        viewModel.sortPSByPrice()
+                    } else {
+                        viewModel.sortPSByDistance()
+                    }
+                }
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Sort,
+                    contentDescription = if (sortByDistance) "Ordina per prezzo" else "Ordina per distanza"
+                )
+            }
+        }
+    }
+
+    if (showAddParkingSpace) {
+
+        AddParkingSpaceDialog(
+            onDismissRequest = { showAddParkingSpace = false },
+            onAddSpace = { name, city, street ->
+                viewModel.addParkingSpace(name, city, street)
+                showAddParkingSpace = false
+            }
+        )
+
     }
 
     Log.d("ParkingSpaces", "Reservation: ${sortedPS.firstOrNull()?.first}")
@@ -366,7 +424,7 @@ fun ParkingSpaceListItem(
             .padding(8.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondary,
+            containerColor = MaterialTheme.colorScheme.surfaceContainerLowest,
         ),
     ) {
         Row(
@@ -390,18 +448,35 @@ fun ParkingSpaceListItem(
                     fontSize = 16.sp
                 )
             }
-            IconButton(
-                onClick = {
-                    onParkingSpaceSelected(parkingSpot)
-                    showDialog = true
-                },
-                modifier = Modifier.align(Alignment.CenterVertically)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.ShoppingCart,
-                    contentDescription = "Acquista",
-                    tint = Color.Green
-                )
+
+            if (SessionManager.user?.role == "ROLE_OWNER" || SessionManager.user?.role == "ROLE_ADMIN") {
+                IconButton(
+                    onClick = {
+                        parkingViewModel.deleteParkingSpot(parkingSpot.id)
+                    },
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.DeleteOutline,
+                        contentDescription = "Elimina",
+                        tint = Color.Red
+                    )
+                }
+            }
+            else {
+                IconButton(
+                    onClick = {
+                        onParkingSpaceSelected(parkingSpot)
+                        showDialog = true
+                    },
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.ShoppingCart,
+                        contentDescription = "Acquista",
+                        tint = Color.Green
+                    )
+                }
             }
         }
     }

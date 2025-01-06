@@ -1,7 +1,7 @@
 package com.example.parkingappfront_end.model
 
 data class Address(
-    val id: Long,
+    val id: Long? = null,
     val street: String? = null,
     val city: String,
     val latitude: Double,

@@ -20,7 +20,8 @@ import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AccountCircle
-import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.AutoGraph
+import androidx.compose.material.icons.filled.LocalParking
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -39,7 +40,6 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
@@ -50,7 +50,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.parkingappfront_end.model.ParkingSpace
 import com.example.parkingappfront_end.model.SearchParams
 
 import com.example.parkingappfront_end.network.RetrofitClient
@@ -65,8 +64,8 @@ import com.example.parkingappfront_end.ui.theme.ParkingAppFrontEndTheme
 import com.example.parkingappfront_end.ui.user.SignInUpScreen
 import com.example.parkingappfront_end.ui.home.ParkingSearchScreen
 import com.example.parkingappfront_end.ui.payment.PaymentScreen
-import com.example.parkingappfront_end.ui.reservation.MainSpaceResults
-import com.example.parkingappfront_end.ui.reservation.ParkingSpaceList
+import com.example.parkingappfront_end.ui.reservation.MainSearchResults
+import com.example.parkingappfront_end.ui.reservation.MainStatisticView
 import com.example.parkingappfront_end.ui.user.AccountManagerScreen
 import com.example.parkingappfront_end.ui.user.MyAccountScreen
 import com.example.parkingappfront_end.viewmodels.AccountViewModel
@@ -124,7 +123,18 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
     ) { innerPadding -> // innerPadding è un parametro che serve a creare il padding
         NavHost(
             navController = navController,
-            startDestination = if (SessionManager.user != null) "search" else "userAuth", // startDestination è una stringa che serve a indicare la destinazione iniziale
+            startDestination = if (SessionManager.user != null){
+                                    if(SessionManager.user!!.role == "ROLE_OWNER") {
+                                        "myParkingSpaces"
+                                    }
+                                    else {
+                                        "search"
+                                    }
+                               }
+                               else {
+                                   "userAuth"
+                               },
+            // startDestination è una stringa che serve a indicare la destinazione iniziale
             modifier = Modifier.padding(innerPadding)
         ) {
 
@@ -165,7 +175,7 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
 
 
                 // Chiama ParkingSpaceList
-                MainSpaceResults(
+                MainSearchResults(
                     navController =  navController,
                     viewModel = parkingViewModel,
                     reservationViewModel =  reservationViewModel,
@@ -173,16 +183,43 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
                 )
             }
 
+            composable("myParkingSpaces") {
+                selectedIndex.value = 0
+
+                parkingViewModel.loadParkingSpacesByOwner()
+
+                MainSearchResults(
+                    navController =  navController,
+                    viewModel = parkingViewModel,
+                    reservationViewModel =  reservationViewModel,
+                    searchCriteria = null
+                )
+
+            }
+
+            composable("myStats") {
+                selectedIndex.value = 1
+
+                parkingViewModel.loadParkingSpacesByOwner()
+
+                MainStatisticView(
+                    navController =  navController,
+                    viewModel = parkingViewModel,
+                    reservationViewModel =  reservationViewModel,
+                )
+
+            }
+
 
             composable("userAuth") {
-                selectedIndex.value = 1
+                selectedIndex.value = 2
                 val _authApiService = RetrofitClient.authApiService
                 val repository = AuthRepository(_authApiService)
                 SignInUpScreen(loginViewModel = LoginViewModel(repository), registrationViewModel = RegistrationViewModel(repository), navController)
             }
 
             composable("account-manager") {
-                selectedIndex.value = 1
+                selectedIndex.value = 2
 
                 LaunchedEffect(Unit) {
                     accountViewModel.loadUserDetails()
@@ -213,10 +250,6 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
             }
 
 
-            composable("reservation") { //route = "home" è una stringa che serve a indicare la destinazione, quando si preme il pulsante Home si va alla destinazione "home"
-                selectedIndex.value = 2 // selectedIndex.value = 0 è una funzione che serve a indicare che l'indice selezionato è 0
-                //ReservationScreen(navController)
-            }
 
             composable("payment") { //route = "home" è una stringa che serve a indicare la destinazione, quando si preme il pulsante Home si va alla destinazione "home"
                 selectedIndex.value = 3
@@ -268,30 +301,75 @@ fun TopBar(navHostController: NavHostController) {
 fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostController) {
     NavigationBar {
 
-        NavigationBarItem(
-            selected = selectedIndex.value == 0,
-            onClick = {
-                selectedIndex.value = 0
-                navHostController.navigate("search") {
-                    popUpTo(navHostController.graph.startDestinationId) {
-                        saveState = true
+        if (SessionManager.user != null && SessionManager.user!!.role != "ROLE_OWNER") {
+            NavigationBarItem(
+                selected = selectedIndex.value == 0,
+                onClick = {
+                    selectedIndex.value = 0
+                    navHostController.navigate("search") {
+                        popUpTo(navHostController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
                     }
-                    launchSingleTop = true
-                    restoreState = true
+                },
+                icon = {
+                    Icon(
+                        Icons.Filled.Search,
+                        contentDescription = stringResource(R.string.app_name)
+                    )
                 }
-            },
-            icon = {
-                Icon(
-                    Icons.Filled.Search,
-                    contentDescription = stringResource(R.string.app_name)
-                )
-            }
 
-        )
+            )
+        }
+        if (SessionManager.user != null  && SessionManager.user!!.role == "ROLE_OWNER") {
+            NavigationBarItem(
+                selected = selectedIndex.value == 0,
+                onClick = {
+                    selectedIndex.value = 0
+                    navHostController.navigate("myParkingSpaces") {
+                        popUpTo(navHostController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                },
+                icon = {
+                    Icon(
+                        Icons.Filled.LocalParking,
+                        contentDescription = stringResource(R.string.app_name)
+                    )
+                }
+
+            )
+            NavigationBarItem(
+                selected = selectedIndex.value == 1,
+                onClick = {
+                    selectedIndex.value = 1
+                    navHostController.navigate("myStats") {
+                        popUpTo(navHostController.graph.startDestinationId) {
+                            saveState = true
+                        }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                },
+                icon = {
+                    Icon(
+                        Icons.Filled.AutoGraph,
+                        contentDescription = stringResource(R.string.app_name)
+                    )
+                }
+
+            )
+
+        }
         NavigationBarItem(
-            selected = selectedIndex.value == 1,
+            selected = selectedIndex.value == 2,
             onClick = {
-                selectedIndex.value = 1
+                selectedIndex.value = 2
 
                 if(SessionManager.user == null) //SessionManager.user == null
                     navHostController.navigate("userAuth") {

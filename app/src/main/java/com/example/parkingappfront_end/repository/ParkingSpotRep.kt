@@ -1,6 +1,7 @@
 package com.example.parkingappfront_end.repository
 
 import android.util.Log
+import com.example.parkingappfront_end.SessionManager
 import com.example.parkingappfront_end.model.ParkingSpot
 import com.example.parkingappfront_end.model.Reservation
 import com.example.parkingappfront_end.network.ParkingSpotApiService
@@ -26,6 +27,9 @@ class ParkingSpotRep (private val pSpotApiService: ParkingSpotApiService) {
         return pSpotApiService.addParkingSpot(parkingSpot, idUser).body()!!
     }
 
+    suspend fun deleteParkingSpot(id: Long): Boolean? {
+        return SessionManager.user?.let { pSpotApiService.deleteParkingSpot(id, it.id).body() }
+    }
 
 
 }

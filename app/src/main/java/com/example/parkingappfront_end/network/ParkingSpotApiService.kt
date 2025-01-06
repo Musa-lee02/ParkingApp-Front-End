@@ -5,6 +5,7 @@ import com.example.parkingappfront_end.model.RequiresAuth
 import com.example.parkingappfront_end.model.Reservation
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -20,6 +21,10 @@ interface ParkingSpotApiService {
     @RequiresAuth
     suspend fun addParkingSpot(@Body parkingSpot: ParkingSpot, @Path("idUser") idUser: UUID): Response<ParkingSpot>
 
+
+    @DELETE("parkingSpots/delete/{id}/{idUser}")
+    @RequiresAuth
+    suspend fun deleteParkingSpot(@Path("id") id: Long, @Path("idUser") idUser: UUID): Response<Boolean>
 
 
 }

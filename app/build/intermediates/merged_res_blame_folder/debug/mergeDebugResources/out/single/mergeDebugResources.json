@@ -1,78 +1,86 @@
 [
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/xml_network_security_config.xml.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/xml/network_security_config.xml"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\mipmap-mdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/drawable_ic_launcher_background.xml.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/drawable/ic_launcher_background.xml"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\mipmap-xxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/mipmap-xxxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/mipmap-xxxhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\mipmap-mdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/drawable-v24_ic_launcher_foreground.xml.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/drawable-v24/ic_launcher_foreground.xml"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\drawable_parcheggio.jpg.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\drawable\\parcheggio.jpg"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/mipmap-mdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/mipmap-mdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\mipmap-xhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/mipmap-hdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/mipmap-hdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/mipmap-xxhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/mipmap-xxhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/xml_backup_rules.xml.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/xml/backup_rules.xml"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\mipmap-anydpi-v26\\ic_launcher.xml"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/drawable_parcheggio.jpg.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/drawable/parcheggio.jpg"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\mipmap-xhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/mipmap-mdpi_ic_launcher.webp.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/mipmap-mdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\raw_your_certificate.pem.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\raw\\your_certificate.pem"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/mipmap-xhdpi_ic_launcher.webp.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/mipmap-xhdpi/ic_launcher.webp"
+        "merged": "com.example.parkingappfront_end.app-debug-81:/layout_marker_view.xml.flat",
+        "source": "com.example.parkingappfront_end.app-main-83:/layout/marker_view.xml"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/mipmap-xxxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/mipmap-xxxhdpi/ic_launcher.webp"
+        "merged": "com.example.parkingappfront_end.app-debug-81:/drawable_marker_background.xml.flat",
+        "source": "com.example.parkingappfront_end.app-main-83:/drawable/marker_background.xml"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/raw_your_certificate.pem.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/raw/your_certificate.pem"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\mipmap-hdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/mipmap-anydpi-v26_ic_launcher.xml.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/mipmap-anydpi-v26/ic_launcher.xml"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\mipmap-xxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/mipmap-hdpi_ic_launcher.webp.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/mipmap-hdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\mipmap-hdpi\\ic_launcher_round.webp"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/mipmap-xxhdpi_ic_launcher.webp.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/mipmap-xxhdpi/ic_launcher.webp"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\drawable\\ic_launcher_background.xml"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/mipmap-xhdpi_ic_launcher_round.webp.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/mipmap-xhdpi/ic_launcher_round.webp"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\xml\\backup_rules.xml"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/mipmap-anydpi-v26/ic_launcher_round.xml"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\mipmap-xxxhdpi\\ic_launcher.webp"
     },
     {
-        "merged": "com.example.parkingappfront_end.app-debug-53:/xml_data_extraction_rules.xml.flat",
-        "source": "com.example.parkingappfront_end.app-main-55:/xml/data_extraction_rules.xml"
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\xml_network_security_config.xml.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\xml\\network_security_config.xml"
+    },
+    {
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\xml\\data_extraction_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-debug-81:\\drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\samue\\.gradle\\daemon\\8.9\\com.example.parkingappfront_end.app-main-83:\\drawable-v24\\ic_launcher_foreground.xml"
     }
 ]

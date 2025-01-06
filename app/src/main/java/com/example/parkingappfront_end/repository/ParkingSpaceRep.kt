@@ -57,11 +57,10 @@ class ParkingSpaceRep(private val pSpaceApiService : ParkingSpaceApiService) {
             emptyList()
         }
     }
-
-    suspend fun getPSpaceByUser(idUser: UUID): List<ParkingSpace> {
+    suspend fun getParkingSpacesByOwner(id: UUID): List<ParkingSpace> {
         return try {
-            val response = pSpaceApiService.getParkingSpaceByUser(idUser)
-           if (response.isEmpty()){
+            val response = pSpaceApiService.getParkingSpaceByUser(id)
+            if (response.isEmpty()){
                 println("No parking spaces found")
             }
             else {
@@ -73,9 +72,12 @@ class ParkingSpaceRep(private val pSpaceApiService : ParkingSpaceApiService) {
         }
     }
 
-    suspend fun addParkingSpace(parkingSpace: ParkingSpace): ParkingSpace {
-        return pSpaceApiService.add(parkingSpace).body()!!
+
+    suspend fun addParkingSpace(parkingSpace: ParkingSpace): ParkingSpace? {
+        return pSpaceApiService.add(parkingSpace).body()
     }
+
+
 
 
 }
