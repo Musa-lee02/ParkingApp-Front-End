@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.parkingappfront_end.app-mergeDebugResources-79:/values-ko/values-ko.xml",
+            "outputFile": "com.example.parkingappfront_end.app-mergeDebugResources-80:/values-ko/values-ko.xml",
             "map": [
                 {
                     "source": "C:\\Users\\samue\\.gradle\\caches\\8.9\\transforms\\327b39dda6a8fa851efe2ff4f94ba625\\transformed\\core-1.13.1\\res\\values-ko\\values-ko.xml",

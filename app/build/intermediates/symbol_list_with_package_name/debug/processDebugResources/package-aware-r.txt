@@ -4105,6 +4105,7 @@ layout abc_tooltip
 layout browser_actions_context_menu_page
 layout browser_actions_context_menu_row
 layout custom_dialog
+layout custom_marker_view
 layout design_bottom_navigation_item
 layout design_bottom_sheet_dialog
 layout design_layout_snackbar
@@ -4127,7 +4128,6 @@ layout m3_alert_dialog_actions
 layout m3_alert_dialog_title
 layout m3_auto_complete_simple_item
 layout m3_side_sheet_dialog
-layout marker_view
 layout material_chip_input_combo
 layout material_clock_display
 layout material_clock_display_divider

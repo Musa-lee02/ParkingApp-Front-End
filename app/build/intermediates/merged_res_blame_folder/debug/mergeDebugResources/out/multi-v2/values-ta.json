@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.parkingappfront_end.app-mergeDebugResources-79:/values-ta/values-ta.xml",
+            "outputFile": "com.example.parkingappfront_end.app-mergeDebugResources-80:/values-ta/values-ta.xml",
             "map": [
                 {
                     "source": "C:\\Users\\samue\\.gradle\\caches\\8.9\\transforms\\4b3ba1d2ceedd37d2ff0b88d841714c6\\transformed\\play-services-basement-18.4.0\\res\\values-ta\\values.xml",

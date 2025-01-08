@@ -7,24 +7,21 @@ import com.github.mikephil.charting.components.MarkerView
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.highlight.Highlight
 import com.github.mikephil.charting.utils.MPPointF
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
 
 class CustomMarkerView(context: Context, layoutResource: Int) : MarkerView(context, layoutResource) {
-    // Inizializza tvContent nella funzione init
-    private lateinit var tvContent: TextView
-
-    init {
-        // Inizializza la TextView dopo che la view è stata inflata
-        tvContent = findViewById(R.id.tvContent)
-    }
+    private val tvContent: TextView = findViewById(R.id.tvContent)
 
     override fun refreshContent(e: Entry?, highlight: Highlight?) {
         e?.let {
-            tvContent.text = "€${it.y.toInt()}"
+            val date = LocalDate.ofEpochDay(e.x.toLong())
+            val value = e.y
+            tvContent.text = "${date.format(DateTimeFormatter.ofPattern("dd/MM"))} \n€%.2f".format(value)
         }
-        super.refreshContent(e, highlight)
     }
 
     override fun getOffset(): MPPointF {
-        return MPPointF((-(width / 2)).toFloat(), (-height).toFloat())
+        return MPPointF(-width / 2f, -height.toFloat())
     }
 }

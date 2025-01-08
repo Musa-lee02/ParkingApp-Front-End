@@ -100,6 +100,7 @@ MERGED from [com.auth0.android:jwtdecode:2.0.1] C:\Users\samue\.gradle\caches\8.
 MERGED from [androidx.security:security-crypto:1.1.0-alpha06] C:\Users\samue\.gradle\caches\8.9\transforms\7e5281d67065ace3c83a46d2ae53cbd1\transformed\security-crypto-1.1.0-alpha06\AndroidManifest.xml:17:1-22:12
 MERGED from [io.grpc:grpc-android:1.57.2] C:\Users\samue\.gradle\caches\8.9\transforms\216a63afb5893a9b6fd5134af2711a96\transformed\grpc-android-1.57.2\AndroidManifest.xml:2:1-9:12
 MERGED from [com.android.volley:volley:1.2.1] C:\Users\samue\.gradle\caches\8.9\transforms\8de436b38df6f4210656cff620fdaf3b\transformed\volley-1.2.1\AndroidManifest.xml:2:1-7:12
+MERGED from [androidx.core:core-i18n:1.0.0-alpha01] C:\Users\samue\.gradle\caches\8.9\transforms\2518f746f02b3fe12d2ad92f613eaeb7\transformed\core-i18n-1.0.0-alpha01\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.sqlite:sqlite-framework:2.4.0] C:\Users\samue\.gradle\caches\8.9\transforms\226f35cc8371fc8e24cf77953e3eb102\transformed\sqlite-framework-2.4.0\AndroidManifest.xml:17:1-22:12
 MERGED from [androidx.sqlite:sqlite:2.4.0] C:\Users\samue\.gradle\caches\8.9\transforms\545380bfe46fca47dd89cbc7c50aa126\transformed\sqlite-2.4.0\AndroidManifest.xml:17:1-22:12
 MERGED from [io.github.aakira:napier-android-debug:1.4.1] C:\Users\samue\.gradle\caches\8.9\transforms\3e18f8d942381747ae5e5ef054ceb32a\transformed\napier-debug\AndroidManifest.xml:2:1-11:12
@@ -451,6 +452,8 @@ MERGED from [io.grpc:grpc-android:1.57.2] C:\Users\samue\.gradle\caches\8.9\tran
 MERGED from [io.grpc:grpc-android:1.57.2] C:\Users\samue\.gradle\caches\8.9\transforms\216a63afb5893a9b6fd5134af2711a96\transformed\grpc-android-1.57.2\AndroidManifest.xml:5:5-44
 MERGED from [com.android.volley:volley:1.2.1] C:\Users\samue\.gradle\caches\8.9\transforms\8de436b38df6f4210656cff620fdaf3b\transformed\volley-1.2.1\AndroidManifest.xml:5:5-43
 MERGED from [com.android.volley:volley:1.2.1] C:\Users\samue\.gradle\caches\8.9\transforms\8de436b38df6f4210656cff620fdaf3b\transformed\volley-1.2.1\AndroidManifest.xml:5:5-43
+MERGED from [androidx.core:core-i18n:1.0.0-alpha01] C:\Users\samue\.gradle\caches\8.9\transforms\2518f746f02b3fe12d2ad92f613eaeb7\transformed\core-i18n-1.0.0-alpha01\AndroidManifest.xml:20:5-44
+MERGED from [androidx.core:core-i18n:1.0.0-alpha01] C:\Users\samue\.gradle\caches\8.9\transforms\2518f746f02b3fe12d2ad92f613eaeb7\transformed\core-i18n-1.0.0-alpha01\AndroidManifest.xml:20:5-44
 MERGED from [androidx.sqlite:sqlite-framework:2.4.0] C:\Users\samue\.gradle\caches\8.9\transforms\226f35cc8371fc8e24cf77953e3eb102\transformed\sqlite-framework-2.4.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.sqlite:sqlite-framework:2.4.0] C:\Users\samue\.gradle\caches\8.9\transforms\226f35cc8371fc8e24cf77953e3eb102\transformed\sqlite-framework-2.4.0\AndroidManifest.xml:20:5-44
 MERGED from [androidx.sqlite:sqlite:2.4.0] C:\Users\samue\.gradle\caches\8.9\transforms\545380bfe46fca47dd89cbc7c50aa126\transformed\sqlite-2.4.0\AndroidManifest.xml:20:5-44

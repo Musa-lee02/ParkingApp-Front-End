@@ -1,5 +1,9 @@
 package com.example.parkingappfront_end.ui.reservation
 
+import android.graphics.Canvas
+import android.graphics.Paint
+import android.graphics.RectF
+import android.graphics.drawable.GradientDrawable
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -10,12 +14,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,23 +44,29 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.example.parkingappfront_end.model.ParkingSpace
 import com.example.parkingappfront_end.model.SpacesSortCriterias
-import com.example.parkingappfront_end.model.Statistic
 import com.example.parkingappfront_end.viewmodels.ParkingViewModel
 import com.example.parkingappfront_end.viewmodels.ReservationViewModel
 import java.util.Locale
 import androidx.compose.runtime.Composable
-import com.example.parkingappfront_end.R
-import com.example.parkingappfront_end.model.CustomMarkerView
+import androidx.core.graphics.toRect
+import com.example.parkingappfront_end.model.DateAxisValueFormatter
+import com.example.parkingappfront_end.ui.home.DateSelector
+import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.IMarker
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.IndexAxisValueFormatter
+import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.highlight.Highlight
+import com.github.mikephil.charting.utils.MPPointF
 import java.text.SimpleDateFormat
-import java.util.Calendar
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun MainStatisticView(
@@ -66,8 +76,11 @@ fun MainStatisticView(
 ) {
     val sortedPS by viewModel.sortedPSBy.collectAsState()
     val selectedParkingSpace = remember { mutableStateOf<ParkingSpace?>(null) }
-    val selectedFilter = remember { mutableStateOf(FilterType.WEEKLY) } // Gestione filtro
     val isLoading by viewModel.isLoading.collectAsState()
+
+    // Stati per le date di inizio e fine
+    val startDate = remember { mutableStateOf(LocalDate.now().minusDays(7)) }
+    val endDate = remember { mutableStateOf(LocalDate.now()) }
 
     LaunchedEffect(sortedPS) {
         if (sortedPS.isNotEmpty()) {
@@ -91,12 +104,35 @@ fun MainStatisticView(
                 viewModel = viewModel
             )
 
-            FilterButtons(
-                selectedFilter = selectedFilter.value,
-                onFilterSelected = { filter ->
-                    selectedFilter.value = filter
-                }
-            )
+            // Date Selectors
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp, vertical = 8.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                DateSelector(
+                    label = "Data Inizio",
+                    selectedDate = startDate.value,
+                    minDate =  LocalDateTime.now().minusMonths(6).toLocalDate(),
+                    maxDate =  LocalDateTime.now().toLocalDate(),
+                    onDateSelected = { date -> startDate.value = date },
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(8.dp)
+                )
+
+                Spacer(modifier = Modifier.width(16.dp))
+
+                DateSelector(
+                    label = "Data Fine",
+                    selectedDate = endDate.value,
+                    minDate =  LocalDateTime.now().minusMonths(6).toLocalDate(),
+                    maxDate =  LocalDateTime.now().toLocalDate(),
+                    onDateSelected = { date -> endDate.value = date },
+                    modifier = Modifier.weight(1f),
+                    shape = RoundedCornerShape(8.dp)
+                )
+            }
 
             selectedParkingSpace.value?.let { parkingSpace ->
                 val selectedPair = sortedPS.firstOrNull { it.first == parkingSpace }
@@ -104,8 +140,8 @@ fun MainStatisticView(
                     SpaceStatsDetails(
                         parkingSpace = parkingSpace,
                         sortCriteria = it.second,
-                        filterType = selectedFilter.value,
-                        parkingViewModel = viewModel,
+                        startDate = startDate.value,
+                        endDate = endDate.value,
                         reservationViewModel = reservationViewModel
                     )
                 }
@@ -113,49 +149,6 @@ fun MainStatisticView(
         }
     }
 }
-
-@Composable
-fun FilterButtons(
-    selectedFilter: FilterType,
-    onFilterSelected: (FilterType) -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp),
-        horizontalArrangement = Arrangement.SpaceAround
-    ) {
-
-        FilterButton(
-            label = "Oraria",
-            isSelected = selectedFilter == FilterType.TIMELY,
-            onClick = { onFilterSelected(FilterType.TIMELY) }
-        )
-        FilterButton(
-            label = "Settimanale",
-            isSelected = selectedFilter == FilterType.WEEKLY,
-            onClick = { onFilterSelected(FilterType.WEEKLY) }
-        )
-        FilterButton(
-            label = "Mensile",
-            isSelected = selectedFilter == FilterType.MONTHLY,
-            onClick = { onFilterSelected(FilterType.MONTHLY) }
-        )
-    }
-}
-
-@Composable
-fun FilterButton(label: String, isSelected: Boolean, onClick: () -> Unit) {
-    Button(
-        onClick = onClick,
-        colors = ButtonDefaults.buttonColors(
-            containerColor = if (isSelected) Color.Blue else MaterialTheme.colorScheme.primary
-        )
-    ) {
-        Text(text = label, color = if (isSelected) Color.White else Color.Black)
-    }
-}
-
 
 @Composable
 fun SpaceList(
@@ -246,21 +239,14 @@ fun SpaceList(
 fun SpaceStatsDetails(
     parkingSpace: ParkingSpace,
     sortCriteria: SpacesSortCriterias,
-    filterType: FilterType,
-    parkingViewModel: ParkingViewModel,
+    startDate: LocalDate,
+    endDate: LocalDate,
     reservationViewModel: ReservationViewModel
 ) {
-    val isSortedByDistance by parkingViewModel.isSortedByDistance.collectAsState()
-    val timelyStats by reservationViewModel.timelyStats.collectAsState()
-    val weeklyStats by reservationViewModel.weeklyStats.collectAsState()
-    val monthlyStats by reservationViewModel.monthlyStats.collectAsState()
+    val stats by reservationViewModel.filteredStats.collectAsState()
 
-    LaunchedEffect(filterType, parkingSpace) {
-        when (filterType) {
-            FilterType.TIMELY -> reservationViewModel.calculateSalesTimely(parkingSpace)
-            FilterType.WEEKLY -> reservationViewModel.calculateSalesWeekly(parkingSpace)
-            FilterType.MONTHLY -> reservationViewModel.calculateSalesMonthly(parkingSpace)
-        }
+    LaunchedEffect(startDate, endDate, parkingSpace) {
+        reservationViewModel.filterStatsByDate(parkingSpace, startDate, endDate)
     }
 
     Column(
@@ -268,43 +254,29 @@ fun SpaceStatsDetails(
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        Row(
-            modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Text(
-                text = parkingSpace.name,
-                fontSize = 24.sp,
-                fontWeight = FontWeight.Bold
-            )
-            Text(
-                text = String.format(
-                    Locale.getDefault(),
-                    "%.0f€ - %.0f€",
-                    sortCriteria.minPrice,
-                    sortCriteria.maxPrice
-                ),
-                fontSize = 18.sp,
-                fontWeight = if (!isSortedByDistance) FontWeight.Bold else FontWeight.Normal,
-                color = if (!isSortedByDistance) Color.Blue else Color.Unspecified
-            )
-        }
+        Text(
+            text = parkingSpace.name,
+            fontSize = 24.sp,
+            fontWeight = FontWeight.Bold
+        )
 
         Spacer(modifier = Modifier.height(10.dp))
 
-        val currentStats = when (filterType) {
-            FilterType.TIMELY -> timelyStats
-            FilterType.WEEKLY -> weeklyStats
-            FilterType.MONTHLY -> monthlyStats
-        }
+        if (stats.isNotEmpty()) {
+            val labels = reservationViewModel.generateLabels(startDate, endDate)
+            val statsList = remember(stats, labels) {
+                labels.map { date ->
+                    Pair(date, stats[date] ?: 0.0)
+                }
+            }
+            Log.d("LineChartView", "StatsList: $statsList")
 
-        if (currentStats.isNotEmpty()) {
             LineChartView(
-                stats = currentStats,
-                filterType = filterType
+                stats = statsList,
+                filterType = FilterType.MONTHLY
             )
-        } else {
+        }
+        else {
             Text(
                 text = "Nessun dato disponibile",
                 modifier = Modifier.padding(16.dp),
@@ -315,121 +287,105 @@ fun SpaceStatsDetails(
     }
 }
 
-@Composable
-fun LineChartView(stats: HashMap<String, Double>, filterType: FilterType) {
-    val context = LocalContext.current
 
-    // Funzione per ottenere tutte le possibili fasce temporali
-    fun getAllTimeSlots(): List<String> = when (filterType) {
-        FilterType.TIMELY -> (0..23).map { hour ->
-            if (hour < 10) "0$hour:00" else "$hour:00"
-        }
-        FilterType.WEEKLY -> listOf("Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì", "Sabato", "Domenica")
-        FilterType.MONTHLY -> listOf("Gennaio", "Febbraio", "Marzo", "Aprile", "Maggio", "Giugno",
-            "Luglio", "Agosto", "Settembre", "Ottobre", "Novembre", "Dicembre")
+@Composable
+fun LineChartView(
+    stats: List<Pair<LocalDate, Double>>,
+    filterType: FilterType
+) {
+    // Converti i dati in `Entry`
+    val entries = stats.map { (date, value) ->
+        Entry(date.toEpochDay().toFloat(), value.toFloat())
+    }.sortedBy { it.x }
+
+    val primaryColor = Color(0xFF6200EE)
+    val accentColor = Color(0xFF03DAC5)
+
+    // Crea dinamicamente il dataset e i dati
+    val dataSet = LineDataSet(entries, "Guadagni").apply {
+        color = primaryColor.toArgb()
+        valueTextColor = Color.DarkGray.toArgb()
+        valueTextSize = 13f
+        setCircleColor(accentColor.toArgb())
+        setDrawCircleHole(true)
+        circleHoleColor = Color.White.toArgb()
+        circleRadius = 4f
+        circleHoleRadius = 2f
+        lineWidth = 2.5f
+        mode = LineDataSet.Mode.CUBIC_BEZIER
+        cubicIntensity = 0.2f
+        setDrawValues(true) // Visualizza i valori
+        valueFormatter = DefaultValueFormatter(2) // Formattazione con 2 decimali
+        setDrawFilled(true)
+        fillDrawable = GradientDrawable(
+            GradientDrawable.Orientation.TOP_BOTTOM,
+            intArrayOf(primaryColor.copy(alpha = 0.3f).toArgb(), Color.Transparent.toArgb())
+        )
     }
+
+    val lineData = LineData(dataSet)
 
     AndroidView(
         modifier = Modifier
             .fillMaxWidth()
-            .height(300.dp),
-        factory = { ctx ->
-            LineChart(ctx).apply {
+            .height(300.dp)
+            .padding(8.dp),
+        factory = { context ->
+            LineChart(context).apply {
+                data = lineData
                 description.isEnabled = false
-                xAxis.apply {
-                    position = XAxis.XAxisPosition.BOTTOM
-                    labelRotationAngle = -45f
-                    granularity = 1f
-                    setDrawGridLines(true)
-                    textSize = 10f
-                }
-                axisLeft.apply {
-                    setDrawGridLines(true)
-                    axisMinimum = 0f
-                    textSize = 12f
-                    setDrawLabels(true)
-                    valueFormatter = object : ValueFormatter() {
-                        override fun getFormattedValue(value: Float): String {
-                            return "€${value.toInt()}"
-                        }
-                    }
-                }
-                axisRight.isEnabled = false
                 legend.apply {
-                    isEnabled = true
                     textSize = 12f
-                    horizontalAlignment = Legend.LegendHorizontalAlignment.CENTER
+                    textColor = Color.DarkGray.toArgb()
+                    form = Legend.LegendForm.LINE
+                    formSize = 15f
+                    xEntrySpace = 10f
                 }
+                setDrawGridBackground(false)
                 setTouchEnabled(true)
                 isDragEnabled = true
                 setScaleEnabled(true)
-                setPinchZoom(true)
-                marker = CustomMarkerView(context, R.layout.marker_view)
+                setPinchZoom(false)
+
+                xAxis.apply {
+                    position = XAxis.XAxisPosition.BOTTOM
+                    valueFormatter = DateAxisValueFormatter(stats.map { it.first }, filterType)
+                    granularity = 1f
+                    labelRotationAngle = -30f
+                    setDrawGridLines(false)
+                    textColor = Color.DarkGray.toArgb()
+                    textSize = 10f
+                    yOffset = 10f
+                    labelCount = 5
+                }
+
+                axisLeft.apply {
+                    setDrawGridLines(true)
+                    gridColor = Color.LightGray.copy(alpha = 0.5f).toArgb()
+                    textColor = Color.DarkGray.toArgb()
+                    textSize = 10f
+                    axisMinimum = 0f
+                    valueFormatter = object : ValueFormatter() {
+                        override fun getFormattedValue(value: Float): String {
+                            return "€%.0f".format(value)
+                        }
+                    }
+                }
+
+                axisRight.isEnabled = false
+
+                animateY(1000, Easing.EaseOutCubic)
             }
         },
         update = { chart ->
-            val timeSlots = getAllTimeSlots()
-
-            val entries = timeSlots.mapIndexed { index, timeSlot ->
-                Entry(index.toFloat(), stats[timeSlot]?.toFloat() ?: 0f)
-            }
-
-            val timeLabel = when (filterType) {
-                FilterType.TIMELY -> "Vendite orarie"
-                FilterType.WEEKLY -> "Vendite settimanali"
-                FilterType.MONTHLY -> "Vendite mensili"
-            }
-
-            val dataSet = LineDataSet(entries, timeLabel).apply {
-                color = Color.Green.toArgb()
-                setCircleColor(Color.Blue.toArgb())
-                circleRadius = 5f
-                lineWidth = 2f
-                valueTextSize = 10f
-                valueTextColor = Color.Black.toArgb()
-                mode = LineDataSet.Mode.LINEAR
-                setDrawValues(true)
-                setDrawFilled(true)
-                fillColor = Color.Green.toArgb()  // Modificato come richiesto
-                fillAlpha = 50
-                valueFormatter = object : ValueFormatter() {
-                    override fun getFormattedValue(value: Float): String {
-                        return "€${value.toInt()}"
-                    }
-                }
-            }
-
-            val lineData = LineData(dataSet)
             chart.data = lineData
-
-            chart.xAxis.valueFormatter = IndexAxisValueFormatter(timeSlots)
-
-            val maxSales = stats.values.maxOrNull()?.toFloat() ?: 0f
-            chart.axisLeft.apply {
-                axisMaximum = maxSales + (maxSales * 0.1f)
-                labelCount = 5
-            }
-
-            chart.notifyDataSetChanged()
-            chart.invalidate()
+            chart.invalidate() // Forza il refresh del grafico
         }
     )
 }
-// Funzione helper per convertire il numero del mese nel nome
-private fun getMonthName(monthNumber: String): String {
-    return try {
-        val month = monthNumber.toInt()
-        val calendar = Calendar.getInstance()
-        calendar.set(Calendar.MONTH, month - 1)
-        val monthFormat = SimpleDateFormat("MMMM", Locale.getDefault())
-        monthFormat.format(calendar.time)
-    } catch (e: Exception) {
-        monthNumber
-    }
-}
-
 
 
 enum class FilterType {
-   TIMELY, WEEKLY, MONTHLY
+    DAILY,
+    MONTHLY
 }

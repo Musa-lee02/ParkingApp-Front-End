@@ -4104,6 +4104,7 @@ int layout abc_tooltip 0x7f0b001b
 int layout browser_actions_context_menu_page 0x7f0b001c
 int layout browser_actions_context_menu_row 0x7f0b001d
 int layout custom_dialog 0x7f0b001e
+int layout custom_marker_view 0x7f0b0076
 int layout design_bottom_navigation_item 0x7f0b001f
 int layout design_bottom_sheet_dialog 0x7f0b0020
 int layout design_layout_snackbar 0x7f0b0021
@@ -4126,7 +4127,6 @@ int layout m3_alert_dialog_actions 0x7f0b0031
 int layout m3_alert_dialog_title 0x7f0b0032
 int layout m3_auto_complete_simple_item 0x7f0b0033
 int layout m3_side_sheet_dialog 0x7f0b0034
-int layout marker_view 0x7f0b0075
 int layout material_chip_input_combo 0x7f0b0035
 int layout material_clock_display 0x7f0b0036
 int layout material_clock_display_divider 0x7f0b0037

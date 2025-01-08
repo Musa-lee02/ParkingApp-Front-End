@@ -43,6 +43,7 @@ import java.util.Calendar
 import android.app.DatePickerDialog
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.window.Dialog
 
@@ -106,6 +107,8 @@ fun ParkingSearchScreen(
             DateSelector(
                 label = "Data di inizio",
                 selectedDate = startDate.toLocalDate(),
+                minDate = nowInRome.toLocalDate(),
+                maxDate = endDate.plusWeeks(8).toLocalDate(),
                 onDateSelected = { date ->
                     startDate = LocalDateTime.of(date, startDate.toLocalTime())
                 },
@@ -136,6 +139,8 @@ fun ParkingSearchScreen(
             DateSelector(
                 label = "Data di fine",
                 selectedDate = endDate.toLocalDate(),
+                minDate = nowInRome.toLocalDate(),
+                maxDate = endDate.plusWeeks(8).toLocalDate(),
                 onDateSelected = { date ->
                     endDate = LocalDateTime.of(date, endDate.toLocalTime())
                 },
@@ -202,42 +207,43 @@ fun ParkingSearchScreen(
 fun DateSelector(
     label: String,
     selectedDate: LocalDate,
+    minDate: LocalDate,
+    maxDate: LocalDate,
     onDateSelected: (LocalDate) -> Unit,
     modifier: Modifier = Modifier,
-    shape: RoundedCornerShape
+    shape: Shape = MaterialTheme.shapes.medium
 ) {
-    val context = LocalContext.current
     var showDialog by remember { mutableStateOf(false) }
 
-    OutlinedTextField(
-        value = selectedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-        onValueChange = {},
-        label = { Text(label) },
-        modifier = modifier,
-        readOnly = true,
-        trailingIcon = {
-            IconButton(onClick = { showDialog = true }) {
-                Icon(Icons.Filled.DateRange, contentDescription = "Date Icon")
-            }
-        }
-    )
-
-    if (showDialog) {
-        DatePickerDialog(
-            context = context,
-            selectedDate = selectedDate,
-            onDateSelected = {
-                onDateSelected(it)
-                showDialog = false
-            },
-            onDismiss = { showDialog = false }
+    Column(modifier = modifier.clickable { showDialog = true }) {
+        Text(text = label, style = MaterialTheme.typography.labelMedium)
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = selectedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+            style = MaterialTheme.typography.bodyLarge,
+            modifier = Modifier.padding(8.dp)
         )
+        if (showDialog) {
+            DatePickerDialog(
+                context = LocalContext.current,
+                selectedDate = selectedDate,
+                minDate = minDate,
+                maxDate = maxDate,
+                onDateSelected = {
+                    onDateSelected(it)
+                    showDialog = false
+                },
+                onDismiss = { showDialog = false }
+            )
+        }
     }
 }
 
 fun DatePickerDialog(
     context: Context,
     selectedDate: LocalDate,
+    minDate: LocalDate?,
+    maxDate: LocalDate?,
     onDateSelected: (LocalDate) -> Unit,
     onDismiss: () -> Unit
 ) {
@@ -256,7 +262,11 @@ fun DatePickerDialog(
     )
 
     // Imposta la data minima alla data odierna
-    datePickerDialog.datePicker.minDate = System.currentTimeMillis()
+    datePickerDialog.datePicker.minDate = minDate?.atStartOfDay(ZoneId.systemDefault())?.toInstant()
+        ?.toEpochMilli() ?: System.currentTimeMillis()
+
+    datePickerDialog.datePicker.maxDate = maxDate?.atStartOfDay(ZoneId.systemDefault())?.toInstant()
+        ?.toEpochMilli() ?: Long.MAX_VALUE
 
     datePickerDialog.apply {
         setOnDismissListener { onDismiss() }

@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.parkingappfront_end.app-mergeDebugResources-79:/values-en-rAU/values-en-rAU.xml",
+            "outputFile": "com.example.parkingappfront_end.app-mergeDebugResources-80:/values-en-rAU/values-en-rAU.xml",
             "map": [
                 {
                     "source": "C:\\Users\\samue\\.gradle\\caches\\8.9\\transforms\\fd5cd1972d5103d05d92a8bf82879280\\transformed\\appcompat-1.6.1\\res\\values-en-rAU\\values-en-rAU.xml",
