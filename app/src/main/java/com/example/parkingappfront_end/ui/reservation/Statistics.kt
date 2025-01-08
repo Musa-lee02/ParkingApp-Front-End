@@ -17,7 +17,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.CircularProgressIndicator
@@ -49,13 +51,18 @@ import com.example.parkingappfront_end.viewmodels.ReservationViewModel
 import java.util.Locale
 import androidx.compose.runtime.Composable
 import androidx.core.graphics.toRect
+import com.example.parkingappfront_end.R
 import com.example.parkingappfront_end.model.DateAxisValueFormatter
 import com.example.parkingappfront_end.ui.home.DateSelector
 import com.github.mikephil.charting.animation.Easing
+import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.IMarker
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.BarData
+import com.github.mikephil.charting.data.BarDataSet
+import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
@@ -67,6 +74,8 @@ import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import com.example.parkingappfront_end.model.IndexAxisValueFormatter
+import com.github.mikephil.charting.components.MarkerView
 
 @Composable
 fun MainStatisticView(
@@ -251,7 +260,8 @@ fun SpaceStatsDetails(
 
     Column(
         modifier = Modifier
-            .fillMaxWidth()
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState()) // Abilita lo scroll verticale
             .padding(16.dp)
     ) {
         Text(
@@ -261,7 +271,8 @@ fun SpaceStatsDetails(
         )
 
         Spacer(modifier = Modifier.height(10.dp))
-//ok
+
+        // Primo grafico
         if (stats.isNotEmpty()) {
             val labels = reservationViewModel.generateLabels(startDate, endDate)
             val statsList = remember(stats, labels) {
@@ -269,16 +280,35 @@ fun SpaceStatsDetails(
                     Pair(date, stats[date] ?: 0.0)
                 }
             }
-            Log.d("LineChartView", "StatsList: $statsList")
 
             LineChartView(
                 stats = statsList,
                 filterType = FilterType.MONTHLY
             )
-        }
-        else {
+        } else {
             Text(
                 text = "Nessun dato disponibile",
+                modifier = Modifier.padding(16.dp),
+                fontSize = 18.sp,
+                textAlign = TextAlign.Center
+            )
+        }
+
+        Spacer(modifier = Modifier.height(20.dp))
+
+        // Secondo grafico (per gli spot)
+        val spotStats = parkingSpace.parkingSpots?.associate { it.number to it.reservations.size } // Implementa la logica nel ViewModel
+        if (spotStats?.isNotEmpty() == true) {
+            val spotLabels = spotStats?.keys?.toList()
+            val spotValues = spotStats?.values?.toList()
+
+            BarChartView(
+                labels = spotLabels?.map { it.toString() } ?: emptyList(),
+                values = spotValues?.map { it.toDouble() } ?: emptyList()
+            )
+        } else {
+            Text(
+                text = "Ancora nessun dato sugli spot",
                 modifier = Modifier.padding(16.dp),
                 fontSize = 18.sp,
                 textAlign = TextAlign.Center
@@ -287,39 +317,40 @@ fun SpaceStatsDetails(
     }
 }
 
-
 @Composable
 fun LineChartView(
     stats: List<Pair<LocalDate, Double>>,
     filterType: FilterType
 ) {
-    // Converti i dati in `Entry`
     val entries = stats.map { (date, value) ->
         Entry(date.toEpochDay().toFloat(), value.toFloat())
     }.sortedBy { it.x }
 
-    val primaryColor = Color(0xFF6200EE)
-    val accentColor = Color(0xFF03DAC5)
+    val primaryColor = Color( 0xFF00FF00)//green 0xFF00FF00
 
-    // Crea dinamicamente il dataset e i dati
     val dataSet = LineDataSet(entries, "Guadagni").apply {
         color = primaryColor.toArgb()
         valueTextColor = Color.DarkGray.toArgb()
-        valueTextSize = 13f
-        setCircleColor(accentColor.toArgb())
-        setDrawCircleHole(true)
-        circleHoleColor = Color.White.toArgb()
-        circleRadius = 4f
-        circleHoleRadius = 2f
-        lineWidth = 2.5f
+        valueTextSize = 12f
+        setDrawCircles(false)  // Rimuove i cerchi
+        lineWidth = 3f
         mode = LineDataSet.Mode.CUBIC_BEZIER
-        cubicIntensity = 0.2f
-        setDrawValues(true) // Visualizza i valori
-        valueFormatter = DefaultValueFormatter(2) // Formattazione con 2 decimali
+        cubicIntensity = 0.15f
+        setDrawValues(true)
+        // Mostra i valori solo se maggiori di zero
+        valueFormatter = object : ValueFormatter() {
+            override fun getFormattedValue(value: Float): String {
+                return if (value > 0) "€%.2f".format(value) else ""
+            }
+        }
         setDrawFilled(true)
         fillDrawable = GradientDrawable(
             GradientDrawable.Orientation.TOP_BOTTOM,
-            intArrayOf(primaryColor.copy(alpha = 0.3f).toArgb(), Color.Transparent.toArgb())
+            intArrayOf(
+                primaryColor.copy(alpha = 0.4f).toArgb(),
+                primaryColor.copy(alpha = 0.1f).toArgb(),
+                Color.Transparent.toArgb()
+            )
         )
     }
 
@@ -340,30 +371,34 @@ fun LineChartView(
                     form = Legend.LegendForm.LINE
                     formSize = 15f
                     xEntrySpace = 10f
+                    formLineWidth = 3f
                 }
                 setDrawGridBackground(false)
+                setDrawBorders(true)
+                setBorderColor(Color.LightGray.toArgb())
+
                 setTouchEnabled(true)
                 isDragEnabled = true
                 setScaleEnabled(true)
-                setPinchZoom(false)
+                setPinchZoom(true)
 
                 xAxis.apply {
                     position = XAxis.XAxisPosition.BOTTOM
                     valueFormatter = DateAxisValueFormatter(stats.map { it.first }, filterType)
                     granularity = 1f
-                    labelRotationAngle = -30f
+                    labelRotationAngle = -45f
                     setDrawGridLines(false)
                     textColor = Color.DarkGray.toArgb()
-                    textSize = 10f
+                    textSize = 11f
                     yOffset = 10f
-                    labelCount = 5
+                    labelCount = 6
                 }
 
                 axisLeft.apply {
                     setDrawGridLines(true)
                     gridColor = Color.LightGray.copy(alpha = 0.5f).toArgb()
                     textColor = Color.DarkGray.toArgb()
-                    textSize = 10f
+                    textSize = 11f
                     axisMinimum = 0f
                     valueFormatter = object : ValueFormatter() {
                         override fun getFormattedValue(value: Float): String {
@@ -373,17 +408,114 @@ fun LineChartView(
                 }
 
                 axisRight.isEnabled = false
-
-                animateY(1000, Easing.EaseOutCubic)
+                animateY(1200, Easing.EaseInOutQuart)
             }
         },
         update = { chart ->
             chart.data = lineData
-            chart.invalidate() // Forza il refresh del grafico
+            chart.invalidate()
         }
     )
 }
 
+@Composable
+fun BarChartView(
+    labels: List<String>,
+    values: List<Double>
+) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(8.dp)
+    ) {
+        Text(
+            text = "Distribuzione prenotazioni per spot",
+            style = MaterialTheme.typography.labelMedium,
+            modifier = Modifier
+                .padding(bottom = 16.dp)
+                .align(Alignment.CenterHorizontally),
+            color = Color.DarkGray
+        )
+
+        val entries = values.mapIndexed { spot, numSelled ->
+            BarEntry(spot.toFloat(), numSelled.toFloat())
+        }
+
+        val primaryColor = Color(0xFF6200EE)
+
+        val dataSet = BarDataSet(entries, "Prenotazioni per Spot").apply {
+            color = primaryColor.toArgb()
+            valueTextColor = Color.DarkGray.toArgb()
+            valueTextSize = 13f
+            valueFormatter = object : ValueFormatter() {
+                override fun getFormattedValue(value: Float): String {
+                    return value.toInt().toString()
+                }
+            }
+            setColor(primaryColor.toArgb())
+        }
+
+        val barData = BarData(dataSet).apply {
+            barWidth = 0.8f
+        }
+
+        AndroidView(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(300.dp),
+            factory = { context ->
+                BarChart(context).apply {
+                    data = barData
+                    description.isEnabled = false  // Disabilitiamo la description interna del grafico
+                    legend.apply {
+                        isEnabled = true
+                        textSize = 12f
+                        textColor = Color.DarkGray.toArgb()
+                        form = Legend.LegendForm.SQUARE
+                        formSize = 12f
+                        xEntrySpace = 10f
+                    }
+                    setDrawGridBackground(false)
+                    setDrawBorders(true)
+                    setBorderColor(Color.LightGray.toArgb())
+
+                    xAxis.apply {
+                        valueFormatter = IndexAxisValueFormatter(labels)
+                        position = XAxis.XAxisPosition.BOTTOM
+                        granularity = 1f
+                        textColor = Color.DarkGray.toArgb()
+                        textSize = 11f
+                        labelRotationAngle = -45f
+                        setDrawGridLines(false)
+                    }
+
+                    axisLeft.apply {
+                        axisMinimum = 0f
+                        granularity = 1f
+                        textColor = Color.DarkGray.toArgb()
+                        textSize = 11f
+                        setDrawGridLines(true)
+                        gridColor = Color.LightGray.copy(alpha = 0.5f).toArgb()
+                        valueFormatter = object : ValueFormatter() {
+                            override fun getFormattedValue(value: Float): String {
+                                return value.toInt().toString()
+                            }
+                        }
+                    }
+
+                    axisRight.isEnabled = false
+                    animateY(1200, Easing.EaseInOutQuart)
+                    setPinchZoom(true)
+                    setScaleEnabled(true)
+                }
+            },
+            update = { chart ->
+                chart.data = barData
+                chart.invalidate()
+            }
+        )
+    }
+}
 
 enum class FilterType {
     DAILY,

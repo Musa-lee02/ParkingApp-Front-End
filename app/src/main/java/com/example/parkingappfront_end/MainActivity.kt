@@ -125,7 +125,7 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
             navController = navController,
             startDestination = if (SessionManager.user != null){
                                     if(SessionManager.user!!.role == "ROLE_OWNER") {
-                                        "myParkingSpaces"
+                                        "myStats"
                                     }
                                     else {
                                         "search"
