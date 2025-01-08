@@ -261,7 +261,7 @@ fun SpaceStatsDetails(
         )
 
         Spacer(modifier = Modifier.height(10.dp))
-
+//ok
         if (stats.isNotEmpty()) {
             val labels = reservationViewModel.generateLabels(startDate, endDate)
             val statsList = remember(stats, labels) {
