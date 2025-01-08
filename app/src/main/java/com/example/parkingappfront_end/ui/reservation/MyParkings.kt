@@ -203,5 +203,105 @@ fun AddParkingSpaceDialog(
                 .heightIn(max = 450.dp)
         )
     }
+}
 
+@Composable
+fun AddParkingSpotDialog(
+    onDismissRequest: () -> Unit,
+    onAddSpot: (String, Double) -> Unit,
+) {
+
+    var showDialog by remember { mutableStateOf(true) }
+
+    var number by remember { mutableStateOf("") }
+    var basePrice by remember { mutableStateOf("") }
+
+    var numberValid by remember { mutableStateOf(false) }
+    var basePriceValid by remember { mutableStateOf(false) }
+
+    var expanded by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = onDismissRequest,
+            title = {
+                Text(
+                    text = "Aggiungi un posto auto",
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .wrapContentSize(Alignment.Center)
+                )
+            },
+            text = {
+                Box(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .wrapContentSize(Alignment.Center)
+                ) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally
+                    ) {
+                        // Campo per il nome della wishlist
+                        OutlinedTextField(
+                            value = number,
+                            onValueChange = {
+                                number = it
+                                numberValid = it.isNotBlank()
+                            },
+                            label = { Text("Numero posto") },
+                            modifier = Modifier
+                                .fillMaxWidth(0.9f)
+                                .padding(bottom = 8.dp),
+                            shape = RoundedCornerShape(16.dp),
+                        )
+
+                        Spacer(modifier = Modifier.height(6.dp))
+
+                        OutlinedTextField(
+                            value = basePrice,
+                            onValueChange = {
+                                basePrice = it
+                                basePriceValid = it.isNotBlank()
+                            },
+                            label = { Text("Prezzo base") },
+                            modifier = Modifier
+                                .fillMaxWidth(0.9f)
+                                .padding(bottom = 8.dp),
+                            shape = RoundedCornerShape(16.dp),
+                        )
+
+                    }
+                }
+            },
+            confirmButton = {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
+                    Button(
+                        onClick = {
+                            onAddSpot(number, basePrice.toDouble())
+                            onDismissRequest()
+                        },
+                        enabled = numberValid && basePriceValid // Abilita il pulsante solo se il campo non è vuoto
+                    ) {
+                        Text("Aggiungi")
+                    }
+                    Button(
+                        onClick = onDismissRequest,
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Gray)
+                    )
+                    {
+                        Text("Cancel")
+
+                    }
+                }
+            },
+            dismissButton = null,
+            modifier = Modifier
+                .fillMaxWidth()
+                .wrapContentSize(Alignment.Center)
+                .heightIn(max = 330.dp)
+        )
+    }
 }

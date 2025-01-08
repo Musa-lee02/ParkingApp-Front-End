@@ -3,6 +3,7 @@ package com.example.parkingappfront_end.ui.reservation
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.util.Log
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -21,8 +22,12 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.Divider
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.AddCircle
 import androidx.compose.material.icons.filled.AddCircleOutline
 import androidx.compose.material.icons.filled.DeleteOutline
+import androidx.compose.material.icons.filled.DeleteSweep
+import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.Sort
 import androidx.compose.material3.AlertDialog
@@ -30,6 +35,8 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -136,7 +143,7 @@ fun MainSearchResults(
                             searchCriteria = SearchParams( "", LocalDateTime.now(), LocalDateTime.now()),
                             sortCriteria = it.second,
                             parkingViewModel = viewModel,
-                            reservationViewModel = reservationViewModel
+                            reservationViewModel = reservationViewModel,
                         )
                     }
 
@@ -154,6 +161,10 @@ fun ParkingSpaceDetails(
     parkingViewModel: ParkingViewModel,
     reservationViewModel: ReservationViewModel
 ) {
+    var showAddSpot by remember {
+        mutableStateOf(false)
+    }
+
 
     val isSortedByDistance by parkingViewModel.isSortedByDistance.collectAsState()
 
@@ -220,12 +231,30 @@ fun ParkingSpaceDetails(
                 fontSize = 18.sp
             )
 
-            Text(
-                text = parkingSpace.parkingSpots?.size.toString() + " posti",
-                fontSize = 18.sp,
-                fontWeight = if (!isSortedByDistance) FontWeight.Bold else FontWeight.Normal,
-                color = if (!isSortedByDistance) Color.Blue else Color.Unspecified
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.End
+            ) {
+                Text(
+                    text = parkingSpace.parkingSpots?.size.toString() + " posti",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = Color.DarkGray
+                )
+                Spacer(modifier = Modifier.width(4.dp))
+
+                if (SessionManager.user?.role == "ROLE_OWNER") {
+                    IconButton(onClick = {
+                        showAddSpot = true
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.AddCircle,
+                            contentDescription = "Aggiungi posto",
+                            tint = Color.Green
+                        )
+                    }
+                }
+            }
         }
 
 
@@ -267,7 +296,19 @@ fun ParkingSpaceDetails(
             }
         }
     }
+
+    if (showAddSpot){
+        AddParkingSpotDialog(
+            onDismissRequest = { showAddSpot = false },
+            onAddSpot = { number, basePrice ->
+                parkingSpace?.id?.let { parkingViewModel.addParkingSpot(number, basePrice, it) }
+                showAddSpot = false
+            }
+        )
+    }
+
 }
+
 @Composable
 fun ParkingSpaceList(
     selectedParkingSpace: ParkingSpace?,
@@ -278,6 +319,16 @@ fun ParkingSpaceList(
     var showAddParkingSpace by remember {
         mutableStateOf(false)
     }
+
+    var optionsExpanded by remember {
+        mutableStateOf(false)
+    }
+
+    var onDeleteClick by remember {
+        mutableStateOf(false)
+    }
+
+
     val sortByDistance by viewModel.isSortedByDistance.collectAsState()
     val sortedPS by viewModel.sortedPSBy.collectAsState()
 
@@ -295,17 +346,47 @@ fun ParkingSpaceList(
             fontWeight = FontWeight.Bold
         )
         if (SessionManager.user?.role == "ROLE_OWNER") {
-            IconButton(
-                onClick = {
-                    showAddParkingSpace = true
+            Box(contentAlignment = Alignment.CenterEnd) {
+                IconButton(onClick = { optionsExpanded = true }) {
+                    Icon(
+                        imageVector = Icons.Default.MoreVert,
+                        contentDescription = "Menu",
+                        tint = Color.Gray
+                    )
                 }
-            ) {
-                Icon(
-                    imageVector = Icons.Default.AddCircleOutline,
-                    contentDescription = if (sortByDistance) "Ordina per prezzo" else "Ordina per distanza"
-                )
+                DropdownMenu(
+                    expanded = optionsExpanded,
+                    onDismissRequest = { optionsExpanded = false }
+                ) {
+                    DropdownMenuItem(
+                        text = { Text("Aggiungi") },
+                        onClick = {
+                            showAddParkingSpace = true
+                            optionsExpanded = false
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.Add,
+                                contentDescription = "Aggiungi",
+                                tint = Color.Green
+                            )
+                        }
+                    )
+                    DropdownMenuItem(
+                        text = { Text("Elimina") },
+                        onClick = {
+                            onDeleteClick = true
+                            optionsExpanded = false
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Default.DeleteSweep,
+                                contentDescription = "Elimina",
+                                tint = Color.Red
+                            )}
+                    )
+                }
             }
-
         }
         else{
             IconButton(
@@ -335,6 +416,31 @@ fun ParkingSpaceList(
             }
         )
 
+    }
+
+    if (onDeleteClick) {
+        AlertDialog(
+            onDismissRequest = { onDeleteClick = false },
+            title = { Text("Elimina parcheggio") },
+            text = { Text("Sei sicuro di voler eliminare questo parcheggio?") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        selectedParkingSpace?.id?.let { viewModel.deleteParkingSpace(it) }
+                        onDeleteClick = false
+                    }
+                ) {
+                    Text("Conferma")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = { onDeleteClick = false }
+                ) {
+                    Text("Annulla")
+                }
+            }
+        )
     }
 
     Log.d("ParkingSpaces", "Reservation: ${sortedPS.firstOrNull()?.first}")
@@ -380,11 +486,12 @@ fun ParkingSpaceThumbnail(parkingSpace: ParkingSpace, onClick: () -> Unit, isSel
             .width(150.dp)
             .height(70.dp)
             .clickable { onClick() },
-        shape = RoundedCornerShape(8.dp),
+        shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         colors = CardDefaults.cardColors(
             containerColor = if (isSelected)  Color.White else Color(0xFFE0E0E0)
         ),
+        border = if (isSelected) BorderStroke(1.dp, Color.Blue) else null
     ) {
         Column(
             modifier = Modifier
@@ -398,7 +505,8 @@ fun ParkingSpaceThumbnail(parkingSpace: ParkingSpace, onClick: () -> Unit, isSel
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier.weight(1f),
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                color = if (isSelected) Color.Blue else Color.Black
             )
             Spacer(modifier = Modifier.height(4.dp))
         }
@@ -452,12 +560,12 @@ fun ParkingSpaceListItem(
             if (SessionManager.user?.role == "ROLE_OWNER" || SessionManager.user?.role == "ROLE_ADMIN") {
                 IconButton(
                     onClick = {
-                        parkingViewModel.deleteParkingSpot(parkingSpot.id)
+                        parkingSpot.id?.let { parkingViewModel.deleteParkingSpot(it) }
                     },
                     modifier = Modifier.align(Alignment.CenterVertically)
                 ) {
                     Icon(
-                        imageVector = Icons.Default.DeleteOutline,
+                        imageVector = Icons.Default.DeleteSweep,
                         contentDescription = "Elimina",
                         tint = Color.Red
                     )
@@ -497,6 +605,8 @@ fun ParkingSpaceListItem(
             }
         )
     }
+
+
 
     // Popup di conferma prenotazione
     confirmedReservation?.let { reservation ->
@@ -628,16 +738,20 @@ fun ReservationDialog(
         confirmButton = {
             Button(
                 onClick = {
-                    val reservation = Reservation(
-                        id = null,
-                        user = SessionManager.user!!,
-                        price = price,
-                        parkingSpotId = parkingSpot.id,
-                        licensePlate = licensePlate.text,
-                        startDate = searchCriteria.startDate,
-                        endDate = searchCriteria.endDate,
-                    )
-                    onConfirm(reservation)
+                    val reservation = parkingSpot.id?.let {
+                        Reservation(
+                            id = null,
+                            user = SessionManager.user!!,
+                            price = price,
+                            parkingSpotId = it,
+                            licensePlate = licensePlate.text,
+                            startDate = searchCriteria.startDate,
+                            endDate = searchCriteria.endDate,
+                        )
+                    }
+                    if (reservation != null) {
+                        onConfirm(reservation)
+                    }
                 },
                 enabled = licensePlate.text.isNotEmpty() && licensePlate.text.length >= 6,
                 modifier = Modifier.padding(horizontal = 8.dp)

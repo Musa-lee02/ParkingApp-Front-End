@@ -23,8 +23,8 @@ class ParkingSpotRep (private val pSpotApiService: ParkingSpotApiService) {
         }
     }
 
-    suspend fun addParkingSpot(parkingSpot: ParkingSpot, idUser: UUID): ParkingSpot {
-        return pSpotApiService.addParkingSpot(parkingSpot, idUser).body()!!
+    suspend fun addParkingSpot(parkingSpot: ParkingSpot, idUser: UUID): ParkingSpot? {
+        return pSpotApiService.addParkingSpot(parkingSpot, idUser).body()
     }
 
     suspend fun deleteParkingSpot(id: Long): Boolean? {

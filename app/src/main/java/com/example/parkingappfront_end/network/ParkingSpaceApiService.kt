@@ -6,6 +6,7 @@ import com.example.parkingappfront_end.model.RequiresAuth
 import com.example.parkingappfront_end.model.Reservation
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Path
@@ -33,9 +34,9 @@ interface ParkingSpaceApiService {
     @RequiresAuth
     suspend fun getAllAddresses(): List<Address>
 
-
-
-
+    @DELETE("parkingSpaces/delete/{spaceId}/{idUser}")
+    @RequiresAuth
+    suspend fun delete(@Path("spaceId") spaceId: Long, @Path("idUser") idUser: UUID): Response<Boolean>
 
 
 }

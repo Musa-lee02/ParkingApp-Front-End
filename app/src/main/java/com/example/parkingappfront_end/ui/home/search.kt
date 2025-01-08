@@ -41,6 +41,7 @@ import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 import java.util.Calendar
 import android.app.DatePickerDialog
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.graphics.Shape
@@ -205,41 +206,55 @@ fun ParkingSearchScreen(
 
 @Composable
 fun DateSelector(
-    label: String,
+    label:String,
     selectedDate: LocalDate,
     minDate: LocalDate,
     maxDate: LocalDate,
     onDateSelected: (LocalDate) -> Unit,
     modifier: Modifier = Modifier,
-    shape: Shape = MaterialTheme.shapes.medium
+    shape: Shape,
+    backgroundColor: Color = Color.Transparent,
+    borderColor: Color = MaterialTheme.colorScheme.outline
 ) {
     var showDialog by remember { mutableStateOf(false) }
 
-    Column(modifier = modifier.clickable { showDialog = true }) {
-        Text(text = label, style = MaterialTheme.typography.labelMedium)
-        Spacer(modifier = Modifier.height(4.dp))
-        Text(
-            text = selectedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
-            style = MaterialTheme.typography.bodyLarge,
-            modifier = Modifier.padding(8.dp)
-        )
-        if (showDialog) {
-            DatePickerDialog(
-                context = LocalContext.current,
-                selectedDate = selectedDate,
-                minDate = minDate,
-                maxDate = maxDate,
-                onDateSelected = {
-                    onDateSelected(it)
-                    showDialog = false
-                },
-                onDismiss = { showDialog = false }
+    androidx.compose.material3.Surface(
+        modifier = modifier.clickable { showDialog = true },
+        shape = shape,
+        tonalElevation = 2.dp,
+        color = backgroundColor,
+        border = BorderStroke(1.dp, borderColor)
+    ) {
+        Column(modifier = Modifier.padding(8.dp)) {
+            Text(text = label, style = MaterialTheme.typography.labelMedium)
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = selectedDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")),
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(horizontal = 8.dp)
             )
+            if(showDialog) {
+                datePickerDialog(
+                    context = LocalContext.current,
+                    selectedDate = selectedDate,
+                    minDate = minDate,
+                    maxDate = maxDate,
+                    onDateSelected = {
+                        onDateSelected(it)
+                        showDialog = false
+                    },
+                    onDismiss = { showDialog = false }
+                )
+            }
         }
     }
 }
 
-fun DatePickerDialog(
+
+
+
+fun datePickerDialog(
     context: Context,
     selectedDate: LocalDate,
     minDate: LocalDate?,

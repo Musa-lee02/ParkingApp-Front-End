@@ -1,8 +1,5 @@
 package com.example.parkingappfront_end.ui.reservation
 
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.RectF
 import android.graphics.drawable.GradientDrawable
 import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
@@ -37,7 +34,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -48,16 +44,12 @@ import com.example.parkingappfront_end.model.ParkingSpace
 import com.example.parkingappfront_end.model.SpacesSortCriterias
 import com.example.parkingappfront_end.viewmodels.ParkingViewModel
 import com.example.parkingappfront_end.viewmodels.ReservationViewModel
-import java.util.Locale
 import androidx.compose.runtime.Composable
-import androidx.core.graphics.toRect
-import com.example.parkingappfront_end.R
 import com.example.parkingappfront_end.model.DateAxisValueFormatter
 import com.example.parkingappfront_end.ui.home.DateSelector
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
-import com.github.mikephil.charting.components.IMarker
 import com.github.mikephil.charting.components.Legend
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.BarData
@@ -66,16 +58,10 @@ import com.github.mikephil.charting.data.BarEntry
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
-import com.github.mikephil.charting.formatter.DefaultValueFormatter
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.highlight.Highlight
-import com.github.mikephil.charting.utils.MPPointF
-import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
 import com.example.parkingappfront_end.model.IndexAxisValueFormatter
-import com.github.mikephil.charting.components.MarkerView
 
 @Composable
 fun MainStatisticView(
@@ -185,16 +171,6 @@ fun SpaceList(
             fontSize = 24.sp,
             fontWeight = FontWeight.Bold
         )
-        IconButton(
-            onClick = {
-                showAddParkingSpace = true
-            }
-        ) {
-            Icon(
-                imageVector = Icons.Default.FilterList,
-                contentDescription = "Filter"
-            )
-        }
     }
 
     if (showAddParkingSpace) {
@@ -297,7 +273,12 @@ fun SpaceStatsDetails(
         Spacer(modifier = Modifier.height(20.dp))
 
         // Secondo grafico (per gli spot)
-        val spotStats = parkingSpace.parkingSpots?.associate { it.number to it.reservations.size } // Implementa la logica nel ViewModel
+        val spotStats = parkingSpace.parkingSpots?.associate {
+            it.number to (it.reservations?.filter { r ->
+                r.startDate.toLocalDate() >= startDate && r.endDate.toLocalDate() <= endDate
+            }?.size ?: 0)
+
+        } // Implementa la logica nel ViewModel
         if (spotStats?.isNotEmpty() == true) {
             val spotLabels = spotStats?.keys?.toList()
             val spotValues = spotStats?.values?.toList()
@@ -322,123 +303,145 @@ fun LineChartView(
     stats: List<Pair<LocalDate, Double>>,
     filterType: FilterType
 ) {
-    val entries = stats.map { (date, value) ->
-        Entry(date.toEpochDay().toFloat(), value.toFloat())
-    }.sortedBy { it.x }
 
-    val primaryColor = Color( 0xFF00FF00)//green 0xFF00FF00
-
-    val dataSet = LineDataSet(entries, "Guadagni").apply {
-        color = primaryColor.toArgb()
-        valueTextColor = Color.DarkGray.toArgb()
-        valueTextSize = 12f
-        setDrawCircles(false)  // Rimuove i cerchi
-        lineWidth = 3f
-        mode = LineDataSet.Mode.CUBIC_BEZIER
-        cubicIntensity = 0.15f
-        setDrawValues(true)
-        // Mostra i valori solo se maggiori di zero
-        valueFormatter = object : ValueFormatter() {
-            override fun getFormattedValue(value: Float): String {
-                return if (value > 0) "€%.2f".format(value) else ""
-            }
-        }
-        setDrawFilled(true)
-        fillDrawable = GradientDrawable(
-            GradientDrawable.Orientation.TOP_BOTTOM,
-            intArrayOf(
-                primaryColor.copy(alpha = 0.4f).toArgb(),
-                primaryColor.copy(alpha = 0.1f).toArgb(),
-                Color.Transparent.toArgb()
-            )
-        )
-    }
-
-    val lineData = LineData(dataSet)
-
-    AndroidView(
+    Box(
         modifier = Modifier
             .fillMaxWidth()
-            .height(300.dp)
             .padding(8.dp),
-        factory = { context ->
-            LineChart(context).apply {
-                data = lineData
-                description.isEnabled = false
-                legend.apply {
-                    textSize = 12f
-                    textColor = Color.DarkGray.toArgb()
-                    form = Legend.LegendForm.LINE
-                    formSize = 15f
-                    xEntrySpace = 10f
-                    formLineWidth = 3f
-                }
-                setDrawGridBackground(false)
-                setDrawBorders(true)
-                setBorderColor(Color.LightGray.toArgb())
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            Text(
+                text = "Guadagno generale dello spazio parcheggio",
+                fontSize = 20.sp,
+                modifier = Modifier
+                    .padding(bottom = 16.dp),
+                color = Color.DarkGray
+            )
 
-                setTouchEnabled(true)
-                isDragEnabled = true
-                setScaleEnabled(true)
-                setPinchZoom(true)
+            val entries = stats.map { (date, value) ->
+                Entry(date.toEpochDay().toFloat(), value.toFloat())
+            }.sortedBy { it.x }
 
-                xAxis.apply {
-                    position = XAxis.XAxisPosition.BOTTOM
-                    valueFormatter = DateAxisValueFormatter(stats.map { it.first }, filterType)
-                    granularity = 1f
-                    labelRotationAngle = -45f
-                    setDrawGridLines(false)
-                    textColor = Color.DarkGray.toArgb()
-                    textSize = 11f
-                    yOffset = 10f
-                    labelCount = 6
-                }
+            val primaryColor = Color(0xFF00FF00)//green 0xFF00FF00
 
-                axisLeft.apply {
-                    setDrawGridLines(true)
-                    gridColor = Color.LightGray.copy(alpha = 0.5f).toArgb()
-                    textColor = Color.DarkGray.toArgb()
-                    textSize = 11f
-                    axisMinimum = 0f
-                    valueFormatter = object : ValueFormatter() {
-                        override fun getFormattedValue(value: Float): String {
-                            return "€%.0f".format(value)
-                        }
+            val dataSet = LineDataSet(entries, "Guadagni").apply {
+                color = primaryColor.toArgb()
+                valueTextColor = Color.DarkGray.toArgb()
+                valueTextSize = 12f
+                setDrawCircles(false)  // Rimuove i cerchi
+                lineWidth = 3f
+                mode = LineDataSet.Mode.CUBIC_BEZIER
+                cubicIntensity = 0.15f
+                setDrawValues(true)
+                // Mostra i valori solo se maggiori di zero
+                valueFormatter = object : ValueFormatter() {
+                    override fun getFormattedValue(value: Float): String {
+                        return if (value > 0) "€%.2f".format(value) else ""
                     }
                 }
-
-                axisRight.isEnabled = false
-                animateY(1200, Easing.EaseInOutQuart)
+                setDrawFilled(true)
+                fillDrawable = GradientDrawable(
+                    GradientDrawable.Orientation.TOP_BOTTOM,
+                    intArrayOf(
+                        primaryColor.copy(alpha = 0.4f).toArgb(),
+                        primaryColor.copy(alpha = 0.1f).toArgb(),
+                        Color.Transparent.toArgb()
+                    )
+                )
             }
-        },
-        update = { chart ->
-            chart.data = lineData
-            chart.invalidate()
+
+            val lineData = LineData(dataSet)
+
+            AndroidView(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(300.dp)
+                    .padding(8.dp),
+                factory = { context ->
+                    LineChart(context).apply {
+                        data = lineData
+                        description.isEnabled = false
+                        legend.apply {
+                            textSize = 12f
+                            textColor = Color.DarkGray.toArgb()
+                            form = Legend.LegendForm.LINE
+                            formSize = 15f
+                            xEntrySpace = 10f
+                            formLineWidth = 3f
+                        }
+                        setDrawGridBackground(false)
+                        setDrawBorders(true)
+                        setBorderColor(Color.LightGray.toArgb())
+
+                        setTouchEnabled(true)
+                        isDragEnabled = true
+                        setScaleEnabled(true)
+                        setPinchZoom(true)
+
+                        xAxis.apply {
+                            position = XAxis.XAxisPosition.BOTTOM
+                            valueFormatter =
+                                DateAxisValueFormatter(stats.map { it.first }, filterType)
+                            granularity = 1f
+                            labelRotationAngle = -45f
+                            setDrawGridLines(false)
+                            textColor = Color.DarkGray.toArgb()
+                            textSize = 11f
+                            yOffset = 10f
+                            labelCount = 6
+                        }
+
+                        axisLeft.apply {
+                            setDrawGridLines(true)
+                            gridColor = Color.LightGray.copy(alpha = 0.5f).toArgb()
+                            textColor = Color.DarkGray.toArgb()
+                            textSize = 11f
+                            axisMinimum = 0f
+                            valueFormatter = object : ValueFormatter() {
+                                override fun getFormattedValue(value: Float): String {
+                                    return "€%.0f".format(value)
+                                }
+                            }
+                        }
+
+                        axisRight.isEnabled = false
+                        animateY(1200, Easing.EaseInOutQuart)
+                    }
+                },
+                update = { chart ->
+                    chart.data = lineData
+                    chart.invalidate()
+                }
+            )
         }
-    )
+    }
 }
 
 @Composable
 fun BarChartView(
-    labels: List<String>,
-    values: List<Double>
+    labels: List<String>, //contains the spot numbers (A1, A2, A3) etc
+    values: List<Double> //contains the number of reservations for each spot
 ) {
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(8.dp)
     ) {
+
         Text(
             text = "Distribuzione prenotazioni per spot",
-            style = MaterialTheme.typography.labelMedium,
+            fontSize = 20.sp,
             modifier = Modifier
                 .padding(bottom = 16.dp)
                 .align(Alignment.CenterHorizontally),
             color = Color.DarkGray
         )
 
-        val entries = values.mapIndexed { spot, numSelled ->
-            BarEntry(spot.toFloat(), numSelled.toFloat())
+        val entries = values.mapIndexed { spot, numSelled ->// esegue un map con indice, esempio: 0 -> 5, 1 -> 3, 2 -> 7
+            BarEntry(spot.toFloat(), numSelled.toFloat())// crea un oggetto BarEntry con indice e valore
         }
 
         val primaryColor = Color(0xFF6200EE)
@@ -446,7 +449,7 @@ fun BarChartView(
         val dataSet = BarDataSet(entries, "Prenotazioni per Spot").apply {
             color = primaryColor.toArgb()
             valueTextColor = Color.DarkGray.toArgb()
-            valueTextSize = 13f
+            valueTextSize = 14f
             valueFormatter = object : ValueFormatter() {
                 override fun getFormattedValue(value: Float): String {
                     return value.toInt().toString()

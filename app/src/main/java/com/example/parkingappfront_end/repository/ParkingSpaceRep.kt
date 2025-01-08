@@ -77,7 +77,10 @@ class ParkingSpaceRep(private val pSpaceApiService : ParkingSpaceApiService) {
         return pSpaceApiService.add(parkingSpace).body()
     }
 
+    suspend fun deleteParkingSpace(idSpace: Long, idUser: UUID):Boolean? {
+        return pSpaceApiService.delete(idSpace, idUser).body()
 
+    }
 
 
 }

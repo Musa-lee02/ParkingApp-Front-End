@@ -158,93 +158,142 @@ class ParkingViewModel(private val parkingSpaceRep : ParkingSpaceRep, private va
 
     }
 
-    fun deleteParkingSpot(id: Long) {
+    fun deleteParkingSpace(idSpace: Long) {
         viewModelScope.launch {
             try {
-                val resp = parkingSpotRep.deleteParkingSpot(id)
+                val resp =
+                    SessionManager.user?.let { parkingSpaceRep.deleteParkingSpace(idSpace, it.id) }
                 if (resp == true) {
-                    _parkingSpots.value = _parkingSpots.value.filter { it.id != id }
-                    Log.d("ParkingSpaces", "Parking spot deleted: $id")
-                }
-                else {
-                    Log.d("ParkingSpaces", "Error deleting parking spot")
+                    _parkingSpaces.value = _parkingSpaces.value.filter { it.id != idSpace }
+                    Log.d("ParkingSpaces", "Parking space deleted: $idSpace")
+                } else {
+                    Log.d("ParkingSpaces", "Error deleting parking space")
                 }
             } catch (e: Exception) {
-                Log.e("ParkingSpaces", "Error deleting parking spot", e)
+                Log.e("ParkingSpaces", "Error deleting parking space", e)
             }
         }
-
     }
 
-
-    fun assignCriterias(){
-        viewModelScope.launch {
-            val sorted = _parkingSpaces.value.map { parkingSpace ->
-                var minPrice = 0.0
-                var maxPrice = 0.0
-                if (parkingSpace.parkingSpots?.isNotEmpty() == true){
-                    minPrice =  minPrice(parkingSpace)
-                    maxPrice = maxPrice(parkingSpace)
+        fun addParkingSpot(number: String, basePrice: Double, spaceId: Long) {
+            viewModelScope.launch {
+                try {
+                    val parkingSpot = ParkingSpot(
+                        id = null,
+                        number = number,
+                        basePrice = basePrice,
+                        parkingSpaceId = spaceId
+                    )
+                    val newSpot =
+                        parkingSpotRep.addParkingSpot(parkingSpot, SessionManager.user!!.id)
+                    if (newSpot != null) {
+                        loadParkingSpots(spaceId)
+                        Log.d("ParkingSpaces", "Parking spot added: $newSpot")
+                    }
+                    Log.d("ParkingSpaces", "Parking spot added: $newSpot")
+                } catch (e: Exception) {
+                    Log.e("ParkingSpaces", "Error adding parking spot", e)
                 }
-                val distance = calculateDistance(
-                    SessionManager.position!!.latitude, SessionManager.position!!.longitude,
-                    parkingSpace.address.latitude, parkingSpace.address.longitude
-                )
-                parkingSpace to SpacesSortCriterias(minPrice, maxPrice, distance)
             }
-            _sortedPSBy.value = sorted
+
         }
-    }
 
-    fun sortPSByPrice() {
-        viewModelScope.launch {
-            val sorted = _sortedPSBy.value.sortedBy { it.second.minPrice }
-
-            _sortedPSBy.value = sorted
-            _isSortedByDistance.value = false
-            _isSortedByPrice.value = true
-            Log.d("ParkingSpaces", "Parking spaces sorted with prices: $sorted")
-        }
-    }
-
-    fun sortPSByDistance() {
-        viewModelScope.launch {
-            val sorted = _sortedPSBy.value.sortedBy { it.second.distance }
-            _sortedPSBy.value = sorted
-            _isSortedByDistance.value = true
-            _isSortedByPrice.value = false
-            Log.d("ParkingSpaces", "Parking spaces sorted with distances: $sorted")
-        }
-    }
-
-    fun minPrice(parkingSpace: ParkingSpace): Double {
-        var min = parkingSpace.parkingSpots?.get(0)?.basePrice
-        parkingSpace.parkingSpots?.forEach {
-            if (it.basePrice <= (min ?: 500.0)) {
-                min = it.basePrice
+        fun deleteParkingSpot(id: Long) {
+            viewModelScope.launch {
+                try {
+                    val resp = parkingSpotRep.deleteParkingSpot(id)
+                    if (resp == true) {
+                        _parkingSpots.value = _parkingSpots.value.filter { it.id != id }
+                        Log.d("ParkingSpaces", "Parking spot deleted: $id")
+                    } else {
+                        Log.d("ParkingSpaces", "Error deleting parking spot")
+                    }
+                } catch (e: Exception) {
+                    Log.e("ParkingSpaces", "Error deleting parking spot", e)
+                }
             }
-        }
-        return min ?: 0.0
-    }
 
-    fun maxPrice(parkingSpace: ParkingSpace): Double {
-        var max = parkingSpace.parkingSpots?.get(0)?.basePrice
-        parkingSpace.parkingSpots?.forEach {
-            if (it.basePrice >= (max ?: 0.0)) {
-                max = it.basePrice
+        }
+
+
+        fun assignCriterias() {
+            viewModelScope.launch {
+                val sorted = _parkingSpaces.value.map { parkingSpace ->
+                    var minPrice = 0.0
+                    var maxPrice = 0.0
+                    if (parkingSpace.parkingSpots?.isNotEmpty() == true) {
+                        minPrice = minPrice(parkingSpace)
+                        maxPrice = maxPrice(parkingSpace)
+                    }
+                    val distance = calculateDistance(
+                        SessionManager.position!!.latitude, SessionManager.position!!.longitude,
+                        parkingSpace.address.latitude, parkingSpace.address.longitude
+                    )
+                    parkingSpace to SpacesSortCriterias(minPrice, maxPrice, distance)
+                }
+                _sortedPSBy.value = sorted
             }
         }
-        return max ?: 0.0
-    }
+
+        fun sortPSByPrice() {
+            viewModelScope.launch {
+                val sorted = _sortedPSBy.value.sortedBy { it.second.minPrice }
+
+                _sortedPSBy.value = sorted
+                _isSortedByDistance.value = false
+                _isSortedByPrice.value = true
+                Log.d("ParkingSpaces", "Parking spaces sorted with prices: $sorted")
+            }
+        }
+
+        fun sortPSByDistance() {
+            viewModelScope.launch {
+                val sorted = _sortedPSBy.value.sortedBy { it.second.distance }
+                _sortedPSBy.value = sorted
+                _isSortedByDistance.value = true
+                _isSortedByPrice.value = false
+                Log.d("ParkingSpaces", "Parking spaces sorted with distances: $sorted")
+            }
+        }
+
+        fun minPrice(parkingSpace: ParkingSpace): Double {
+            var min = parkingSpace.parkingSpots?.get(0)?.basePrice
+            parkingSpace.parkingSpots?.forEach {
+                if (it.basePrice <= (min ?: 500.0)) {
+                    min = it.basePrice
+                }
+            }
+            return min ?: 0.0
+        }
+
+        fun maxPrice(parkingSpace: ParkingSpace): Double {
+            var max = parkingSpace.parkingSpots?.get(0)?.basePrice
+            parkingSpace.parkingSpots?.forEach {
+                if (it.basePrice >= (max ?: 0.0)) {
+                    max = it.basePrice
+                }
+            }
+            return max ?: 0.0
+        }
 
 
-    private fun calculateDistance(lat1: Double, lon1: Double, lat2: Double, lon2: Double): Double {
-        val earthRadius = 6371 // Raggio terrestre in km
-        val dLat = Math.toRadians(lat2 - lat1)
-        val dLon = Math.toRadians(lon2 - lon1)
-        val a = sin(dLat / 2).pow(2) + cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) * sin(dLon / 2).pow(2)
-        val c = 2 * atan2(sqrt(a), sqrt(1 - a))
-        return earthRadius * c // Distanza in km
-    }
+        private fun calculateDistance(
+            lat1: Double,
+            lon1: Double,
+            lat2: Double,
+            lon2: Double
+        ): Double {
+            val earthRadius = 6371 // Raggio terrestre in km
+            val dLat = Math.toRadians(lat2 - lat1)
+            val dLon = Math.toRadians(lon2 - lon1)
+            val a =
+                sin(dLat / 2).pow(2) + cos(Math.toRadians(lat1)) * cos(Math.toRadians(lat2)) * sin(
+                    dLon / 2
+                ).pow(2)
+            val c = 2 * atan2(sqrt(a), sqrt(1 - a))
+            return earthRadius * c // Distanza in km
+        }
+
+
 
 }

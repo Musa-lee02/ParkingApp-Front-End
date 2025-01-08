@@ -51,10 +51,10 @@ class ReservationViewModel(private val reservationRep: ReservationRep) : ViewMod
                 Log.d("ReservationViewModel", "ParkingSpots: ${parkingSpace.parkingSpots?.size}")
 
                 parkingSpace.parkingSpots?.forEach { spot ->
-                    Log.d("ReservationViewModel", "Spot Reservations: ${spot.reservations.size}")
+                    Log.d("ReservationViewModel", "Spot Reservations: ${spot.reservations?.size}")
                     spot.reservations
-                        .filter { it.startDate >= startDateTime && it.endDate <= endDateTime }
-                        .forEach { reservation ->
+                        ?.filter { it.startDate >= startDateTime && it.endDate <= endDateTime }
+                        ?.forEach { reservation ->
                             Log.d("ReservationViewModel", "Reservation price: ${reservation.price}")
                             val date = reservation.startDate.toLocalDate()
                             val currentTotal = statsMap.getOrDefault(date, 0.0)
@@ -136,82 +136,4 @@ class ReservationViewModel(private val reservationRep: ReservationRep) : ViewMod
     }
 
 
-    fun calculateSalesTimely(parkingSpace: ParkingSpace) {
-        _allReservations.value =
-            parkingSpace.parkingSpots?.map { it.reservations }?.flatten() ?: emptyList()
-
-        for (res in _allReservations.value) {
-            if (res.startDate != null && res.endDate != null) {
-                val startHour = res.startDate.hour
-                val endHour = res.endDate.hour
-                for (i in startHour until endHour) {
-                    val key = if (i < 10) "0$i:00" else "$i:00"
-                    _timelyStats.value[key] = _timelyStats.value[key]?.plus(res.price) ?: res.price
-                }
-            }
-        }
-    }
-
-    fun calculateSalesWeekly(parkingSpace: ParkingSpace) {
-        _allReservations.value =
-            parkingSpace.parkingSpots?.map { it.reservations }?.flatten() ?: emptyList()
-        for (res in _allReservations.value) {
-            if (res.startDate != null && res.endDate != null) {
-                val startDay = res.startDate.dayOfWeek
-                val endDay = res.endDate.dayOfWeek
-
-                for (i in startDay.value..endDay.value) {
-                    val key = when (i) {
-                        1 -> "Lunedì"
-                        2 -> "Martedì"
-                        3 -> "Mercoledì"
-                        4 -> "Giovedì"
-                        5 -> "Venerdì"
-                        6 -> "Sabato"
-                        7 -> "Domenica"
-                        else -> ""
-                    }
-                    if (key.isNotEmpty()) {
-                        _weeklyStats.value[key] =
-                            _weeklyStats.value[key]?.plus(res.price) ?: res.price
-                    }
-                }
-            }
-        }
-    }
-
-    fun calculateSalesMonthly(parkingSpace: ParkingSpace) {
-        _allReservations.value =
-            parkingSpace.parkingSpots?.map { it.reservations }?.flatten() ?: emptyList()
-
-        for (res in _allReservations.value) {
-            if (res.startDate != null && res.endDate != null) {
-                val startMonth = res.startDate.month
-                val endMonth = res.endDate.month
-
-                // Usa ..= per includere l'ultimo mese
-                for (i in startMonth.value..endMonth.value) {
-                    val key = when (i) {
-                        1 -> "Gennaio"
-                        2 -> "Febbraio"
-                        3 -> "Marzo"
-                        4 -> "Aprile"
-                        5 -> "Maggio"
-                        6 -> "Giugno"
-                        7 -> "Luglio"
-                        8 -> "Agosto"
-                        9 -> "Settembre"
-                        10 -> "Ottobre"
-                        11 -> "Novembre"
-                        12 -> "Dicembre"
-                        else -> ""
-                    }
-                    if (key.isNotEmpty()) {
-                        _monthlyStats.value[key] =
-                            _monthlyStats.value[key]?.plus(res.price) ?: res.price
-                    }
-                }
-            }
-        }
-    }
 }
