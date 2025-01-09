@@ -5,6 +5,7 @@ import com.example.parkingappfront_end.model.RequiresAuth
 import com.example.parkingappfront_end.model.Reservation
 import retrofit2.Response
 import retrofit2.http.Body
+import retrofit2.http.DELETE
 import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.PUT
@@ -28,4 +29,8 @@ interface ReservationApiService {
     @PUT("reservations/add/{idUser}")
     @RequiresAuth
     suspend fun add( @Path ("idUser") idUser: UUID, @Body reservation: Reservation): Response<Reservation>
+
+    @DELETE("reservations/delete/{idRes}/{idUser}")
+    @RequiresAuth
+    suspend fun delete(@Path("idRes") idRes: Long, @Path ("idUser") idUser: UUID): Response<Boolean>
 }

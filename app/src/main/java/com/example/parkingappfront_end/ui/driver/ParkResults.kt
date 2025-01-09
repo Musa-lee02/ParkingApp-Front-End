@@ -1,4 +1,4 @@
-package com.example.parkingappfront_end.ui.reservation
+package com.example.parkingappfront_end.ui.driver
 
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
@@ -24,8 +24,6 @@ import androidx.compose.material.Divider
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.AddCircle
-import androidx.compose.material.icons.filled.AddCircleOutline
-import androidx.compose.material.icons.filled.DeleteOutline
 import androidx.compose.material.icons.filled.DeleteSweep
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -70,6 +68,8 @@ import com.example.parkingappfront_end.model.ParkingSpot
 import com.example.parkingappfront_end.model.Reservation
 import com.example.parkingappfront_end.model.SearchParams
 import com.example.parkingappfront_end.model.SpacesSortCriterias
+import com.example.parkingappfront_end.ui.ownerSide.AddParkingSpaceDialog
+import com.example.parkingappfront_end.ui.ownerSide.AddParkingSpotDialog
 import com.example.parkingappfront_end.viewmodels.ParkingViewModel
 import com.example.parkingappfront_end.viewmodels.ReservationViewModel
 import java.time.Instant

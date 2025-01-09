@@ -1,4 +1,4 @@
-package com.example.parkingappfront_end.ui.reservation
+package com.example.parkingappfront_end.ui.ownerSide
 
 import android.graphics.drawable.GradientDrawable
 import android.util.Log
@@ -17,12 +17,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -46,7 +41,7 @@ import com.example.parkingappfront_end.viewmodels.ParkingViewModel
 import com.example.parkingappfront_end.viewmodels.ReservationViewModel
 import androidx.compose.runtime.Composable
 import com.example.parkingappfront_end.model.DateAxisValueFormatter
-import com.example.parkingappfront_end.ui.home.DateSelector
+import com.example.parkingappfront_end.ui.driver.DateSelector
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
 import com.github.mikephil.charting.charts.LineChart
@@ -62,6 +57,7 @@ import com.github.mikephil.charting.formatter.ValueFormatter
 import java.time.LocalDate
 import java.time.LocalDateTime
 import com.example.parkingappfront_end.model.IndexAxisValueFormatter
+import com.example.parkingappfront_end.ui.driver.ParkingSpaceThumbnail
 
 @Composable
 fun MainStatisticView(

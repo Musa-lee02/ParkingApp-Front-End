@@ -1,18 +1,12 @@
 package com.example.parkingappfront_end.viewmodels
 
 import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.parkingappfront_end.SessionManager
 import com.example.parkingappfront_end.model.ParkingSpace
 import com.example.parkingappfront_end.model.Reservation
-import com.example.parkingappfront_end.model.Statistic
-import com.example.parkingappfront_end.repository.ParkingSpaceRep
-import com.example.parkingappfront_end.repository.ParkingSpotRep
 import com.example.parkingappfront_end.repository.ReservationRep
-import com.example.parkingappfront_end.ui.reservation.FilterType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -133,6 +127,20 @@ class ReservationViewModel(private val reservationRep: ReservationRep) : ViewMod
                 println(e)
             }
         }
+    }
+
+    fun deleteReservation(idRes: Long) {
+        viewModelScope.launch {
+            try {
+                val response = reservationRep.deleteReservation(idRes, SessionManager.user!!.id)
+                if (response.isSuccessful) {
+                    loadMyReservations()
+                }
+            } catch (e: Exception) {
+                println(e)
+            }
+        }
+
     }
 
 

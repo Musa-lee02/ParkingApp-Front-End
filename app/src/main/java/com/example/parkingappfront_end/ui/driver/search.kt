@@ -1,9 +1,8 @@
-package com.example.parkingappfront_end.ui.home
+package com.example.parkingappfront_end.ui.driver
 
 import android.content.Context
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Search
@@ -16,25 +15,20 @@ import androidx.compose.ui.unit.sp
 import java.time.LocalDateTime
 import java.time.ZoneId
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.ui.res.colorResource
-import com.example.parkingappfront_end.R
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.filled.AccessTime
-import androidx.compose.material.icons.filled.DateRange
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.ui.platform.LocalContext
 import com.example.parkingappfront_end.viewmodels.ParkingViewModel
 import com.example.parkingappfront_end.viewmodels.ReservationViewModel
-import java.lang.reflect.Array.set
 import java.time.LocalTime
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import java.time.LocalDate
@@ -43,10 +37,7 @@ import java.util.Calendar
 import android.app.DatePickerDialog
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.ui.graphics.Shape
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.window.Dialog
 
 
 @Composable

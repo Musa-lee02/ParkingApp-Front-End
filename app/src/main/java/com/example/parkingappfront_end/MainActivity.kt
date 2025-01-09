@@ -21,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.AutoGraph
+import androidx.compose.material.icons.filled.ConfirmationNumber
 import androidx.compose.material.icons.filled.LocalParking
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -60,12 +61,13 @@ import com.example.parkingappfront_end.repository.AuthRepository
 import com.example.parkingappfront_end.repository.ParkingSpaceRep
 import com.example.parkingappfront_end.repository.ParkingSpotRep
 import com.example.parkingappfront_end.repository.ReservationRep
+import com.example.parkingappfront_end.ui.driver.MainReservations
 import com.example.parkingappfront_end.ui.theme.ParkingAppFrontEndTheme
 import com.example.parkingappfront_end.ui.user.SignInUpScreen
-import com.example.parkingappfront_end.ui.home.ParkingSearchScreen
+import com.example.parkingappfront_end.ui.driver.ParkingSearchScreen
 import com.example.parkingappfront_end.ui.payment.PaymentScreen
-import com.example.parkingappfront_end.ui.reservation.MainSearchResults
-import com.example.parkingappfront_end.ui.reservation.MainStatisticView
+import com.example.parkingappfront_end.ui.driver.MainSearchResults
+import com.example.parkingappfront_end.ui.ownerSide.MainStatisticView
 import com.example.parkingappfront_end.ui.user.AccountManagerScreen
 import com.example.parkingappfront_end.ui.user.MyAccountScreen
 import com.example.parkingappfront_end.viewmodels.AccountViewModel
@@ -197,6 +199,13 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
 
             }
 
+
+            composable("myReservations") {
+                selectedIndex.value = 1
+                reservationViewModel.loadMyReservations()
+                MainReservations(reservationViewModel = reservationViewModel, navController = navController )
+            }
+
             composable("myStats") {
                 selectedIndex.value = 1
 
@@ -209,7 +218,6 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
                 )
 
             }
-
 
             composable("userAuth") {
                 selectedIndex.value = 2
@@ -301,70 +309,103 @@ fun TopBar(navHostController: NavHostController) {
 fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostController) {
     NavigationBar {
 
-        if (SessionManager.user != null && SessionManager.user!!.role != "ROLE_OWNER") {
-            NavigationBarItem(
-                selected = selectedIndex.value == 0,
-                onClick = {
-                    selectedIndex.value = 0
-                    navHostController.navigate("search") {
-                        popUpTo(navHostController.graph.startDestinationId) {
-                            saveState = true
+        if (SessionManager.user != null) {
+            if (SessionManager.user!!.role != "ROLE_OWNER") {
+                NavigationBarItem(
+                    selected = selectedIndex.value == 0,
+                    onClick = {
+                        selectedIndex.value = 0
+                        navHostController.navigate("search") {
+                            popUpTo(navHostController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Filled.Search,
+                            contentDescription = stringResource(R.string.app_name)
+                        )
+                    },
+                    label = {
+                        Text(text = "Cerca")
                     }
-                },
-                icon = {
-                    Icon(
-                        Icons.Filled.Search,
-                        contentDescription = stringResource(R.string.app_name)
-                    )
-                }
 
-            )
-        }
-        if (SessionManager.user != null  && SessionManager.user!!.role == "ROLE_OWNER") {
-            NavigationBarItem(
-                selected = selectedIndex.value == 0,
-                onClick = {
-                    selectedIndex.value = 0
-                    navHostController.navigate("myParkingSpaces") {
-                        popUpTo(navHostController.graph.startDestinationId) {
-                            saveState = true
+                )
+                NavigationBarItem(
+                    selected = selectedIndex.value == 1,
+                    onClick = {
+                        selectedIndex.value = 1
+                        navHostController.navigate("myReservations") {
+                            popUpTo(navHostController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Filled.ConfirmationNumber,
+                            contentDescription = stringResource(R.string.app_name),
+                        )
+                    },
+                    label = {
+                        Text(text = "Prenotazioni")
                     }
-                },
-                icon = {
-                    Icon(
-                        Icons.Filled.LocalParking,
-                        contentDescription = stringResource(R.string.app_name)
-                    )
-                }
-
-            )
-            NavigationBarItem(
-                selected = selectedIndex.value == 1,
-                onClick = {
-                    selectedIndex.value = 1
-                    navHostController.navigate("myStats") {
-                        popUpTo(navHostController.graph.startDestinationId) {
-                            saveState = true
+                )
+            }
+            if (SessionManager.user!!.role == "ROLE_OWNER") {
+                NavigationBarItem(
+                    selected = selectedIndex.value == 0,
+                    onClick = {
+                        selectedIndex.value = 0
+                        navHostController.navigate("myParkingSpaces") {
+                            popUpTo(navHostController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
                         }
-                        launchSingleTop = true
-                        restoreState = true
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Filled.LocalParking,
+                            contentDescription = stringResource(R.string.app_name)
+                        )
+                    },
+                    label = {
+                        Text(text = "Parcheggi")
                     }
-                },
-                icon = {
-                    Icon(
-                        Icons.Filled.AutoGraph,
-                        contentDescription = stringResource(R.string.app_name)
-                    )
-                }
 
-            )
+                )
+                NavigationBarItem(
+                    selected = selectedIndex.value == 1,
+                    onClick = {
+                        selectedIndex.value = 1
+                        navHostController.navigate("myStats") {
+                            popUpTo(navHostController.graph.startDestinationId) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Filled.AutoGraph,
+                            contentDescription = stringResource(R.string.app_name)
+                        )
+                    },
+                    label = {
+                        Text(text = "Profitti")
+                    }
 
+                )
+
+            }
         }
         NavigationBarItem(
             selected = selectedIndex.value == 2,
@@ -393,6 +434,9 @@ fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostContro
                     Icons.Filled.AccountCircle,
                     contentDescription = stringResource(R.string.app_name)
                 )
+            },
+            label = {
+                Text(text = "Account")
             }
 
         )

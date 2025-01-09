@@ -1,6 +1,6 @@
 package com.example.parkingappfront_end.model
 
-import com.example.parkingappfront_end.ui.reservation.FilterType
+import com.example.parkingappfront_end.ui.ownerSide.FilterType
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter

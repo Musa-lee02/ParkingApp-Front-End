@@ -14,5 +14,6 @@ class ReservationRep (private val reservationApiService: ReservationApiService){
 
     suspend fun addReservation(idUser: UUID, reservation: Reservation) = reservationApiService.add(idUser, reservation )
 
+    suspend fun deleteReservation(idRes: Long, idUser: UUID) = reservationApiService.delete(idRes, idUser)
 
 }
