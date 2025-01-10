@@ -37,6 +37,7 @@ import java.util.Calendar
 import android.app.DatePickerDialog
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
+import androidx.compose.material3.Surface
 import androidx.compose.ui.graphics.Shape
 
 
@@ -241,6 +242,49 @@ fun DateSelector(
         }
     }
 }
+@Composable
+fun TimeSelector(
+    label: String,
+    selectedTime: LocalTime,
+    onTimeSelected: (LocalTime) -> Unit,
+    modifier: Modifier = Modifier,
+    shape: RoundedCornerShape,
+    backgroundColor: Color = Color.Transparent,
+    borderColor: Color = MaterialTheme.colorScheme.outline
+) {
+    val context = LocalContext.current
+    var showDialog by remember { mutableStateOf(false) }
+
+
+    Surface(
+        modifier = modifier.clickable { showDialog = true },
+        shape = shape,
+        tonalElevation = 2.dp,
+        color = backgroundColor,
+        border = BorderStroke(1.dp, borderColor)
+    ) {
+        Column(modifier = Modifier.padding(8.dp)) {
+            Text(text = label, style = MaterialTheme.typography.labelMedium)
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(
+                text = selectedTime.format(DateTimeFormatter.ofPattern("HH:mm")),
+                style = MaterialTheme.typography.bodyLarge,
+                modifier = Modifier.padding(horizontal = 8.dp))
+            if (showDialog) {
+                TimePickerDialog(
+                    context = context,
+                    selectedTime = selectedTime,
+                    onTimeSelected = {
+                        onTimeSelected(it)
+                        showDialog = false
+                    },
+                    onDismiss = { showDialog = false }
+                )
+            }
+        }
+    }
+}
 
 
 
@@ -282,42 +326,6 @@ fun datePickerDialog(
 
 
 
-@Composable
-fun TimeSelector(
-    label: String,
-    selectedTime: LocalTime,
-    onTimeSelected: (LocalTime) -> Unit,
-    modifier: Modifier = Modifier,
-    shape: RoundedCornerShape
-) {
-    val context = LocalContext.current
-    var showDialog by remember { mutableStateOf(false) }
-
-    OutlinedTextField(
-        value = selectedTime.format(DateTimeFormatter.ofPattern("HH:mm")),
-        onValueChange = {},
-        label = { Text(label) },
-        modifier = modifier,
-        readOnly = true,
-        trailingIcon = {
-            IconButton(onClick = { showDialog = true }) {
-                Icon(Icons.Filled.AccessTime, contentDescription = "Time Icon")
-            }
-        }
-    )
-
-    if (showDialog) {
-        TimePickerDialog(
-            context = context,
-            selectedTime = selectedTime,
-            onTimeSelected = {
-                onTimeSelected(it)
-                showDialog = false
-            },
-            onDismiss = { showDialog = false }
-        )
-    }
-}
 
 
 fun TimePickerDialog(

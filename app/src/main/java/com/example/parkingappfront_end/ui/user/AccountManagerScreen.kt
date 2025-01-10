@@ -101,7 +101,9 @@ fun AccountManagerScreen(viewModel: AccountViewModel, navHostController: NavHost
 
 @Composable
 fun UserCard(userDetails: UserDetails){
-    Row(modifier = Modifier.fillMaxWidth()) {
+    Row(modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
+    ) {
         Column() {
             Row(horizontalArrangement = Arrangement.Start) {
                 Text(
@@ -126,14 +128,6 @@ fun OptionsSection(navHostController: NavHostController){
                     popUpTo("my-account") { saveState = true }
                 }}) {
                     Text(text = "My Account")
-                }
-                if(SessionManager.user != null && SessionManager.user!!.role!="ROLE_ADMIN") {
-                    Spacer(modifier = Modifier.width(20.dp))
-                    Button(onClick = {navHostController.navigate("orders"){
-                        popUpTo("account-manager") { saveState = true }
-                    }}) {
-                        Text(text = "Past Reservations")
-                    }
                 }
             }
         }

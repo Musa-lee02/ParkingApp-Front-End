@@ -196,7 +196,7 @@ fun PaymentMethodTypeRadioGroup(
                     onClick = { onPaymentMethodTypeSelected(type) }
                 )
                 Spacer(modifier = Modifier.width(8.dp))
-                Text(text = type.displayName)
+                Text(text = type.name)
             }
             Spacer(modifier = Modifier.height(8.dp))
         }

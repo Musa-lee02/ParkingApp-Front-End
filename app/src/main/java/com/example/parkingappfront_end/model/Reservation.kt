@@ -6,6 +6,7 @@ data class Reservation(
     val id: Long?,
     val user: User,
     val price: Double,
+    val paymentMethod: PaymentMethodType,
     val parkingSpotId: Long,
     val licensePlate: String,
     val startDate: LocalDateTime,

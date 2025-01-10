@@ -18,6 +18,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -291,6 +292,136 @@ fun SpaceStatsDetails(
                 textAlign = TextAlign.Center
             )
         }
+        Spacer(modifier = Modifier.height(20.dp))
+
+        if (spotStats?.isNotEmpty() == true) {
+            val totalReservations = spotStats.values.sum()
+            val totalRevenue = parkingSpace.parkingSpots.sumOf { spot ->
+                spot.reservations?.filter { r ->
+                    r.startDate.toLocalDate() >= startDate && r.endDate.toLocalDate() <= endDate
+                }?.sumOf { it.price } ?: 0.0
+            } ?: 0.0
+
+
+            val mostSoldSpot = spotStats.maxByOrNull { it.value }
+            val mostSoldSpotNumber = mostSoldSpot?.key
+            val mostSoldSpotReservations = mostSoldSpot?.value ?: 0
+            val mostSoldSpotPercentage = if (totalReservations > 0) {
+                (mostSoldSpotReservations.toDouble() / totalReservations * 100).toInt()
+            } else {
+                0
+            }
+
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp)
+            ) {
+                Text(
+                    text = "📊 Resoconto delle prenotazioni:",
+                    fontSize = 22.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.primary
+                )
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Totale prenotazioni
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Totale prenotazioni:",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                    Text(
+                        text = "$totalReservations",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
+                Spacer(modifier = Modifier.height(8.dp))
+
+                // Totale ricavi
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Totale ricavi:",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium
+                    )
+                    Text(
+                        text = "€${String.format("%.2f", totalRevenue)}",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color(0xFF0070BA)
+                    )
+                }
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Posto auto più venduto
+                if (mostSoldSpotNumber != null) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Posto più venduto:",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Text(
+                            text = "$mostSoldSpotNumber ($mostSoldSpotReservations pren. )",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Text(
+                            text = "Percentuale del totale:",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                        Text(
+                            text = "$mostSoldSpotPercentage%",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.Green
+                        )
+                    }
+                } else {
+                    Text(
+                        text = "Nessun posto auto venduto",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Medium,
+                        color = MaterialTheme.colorScheme.error
+                    )
+                }
+            }
+        } else {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                Text(
+                    text = "🚫 Nessun resoconto disponibile",
+                    fontSize = 18.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.error
+                )
+            }
+        }
+
     }
 }
 

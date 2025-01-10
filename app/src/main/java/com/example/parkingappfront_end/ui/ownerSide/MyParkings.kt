@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -25,6 +26,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 
 
@@ -205,14 +207,18 @@ fun AddParkingSpotDialog(
                         OutlinedTextField(
                             value = basePrice,
                             onValueChange = {
-                                basePrice = it
-                                basePriceValid = it.isNotBlank()
+                                    newText ->
+                                if (newText.all { it.isDigit() }) {
+                                    basePrice = newText
+                                    basePriceValid = newText.isNotBlank()
+                                }
                             },
                             label = { Text("Prezzo base") },
                             modifier = Modifier
                                 .fillMaxWidth(0.9f)
                                 .padding(bottom = 8.dp),
                             shape = RoundedCornerShape(16.dp),
+                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number)
                         )
 
                     }

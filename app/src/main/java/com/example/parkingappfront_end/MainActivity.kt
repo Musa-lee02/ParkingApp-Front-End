@@ -185,6 +185,11 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
                 )
             }
 
+            composable("payment") { //route = "home" è una stringa che serve a indicare la destinazione, quando si preme il pulsante Home si va alla destinazione "home"
+
+                PaymentScreen(navController = navController)
+            }
+
             composable("myParkingSpaces") {
                 selectedIndex.value = 0
 

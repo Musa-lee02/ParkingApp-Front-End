@@ -19,103 +19,70 @@ class ReservationViewModel(private val reservationRep: ReservationRep) : ViewMod
     private val _myReservations = MutableStateFlow<List<Reservation>>(emptyList())
     val myReservations: StateFlow<List<Reservation>> = _myReservations.asStateFlow()
 
-    private val _timelyStats = MutableStateFlow<HashMap<String, Double>>(HashMap())
-    val timelyStats: StateFlow<HashMap<String, Double>> = _timelyStats.asStateFlow()
-
-    private val _weeklyStats = MutableStateFlow<HashMap<String, Double>>(HashMap())
-    val weeklyStats: StateFlow<HashMap<String, Double>> = _weeklyStats.asStateFlow()
-
-    private val _monthlyStats = MutableStateFlow<HashMap<String, Double>>(HashMap())
-    val monthlyStats: StateFlow<HashMap<String, Double>> = _monthlyStats.asStateFlow()
-
-    private val _allReservations = MutableStateFlow<List<Reservation>>(emptyList())
-    val allReservations: StateFlow<List<Reservation>> = _allReservations.asStateFlow()
-
     private val _filteredStats = MutableStateFlow<Map<LocalDate, Double>>(emptyMap())
     val filteredStats: StateFlow<Map<LocalDate, Double>> = _filteredStats.asStateFlow()
 
+    // Filtra le statistiche per intervallo di date
     fun filterStatsByDate(parkingSpace: ParkingSpace, startDate: LocalDate, endDate: LocalDate) {
         viewModelScope.launch {
             try {
                 val startDateTime = startDate.atStartOfDay()
                 val endDateTime = endDate.atTime(LocalTime.MAX)
 
-                val statsMap = mutableMapOf<LocalDate, Double>()
+                val statsMap = parkingSpace.parkingSpots?.flatMap { spot ->
+                    spot.reservations.orEmpty()
+                        .filter { it.startDate >= startDateTime && it.endDate <= endDateTime }
+                        .map { it.startDate.toLocalDate() to it.price }
+                }?.groupBy({ it.first }, { it.second })
+                    ?.mapValues { (_, prices) -> prices.sum() }
+                    ?: emptyMap()
 
-                Log.d("ReservationViewModel", "ParkingSpots: ${parkingSpace.parkingSpots?.size}")
-
-                parkingSpace.parkingSpots?.forEach { spot ->
-                    Log.d("ReservationViewModel", "Spot Reservations: ${spot.reservations?.size}")
-                    spot.reservations
-                        ?.filter { it.startDate >= startDateTime && it.endDate <= endDateTime }
-                        ?.forEach { reservation ->
-                            Log.d("ReservationViewModel", "Reservation price: ${reservation.price}")
-                            val date = reservation.startDate.toLocalDate()
-                            val currentTotal = statsMap.getOrDefault(date, 0.0)
-                            val newTotal = currentTotal + reservation.price
-                            statsMap[date] = newTotal
-                            Log.d("ReservationViewModel", "Date: $date, Current: $currentTotal, New: $newTotal")
-                        }
-                }
-
-                _filteredStats.value = fillMissingDates(statsMap.toSortedMap(), startDate, endDate)
-                Log.d("ReservationViewModel", "Last Filtered Stats: ${_filteredStats.value}")
+                _filteredStats.value = fillMissingDates(statsMap, startDate, endDate)
             } catch (e: Exception) {
-                Log.e("ReservationViewModel", "Error: ${e.message}", e)
-                e.printStackTrace()
+                Log.e("ReservationViewModel", "Errore durante il filtraggio: ${e.message}", e)
             }
         }
     }
 
+    // Riempi date mancanti con valore 0.0
     private fun fillMissingDates(
         statsMap: Map<LocalDate, Double>,
         startDate: LocalDate,
         endDate: LocalDate
     ): Map<LocalDate, Double> {
-        val filledMap = mutableMapOf<LocalDate, Double>()
-        var currentDate = startDate
-
-        while (!currentDate.isAfter(endDate)) {
-            filledMap[currentDate] = statsMap[currentDate] ?: 0.0
-            currentDate = currentDate.plusDays(1)
-        }
-
-        return filledMap.toSortedMap()
+        return (startDate..endDate).associateWith { statsMap[it] ?: 0.0 }
     }
 
-    fun generateLabels(startDate: LocalDate, endDate: LocalDate): List<LocalDate> {
-        val labels = mutableListOf<LocalDate>()
-        var currentDate = startDate
-        while (!currentDate.isAfter(endDate)) {
-            labels.add(currentDate)
-            currentDate = currentDate.plusDays(1)
-        }
-        return labels
-    }
-
-    // Funzione per creare un mappa delle statistiche per il grafico
+    // Estrai statistiche per il grafico
     fun getStatsForChart(startDate: LocalDate, endDate: LocalDate): Map<LocalDate, Double> {
         val labels = generateLabels(startDate, endDate)
         val stats = _filteredStats.value
-        return labels.associateWith { date -> stats[date] ?: 0.0 }
+        return labels.associateWith { stats[it] ?: 0.0 }
     }
 
+    // Genera etichette per le date
+    fun generateLabels(startDate: LocalDate, endDate: LocalDate): List<LocalDate> {
+        return (startDate..endDate).toList()
+    }
+
+    // Carica le prenotazioni dell'utente
     fun loadMyReservations() {
         viewModelScope.launch {
             try {
                 val response = reservationRep.getByUser(SessionManager.user!!.id)
-                if (response.isSuccessful) {
-                    _myReservations.value = response.body()!!
+                _myReservations.value = if (response.isSuccessful) {
+                    response.body()?.sortedByDescending { it.startDate } ?: emptyList()
                 } else {
-                    _myReservations.value = emptyList()
+                    emptyList()
                 }
             } catch (e: Exception) {
+                Log.e("ReservationViewModel", "Errore nel caricamento: ${e.message}", e)
                 _myReservations.value = emptyList()
             }
         }
     }
 
-
+    // Aggiungi una prenotazione
     fun addReservation(reservation: Reservation) {
         viewModelScope.launch {
             try {
@@ -124,11 +91,12 @@ class ReservationViewModel(private val reservationRep: ReservationRep) : ViewMod
                     loadMyReservations()
                 }
             } catch (e: Exception) {
-                println(e)
+                Log.e("ReservationViewModel", "Errore nell'aggiunta: ${e.message}", e)
             }
         }
     }
 
+    // Elimina una prenotazione
     fun deleteReservation(idRes: Long) {
         viewModelScope.launch {
             try {
@@ -137,11 +105,18 @@ class ReservationViewModel(private val reservationRep: ReservationRep) : ViewMod
                     loadMyReservations()
                 }
             } catch (e: Exception) {
-                println(e)
+                Log.e("ReservationViewModel", "Errore nell'eliminazione: ${e.message}", e)
             }
         }
-
     }
 
+    // Estensione per generare un intervallo di date
+    private operator fun LocalDate.rangeTo(other: LocalDate): Sequence<LocalDate> = sequence {
+        var current = this@rangeTo
+        while (!current.isAfter(other)) {
+            yield(current)
+            current = current.plusDays(1)
+        }
+    }
 
 }

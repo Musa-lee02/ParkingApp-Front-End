@@ -103,7 +103,9 @@ fun MyAccountScreen(accountViewModel: AccountViewModel, navController: NavContro
             LazyColumn(
                 modifier = Modifier
                     .fillMaxSize()
-                    .padding(paddingValues), verticalArrangement = Arrangement.SpaceAround
+                    .padding(paddingValues),
+                verticalArrangement = Arrangement.SpaceAround,
+                horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 item {
                     Spacer(modifier = Modifier.height(20.dp))
@@ -142,8 +144,13 @@ fun UserInfo(userDetails: UserDetails?, accountViewModel: AccountViewModel, navC
                 isEditingPhoneNumber = false
                 isEditingEmail = false
             })
-        }) {
-        Row(modifier = Modifier.fillMaxWidth()){
+        },
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
+        Row(modifier = Modifier.fillMaxWidth(),
+        horizontalArrangement = Arrangement.Center
+        ){
             if (userDetails != null) {
                 Text(
                     text =  "${userDetails.firstName} ${userDetails.lastName}",
@@ -153,7 +160,9 @@ fun UserInfo(userDetails: UserDetails?, accountViewModel: AccountViewModel, navC
             }
         }
         Spacer(modifier = Modifier.height(20.dp))
-        Row(modifier = Modifier.fillMaxWidth()){
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center
+        ){
             Column {
 
                 Text(
@@ -210,7 +219,8 @@ fun UserInfo(userDetails: UserDetails?, accountViewModel: AccountViewModel, navC
 
         }
         Spacer(modifier = Modifier.height(15.dp))
-        Row(modifier = Modifier.fillMaxWidth()){
+        Row(modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center){
             EditScreen("Email", isEditingEmail, accountViewModel, onSubmit = {isEditingEmail=false; onLogout(); SessionManager.clearSession(); navController.navigate("userAuth"){
                 popUpTo(0) {inclusive= true}
             }})
