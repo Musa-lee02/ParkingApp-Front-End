@@ -37,7 +37,7 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.example.parkingappfront_end.model.ParkingSpace
-import com.example.parkingappfront_end.model.SpacesSortCriterias
+import com.example.parkingappfront_end.model.domain.SpacesSortCriterias
 import com.example.parkingappfront_end.viewmodels.ParkingViewModel
 import com.example.parkingappfront_end.viewmodels.ReservationViewModel
 import androidx.compose.runtime.Composable

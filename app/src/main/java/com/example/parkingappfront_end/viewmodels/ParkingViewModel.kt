@@ -9,8 +9,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.parkingappfront_end.SessionManager
 import com.example.parkingappfront_end.model.Address
-import com.example.parkingappfront_end.model.SpacesSortCriterias
+import com.example.parkingappfront_end.model.domain.SpacesSortCriterias
 import com.example.parkingappfront_end.model.UserId
+import com.example.parkingappfront_end.model.domain.SpotType
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -28,7 +29,7 @@ class ParkingViewModel(private val parkingSpaceRep : ParkingSpaceRep, private va
     val parkingSpaces: StateFlow<List<ParkingSpace>> = _parkingSpaces.asStateFlow()
 
     private val _sortedPSBy = MutableStateFlow<List<Pair<ParkingSpace, SpacesSortCriterias>>>(emptyList())
-    val sortedPSBy: StateFlow<List<Pair<ParkingSpace,SpacesSortCriterias>>> = _sortedPSBy.asStateFlow()
+    val sortedPSBy: StateFlow<List<Pair<ParkingSpace, SpacesSortCriterias>>> = _sortedPSBy.asStateFlow()
 
     private val _isSortedByDistance = MutableStateFlow<Boolean>(false)
     val isSortedByDistance: StateFlow<Boolean> = _isSortedByDistance.asStateFlow()
@@ -175,12 +176,13 @@ class ParkingViewModel(private val parkingSpaceRep : ParkingSpaceRep, private va
         }
     }
 
-        fun addParkingSpot(number: String, basePrice: Double, spaceId: Long) {
+        fun addParkingSpot(number: String, basePrice: Double, type: SpotType ,spaceId: Long) {
             viewModelScope.launch {
                 try {
                     val parkingSpot = ParkingSpot(
                         id = null,
                         number = number,
+                        type = type,
                         basePrice = basePrice,
                         parkingSpaceId = spaceId
                     )

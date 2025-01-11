@@ -12,7 +12,7 @@ import com.example.parkingappfront_end.model.User
 import com.example.parkingappfront_end.model.UserId
 
 import com.auth0.android.jwt.JWT
-import com.example.parkingappfront_end.model.Position
+import com.example.parkingappfront_end.model.domain.Position
 import com.example.parkingappfront_end.network.RetrofitClient
 import com.example.parkingappfront_end.repository.AuthRepository
 import com.google.gson.Gson
@@ -21,7 +21,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 import java.util.UUID
-import kotlin.random.Random
 
 
 object SessionManager {

@@ -51,7 +51,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.example.parkingappfront_end.model.SearchParams
+import com.example.parkingappfront_end.model.domain.SearchParams
 
 import com.example.parkingappfront_end.network.RetrofitClient
 import com.example.parkingappfront_end.repository.AccountRepository
@@ -207,7 +207,7 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
 
             composable("myReservations") {
                 selectedIndex.value = 1
-                reservationViewModel.loadMyReservations()
+                reservationViewModel.loadReservationsWithDetails()
                 MainReservations(reservationViewModel = reservationViewModel, navController = navController )
             }
 

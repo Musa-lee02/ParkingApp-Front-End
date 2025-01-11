@@ -2,26 +2,17 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.launch
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.parkingappfront_end.SessionManager
 import com.example.parkingappfront_end.model.CardProvider
 import com.example.parkingappfront_end.model.PaymentMethod
-import com.example.parkingappfront_end.model.PaymentMethodType
+import com.example.parkingappfront_end.model.domain.PaymentMethodType
 import com.example.parkingappfront_end.model.SavePaymentMethod
 import com.example.parkingappfront_end.repository.CheckoutRepository
 import com.example.parkingappfront_end.utils.ErrorMessageParser
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.stateIn
-import org.json.JSONObject
 import java.net.SocketTimeoutException
 
 

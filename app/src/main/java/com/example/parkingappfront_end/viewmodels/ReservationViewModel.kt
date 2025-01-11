@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.parkingappfront_end.SessionManager
 import com.example.parkingappfront_end.model.ParkingSpace
 import com.example.parkingappfront_end.model.Reservation
+import com.example.parkingappfront_end.model.ReservationWithDetails
 import com.example.parkingappfront_end.repository.ReservationRep
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,8 +17,8 @@ import java.time.LocalTime
 
 class ReservationViewModel(private val reservationRep: ReservationRep) : ViewModel() {
 
-    private val _myReservations = MutableStateFlow<List<Reservation>>(emptyList())
-    val myReservations: StateFlow<List<Reservation>> = _myReservations.asStateFlow()
+    private val _myReservations = MutableStateFlow<List<ReservationWithDetails>>(emptyList())
+    val myReservations: StateFlow<List<ReservationWithDetails>> = _myReservations.asStateFlow()
 
     private val _filteredStats = MutableStateFlow<Map<LocalDate, Double>>(emptyMap())
     val filteredStats: StateFlow<Map<LocalDate, Double>> = _filteredStats.asStateFlow()
@@ -66,12 +67,31 @@ class ReservationViewModel(private val reservationRep: ReservationRep) : ViewMod
     }
 
     // Carica le prenotazioni dell'utente
+    /*
     fun loadMyReservations() {
         viewModelScope.launch {
             try {
                 val response = reservationRep.getByUser(SessionManager.user!!.id)
                 _myReservations.value = if (response.isSuccessful) {
                     response.body()?.sortedByDescending { it.startDate } ?: emptyList()
+                } else {
+                    emptyList()
+                }
+            } catch (e: Exception) {
+                Log.e("ReservationViewModel", "Errore nel caricamento: ${e.message}", e)
+                _myReservations.value = emptyList()
+            }
+        }
+    }*/
+
+    fun loadReservationsWithDetails() {
+        viewModelScope.launch {
+            try {
+                val response = reservationRep.getWithDetails(SessionManager.user!!.id)
+                _myReservations.value = if (response.isSuccessful) {
+
+                   response.body()?.sortedByDescending { it.startDate } ?: emptyList()
+
                 } else {
                     emptyList()
                 }
@@ -88,7 +108,7 @@ class ReservationViewModel(private val reservationRep: ReservationRep) : ViewMod
             try {
                 val response = reservationRep.addReservation(SessionManager.user!!.id, reservation)
                 if (response.isSuccessful) {
-                    loadMyReservations()
+                    loadReservationsWithDetails()
                 }
             } catch (e: Exception) {
                 Log.e("ReservationViewModel", "Errore nell'aggiunta: ${e.message}", e)
@@ -102,7 +122,7 @@ class ReservationViewModel(private val reservationRep: ReservationRep) : ViewMod
             try {
                 val response = reservationRep.deleteReservation(idRes, SessionManager.user!!.id)
                 if (response.isSuccessful) {
-                    loadMyReservations()
+                    loadReservationsWithDetails()
                 }
             } catch (e: Exception) {
                 Log.e("ReservationViewModel", "Errore nell'eliminazione: ${e.message}", e)

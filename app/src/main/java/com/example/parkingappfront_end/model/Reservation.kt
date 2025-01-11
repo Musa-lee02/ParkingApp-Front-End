@@ -1,5 +1,6 @@
 package com.example.parkingappfront_end.model
 
+import com.example.parkingappfront_end.model.domain.PaymentMethodType
 import java.time.LocalDateTime
 
 data class Reservation(

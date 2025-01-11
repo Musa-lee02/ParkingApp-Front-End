@@ -4,7 +4,7 @@ package com.example.parkingappfront_end.network
 import com.example.parkingappfront_end.SessionManager
 import com.example.parkingappfront_end.model.CardProvider
 import com.example.parkingappfront_end.model.CardProviderAdapter
-import com.example.parkingappfront_end.model.PaymentMethodType
+import com.example.parkingappfront_end.model.domain.PaymentMethodType
 import com.example.parkingappfront_end.model.PaymentMethodTypeAdapter
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

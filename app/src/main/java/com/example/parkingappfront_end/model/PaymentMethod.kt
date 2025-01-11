@@ -1,5 +1,7 @@
 package com.example.parkingappfront_end.model
 
+import com.example.parkingappfront_end.model.domain.PaymentMethodType
+
 data class PaymentMethod (
 
     val id: Long,
