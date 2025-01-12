@@ -260,8 +260,6 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
                         adminViewModel.onLogout()
                     })
             }
-
-
         }
 
     }
