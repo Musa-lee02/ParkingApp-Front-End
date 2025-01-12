@@ -1,6 +1,7 @@
 package com.example.parkingappfront_end.network
 
 
+import android.util.Log
 import com.example.parkingappfront_end.SessionManager
 import com.example.parkingappfront_end.model.CardProvider
 import com.example.parkingappfront_end.model.CardProviderAdapter
@@ -17,12 +18,17 @@ import javax.net.ssl.X509TrustManager
 import com.google.gson.GsonBuilder
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.converter.gson.GsonConverterFactory
+import java.net.NetworkInterface
 import java.time.LocalDateTime
 
 
 object RetrofitClient {
 
     private const val Emulator1_URL = "https://10.0.2.2:8081/api/v1/"
+
+    private var Phone2_URL = "https://"+getLocalIpAddress()+":8081/api/v1/"
+
+    private var Phone_URL = "https://192.168.1.50:8081/api/v1/"
 
     val client: OkHttpClient by lazy {
         val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
@@ -60,7 +66,7 @@ object RetrofitClient {
 
     val retrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(Emulator1_URL)
+            .baseUrl(Phone_URL) //Emulator_URL
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(
                 GsonBuilder()
@@ -73,6 +79,7 @@ object RetrofitClient {
                     .create()
             ))
             .build()
+
     }
 
     val authApiService: AuthApiService by lazy {
@@ -96,6 +103,27 @@ object RetrofitClient {
 
     val reservationApiService: ReservationApiService by lazy {
         retrofit.create(ReservationApiService::class.java)
+    }
+
+
+    fun getLocalIpAddress(): String? {
+        try {
+            val interfaces = NetworkInterface.getNetworkInterfaces()
+            while (interfaces.hasMoreElements()) {
+                val networkInterface = interfaces.nextElement()
+                val addresses = networkInterface.inetAddresses
+                while (addresses.hasMoreElements()) {
+                    val address = addresses.nextElement()
+                    if (!address.isLoopbackAddress && address.isSiteLocalAddress) {
+                        Log.d("RetrofitClient", "Local IP Address: ${address.hostAddress}")
+                        Log.d("RetrofitClient", "Emulator Ip Address: ${Emulator1_URL}")
+                        return address.hostAddress
+                    }}
+            }
+        } catch(e: Exception) {
+            e.printStackTrace()
+        }
+        return null
     }
 
 

@@ -89,6 +89,14 @@ class RegistrationViewModel(private val registrationRepository: AuthRepository) 
                     Log.d(TAG, "response: $response")
                     message = "Admin"
                 }
+
+                if(registrationData.value.admin.isNotBlank() && registrationData.value.admin == "1111") {
+                    Log.d(TAG, "registrazione: tentativo owner $user")
+                    response = registrationRepository.registerOwner(user)
+                    Log.d(TAG, "response: $response")
+                    message = "Owner"
+                }
+
                 else {
                     Log.d(TAG, "registrazione: tentativo user$user")
                     response = registrationRepository.registerUser(user)

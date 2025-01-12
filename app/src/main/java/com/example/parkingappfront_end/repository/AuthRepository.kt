@@ -13,6 +13,8 @@ class AuthRepository (private val apiService : AuthApiService) {
     suspend fun loginUser(credentials: Credential) = apiService.login(credentials)
 
     suspend fun registerUser(user: SaveUser) = apiService.registerUser(user)
+    suspend fun registerOwner(user: SaveUser) = apiService.registerOwner(user)
+
 
     suspend fun registerAdmin(user: SaveUser) = apiService.registerAdmin(user)
 

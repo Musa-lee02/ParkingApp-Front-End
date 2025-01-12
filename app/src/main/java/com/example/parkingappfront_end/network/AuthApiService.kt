@@ -25,6 +25,9 @@ interface AuthApiService {
     @POST("auth/register")
     suspend fun registerUser(@Body user: SaveUser): Response<UserDetails>
 
+    @POST("auth/registerOwner")
+    suspend fun registerOwner(@Body user: SaveUser): Response<UserDetails>
+
     @POST("admin/register")
     suspend fun registerAdmin(@Body user: SaveUser): Response<UserDetails>
 
