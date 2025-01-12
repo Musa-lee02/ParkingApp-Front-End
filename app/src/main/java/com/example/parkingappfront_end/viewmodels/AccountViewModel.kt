@@ -28,7 +28,6 @@ class AccountViewModel(private val repository: AccountRepository): ViewModel() {
     private val _userOrders = MutableStateFlow<List<OrderSummary>>(emptyList())
     val userOrders: StateFlow<List<OrderSummary>> get() = _userOrders
 
-
     private val _onError = MutableLiveData<String>()
     val onError: LiveData<String> get() = _onError
 
@@ -92,39 +91,6 @@ class AccountViewModel(private val repository: AccountRepository): ViewModel() {
                     _errorMessage.value = "Error while changing user $key."
             }
         }
-    }
-
-    fun fetchOrders() {
-        viewModelScope.launch {
-            _isLoadingOrders.value = true
-            try {
-                val user = SessionManager.user
-
-                if (user != null && user.role != "ROLE_ADMIN") {
-                    val response = repository.getUserOrders(user.id)
-                    if (response.isSuccessful) {
-                        val responseBody = response.body() as? List<OrderSummary>
-                        if (responseBody != null) {
-                            _userOrders.value = responseBody
-                        } else {
-                            _errorMessage.value = "Error while fetching the orders"
-                        }
-                    } else {
-                        _errorMessage.value = "Error while fetching the orders"
-                    }
-                } else {
-                    _errorMessage.value = "Session Error"
-                }
-            } catch (e: Exception) {
-                if (e is SocketTimeoutException)
-                    _errorMessage.value = "Error while fetching the orders: Connection problem."
-                else
-                    _errorMessage.value = "Error while fetching the orders."
-            } finally {
-                _isLoadingOrders.value = false
-            }
-        }
-
     }
 
     fun changePassword(password: PasswordUser){

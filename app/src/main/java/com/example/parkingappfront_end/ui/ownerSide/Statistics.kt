@@ -41,7 +41,7 @@ import com.example.parkingappfront_end.model.domain.SpacesSortCriterias
 import com.example.parkingappfront_end.viewmodels.ParkingViewModel
 import com.example.parkingappfront_end.viewmodels.ReservationViewModel
 import androidx.compose.runtime.Composable
-import com.example.parkingappfront_end.model.DateAxisValueFormatter
+import com.example.parkingappfront_end.model.domain.DateAxisValueFormatter
 import com.example.parkingappfront_end.ui.driver.DateSelector
 import com.github.mikephil.charting.animation.Easing
 import com.github.mikephil.charting.charts.BarChart
@@ -57,7 +57,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import java.time.LocalDate
 import java.time.LocalDateTime
-import com.example.parkingappfront_end.model.IndexAxisValueFormatter
+import com.example.parkingappfront_end.model.domain.IndexAxisValueFormatter
 import com.example.parkingappfront_end.ui.driver.ParkingSpaceThumbnail
 
 @Composable

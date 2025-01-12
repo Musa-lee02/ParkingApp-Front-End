@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.parkingappfront_end.app-mergeDebugResources-80:/values-v16/values-v16.xml",
+            "outputFile": "com.example.parkingappfront_end.app-mergeDebugResources-83:/values-v16/values-v16.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\samue\\.gradle\\caches\\8.9\\transforms\\fd5cd1972d5103d05d92a8bf82879280\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
+                    "source": "C:\\Users\\samue\\.gradle\\caches\\8.9\\transforms\\7bc8229db3c7969cbd9806dda98ec523\\transformed\\appcompat-1.6.1\\res\\values-v16\\values-v16.xml",
                     "from": {
                         "startLines": "2",
                         "startColumns": "4",

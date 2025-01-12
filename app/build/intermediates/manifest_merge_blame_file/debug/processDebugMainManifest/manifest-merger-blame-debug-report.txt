@@ -17,335 +17,536 @@
 13    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
 13-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:7:5-76
 13-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:7:22-73
-14    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
-14-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\601a90ad7181808552816bbd3caccf00\transformed\places-3.5.0\AndroidManifest.xml:9:5-81
-14-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\601a90ad7181808552816bbd3caccf00\transformed\places-3.5.0\AndroidManifest.xml:9:22-78
-15    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
-15-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\601a90ad7181808552816bbd3caccf00\transformed\places-3.5.0\AndroidManifest.xml:10:5-79
-15-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\601a90ad7181808552816bbd3caccf00\transformed\places-3.5.0\AndroidManifest.xml:10:22-76
-16    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Include required permissions for Google Maps API to run. -->
-16-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\601a90ad7181808552816bbd3caccf00\transformed\places-3.5.0\AndroidManifest.xml:11:5-76
-16-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\601a90ad7181808552816bbd3caccf00\transformed\places-3.5.0\AndroidManifest.xml:11:22-73
-17    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-17-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\f5a2e3325bff13462db4f0f0fe7b8ebf\transformed\play-services-maps-17.0.0\AndroidManifest.xml:23:5-79
-17-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\f5a2e3325bff13462db4f0f0fe7b8ebf\transformed\play-services-maps-17.0.0\AndroidManifest.xml:23:22-76
-18
-19    <uses-feature
-19-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\f5a2e3325bff13462db4f0f0fe7b8ebf\transformed\play-services-maps-17.0.0\AndroidManifest.xml:26:5-28:35
-20        android:glEsVersion="0x00020000"
-20-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\f5a2e3325bff13462db4f0f0fe7b8ebf\transformed\play-services-maps-17.0.0\AndroidManifest.xml:27:9-41
-21        android:required="true" />
-21-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\f5a2e3325bff13462db4f0f0fe7b8ebf\transformed\play-services-maps-17.0.0\AndroidManifest.xml:28:9-32
-22
-23    <uses-permission android:name="com.android.vending.BILLING" />
-23-->[com.android.billingclient:billing-ktx:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\217f9b3ed131f2ca9eb72529293437aa\transformed\billing-ktx-7.1.1\AndroidManifest.xml:9:5-67
-23-->[com.android.billingclient:billing-ktx:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\217f9b3ed131f2ca9eb72529293437aa\transformed\billing-ktx-7.1.1\AndroidManifest.xml:9:22-64
+14    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+14-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:8:5-77
+14-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:8:22-74
+15    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+15-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:9:5-79
+15-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:9:22-76
+16    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+16-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\0f784e9d10f1c080340049fa2d57f0e2\transformed\places-3.5.0\AndroidManifest.xml:9:5-81
+16-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\0f784e9d10f1c080340049fa2d57f0e2\transformed\places-3.5.0\AndroidManifest.xml:9:22-78
+17    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+17-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\0f784e9d10f1c080340049fa2d57f0e2\transformed\places-3.5.0\AndroidManifest.xml:10:5-79
+17-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\0f784e9d10f1c080340049fa2d57f0e2\transformed\places-3.5.0\AndroidManifest.xml:10:22-76
+18    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Include required permissions for Google Maps API to run. -->
+18-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\0f784e9d10f1c080340049fa2d57f0e2\transformed\places-3.5.0\AndroidManifest.xml:11:5-76
+18-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\0f784e9d10f1c080340049fa2d57f0e2\transformed\places-3.5.0\AndroidManifest.xml:11:22-73
+19    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+19-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\7cf9f03c4e784de80d473fcae9162eed\transformed\play-services-maps-17.0.0\AndroidManifest.xml:23:5-79
+19-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\7cf9f03c4e784de80d473fcae9162eed\transformed\play-services-maps-17.0.0\AndroidManifest.xml:23:22-76
+20
+21    <uses-feature
+21-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\7cf9f03c4e784de80d473fcae9162eed\transformed\play-services-maps-17.0.0\AndroidManifest.xml:26:5-28:35
+22        android:glEsVersion="0x00020000"
+22-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\7cf9f03c4e784de80d473fcae9162eed\transformed\play-services-maps-17.0.0\AndroidManifest.xml:27:9-41
+23        android:required="true" />
+23-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\7cf9f03c4e784de80d473fcae9162eed\transformed\play-services-maps-17.0.0\AndroidManifest.xml:28:9-32
 24
-25    <queries>
-25-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:12:5-19:15
-26        <intent>
-26-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:13:9-15:18
-27            <action android:name="com.android.vending.billing.InAppBillingService.BIND" />
-27-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:14:13-91
-27-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:14:21-88
-28        </intent>
-29        <intent>
-29-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:16:9-18:18
-30            <action android:name="com.google.android.apps.play.billingtestcompanion.BillingOverrideService.BIND" />
-30-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:17:13-116
-30-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:17:21-113
-31        </intent>
-32    </queries>
-33
-34    <permission
-34-->[androidx.core:core:1.13.1] C:\Users\samue\.gradle\caches\8.9\transforms\327b39dda6a8fa851efe2ff4f94ba625\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
-35        android:name="com.example.parkingappfront_end.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
-35-->[androidx.core:core:1.13.1] C:\Users\samue\.gradle\caches\8.9\transforms\327b39dda6a8fa851efe2ff4f94ba625\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
-36        android:protectionLevel="signature" />
-36-->[androidx.core:core:1.13.1] C:\Users\samue\.gradle\caches\8.9\transforms\327b39dda6a8fa851efe2ff4f94ba625\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
-37
-38    <uses-permission android:name="com.example.parkingappfront_end.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
-38-->[androidx.core:core:1.13.1] C:\Users\samue\.gradle\caches\8.9\transforms\327b39dda6a8fa851efe2ff4f94ba625\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
-38-->[androidx.core:core:1.13.1] C:\Users\samue\.gradle\caches\8.9\transforms\327b39dda6a8fa851efe2ff4f94ba625\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
+25    <uses-permission android:name="com.android.vending.BILLING" />
+25-->[com.android.billingclient:billing-ktx:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\56d55268255862ede1d3579c15a7b905\transformed\billing-ktx-7.1.1\AndroidManifest.xml:9:5-67
+25-->[com.android.billingclient:billing-ktx:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\56d55268255862ede1d3579c15a7b905\transformed\billing-ktx-7.1.1\AndroidManifest.xml:9:22-64
+26
+27    <queries>
+27-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:12:5-19:15
+28        <intent>
+28-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:13:9-15:18
+29            <action android:name="com.android.vending.billing.InAppBillingService.BIND" />
+29-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:14:13-91
+29-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:14:21-88
+30        </intent>
+31        <intent>
+31-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:16:9-18:18
+32            <action android:name="com.google.android.apps.play.billingtestcompanion.BillingOverrideService.BIND" />
+32-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:17:13-116
+32-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:17:21-113
+33        </intent>
+34    </queries>
+35
+36    <uses-permission android:name="android.permission.WAKE_LOCK" />
+36-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:23:5-68
+36-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:23:22-65
+37    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+37-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:25:5-81
+37-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:25:22-78
+38    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+38-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:26:5-77
+38-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:26:22-74
 39
-40    <application
-40-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:9:5-31:19
-41        android:allowBackup="true"
-41-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:12:9-35
-42        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
-42-->[androidx.core:core:1.13.1] C:\Users\samue\.gradle\caches\8.9\transforms\327b39dda6a8fa851efe2ff4f94ba625\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
-43        android:dataExtractionRules="@xml/data_extraction_rules"
-43-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:13:9-65
-44        android:debuggable="true"
-45        android:extractNativeLibs="false"
-46        android:fullBackupContent="@xml/backup_rules"
-46-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:14:9-54
-47        android:icon="@mipmap/ic_launcher"
-47-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:15:9-43
-48        android:label="@string/app_name"
-48-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:16:9-41
-49        android:networkSecurityConfig="@xml/network_security_config"
-49-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:10:9-69
-50        android:roundIcon="@mipmap/ic_launcher_round"
-50-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:17:9-54
-51        android:supportsRtl="true"
-51-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:18:9-35
-52        android:testOnly="true"
-53        android:theme="@style/Theme.parkingapp" >
-53-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:19:9-48
-54        <activity
-54-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:21:9-30:20
-55            android:name="com.example.parkingappfront_end.MainActivity"
-55-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:22:13-41
-56            android:exported="true"
-56-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:23:13-36
-57            android:theme="@style/Theme.parkingapp" >
-57-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:24:13-52
-58            <intent-filter>
-58-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:25:13-29:29
-59                <action android:name="android.intent.action.MAIN" />
-59-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:26:17-69
-59-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:26:25-66
-60
-61                <category android:name="android.intent.category.LAUNCHER" />
-61-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:28:17-77
-61-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:28:27-74
-62            </intent-filter>
-63        </activity>
-64        <activity
-64-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\601a90ad7181808552816bbd3caccf00\transformed\places-3.5.0\AndroidManifest.xml:15:9-21:20
-65            android:name="com.google.android.libraries.places.widget.AutocompleteActivity"
-65-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\601a90ad7181808552816bbd3caccf00\transformed\places-3.5.0\AndroidManifest.xml:16:13-91
-66            android:exported="false"
-66-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\601a90ad7181808552816bbd3caccf00\transformed\places-3.5.0\AndroidManifest.xml:17:13-37
-67            android:label="@string/places_autocomplete_label"
-67-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\601a90ad7181808552816bbd3caccf00\transformed\places-3.5.0\AndroidManifest.xml:18:13-62
-68            android:theme="@style/PlacesAutocompleteOverlay"
-68-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\601a90ad7181808552816bbd3caccf00\transformed\places-3.5.0\AndroidManifest.xml:19:13-61
-69            android:windowSoftInputMode="adjustResize" >
-69-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\601a90ad7181808552816bbd3caccf00\transformed\places-3.5.0\AndroidManifest.xml:20:13-55
-70        </activity> <!-- Needs to be explicitly declared on P+ -->
-71        <uses-library
-71-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\f5a2e3325bff13462db4f0f0fe7b8ebf\transformed\play-services-maps-17.0.0\AndroidManifest.xml:33:9-35:40
-72            android:name="org.apache.http.legacy"
-72-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\f5a2e3325bff13462db4f0f0fe7b8ebf\transformed\play-services-maps-17.0.0\AndroidManifest.xml:34:13-50
-73            android:required="false" />
-73-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\f5a2e3325bff13462db4f0f0fe7b8ebf\transformed\play-services-maps-17.0.0\AndroidManifest.xml:35:13-37
-74
-75        <meta-data
-75-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:22:9-24:37
-76            android:name="com.google.android.play.billingclient.version"
-76-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:23:13-73
-77            android:value="7.1.1" />
-77-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:24:13-34
-78
-79        <activity
-79-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:26:9-30:75
-80            android:name="com.android.billingclient.api.ProxyBillingActivity"
-80-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:27:13-78
-81            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-81-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:28:13-96
-82            android:exported="false"
-82-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:29:13-37
-83            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-83-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:30:13-72
-84        <activity
-84-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:31:9-35:75
-85            android:name="com.android.billingclient.api.ProxyBillingActivityV2"
-85-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:32:13-80
-86            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
-86-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:33:13-96
-87            android:exported="false"
-87-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:34:13-37
-88            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-88-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\2b594f03e4bbbcf5a7c0965703fedfec\transformed\billing-7.1.1\AndroidManifest.xml:35:13-72
-89
-90        <service
-90-->[com.google.firebase:firebase-firestore-ktx:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\db57fbf58218eb77ea5b6f582b620c44\transformed\firebase-firestore-ktx-25.0.0\AndroidManifest.xml:9:9-15:19
-91            android:name="com.google.firebase.components.ComponentDiscoveryService"
-91-->[com.google.firebase:firebase-firestore-ktx:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\db57fbf58218eb77ea5b6f582b620c44\transformed\firebase-firestore-ktx-25.0.0\AndroidManifest.xml:10:13-84
-92            android:directBootAware="true"
-92-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\a6faebbc40dd92da576ad214bd777431\transformed\firebase-common-21.0.0\AndroidManifest.xml:32:13-43
-93            android:exported="false" >
-93-->[com.google.firebase:firebase-firestore-ktx:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\db57fbf58218eb77ea5b6f582b620c44\transformed\firebase-firestore-ktx-25.0.0\AndroidManifest.xml:11:13-37
-94            <meta-data
-94-->[com.google.firebase:firebase-firestore-ktx:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\db57fbf58218eb77ea5b6f582b620c44\transformed\firebase-firestore-ktx-25.0.0\AndroidManifest.xml:12:13-14:85
-95                android:name="com.google.firebase.components:com.google.firebase.firestore.ktx.FirebaseFirestoreLegacyRegistrar"
-95-->[com.google.firebase:firebase-firestore-ktx:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\db57fbf58218eb77ea5b6f582b620c44\transformed\firebase-firestore-ktx-25.0.0\AndroidManifest.xml:13:17-129
-96                android:value="com.google.firebase.components.ComponentRegistrar" />
-96-->[com.google.firebase:firebase-firestore-ktx:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\db57fbf58218eb77ea5b6f582b620c44\transformed\firebase-firestore-ktx-25.0.0\AndroidManifest.xml:14:17-82
-97            <meta-data
-97-->[com.google.firebase:firebase-firestore:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\930145e3fc87bf7be3c10c2cbdb9b63d\transformed\firebase-firestore-25.0.0\AndroidManifest.xml:17:13-19:85
-98                android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar"
-98-->[com.google.firebase:firebase-firestore:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\930145e3fc87bf7be3c10c2cbdb9b63d\transformed\firebase-firestore-25.0.0\AndroidManifest.xml:18:17-122
-99                android:value="com.google.firebase.components.ComponentRegistrar" />
-99-->[com.google.firebase:firebase-firestore:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\930145e3fc87bf7be3c10c2cbdb9b63d\transformed\firebase-firestore-25.0.0\AndroidManifest.xml:19:17-82
+40    <permission
+40-->[androidx.core:core:1.13.1] C:\Users\samue\.gradle\caches\8.9\transforms\1c37a9d6a264a11b22dc3f3201b06e67\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
+41        android:name="com.example.parkingappfront_end.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+41-->[androidx.core:core:1.13.1] C:\Users\samue\.gradle\caches\8.9\transforms\1c37a9d6a264a11b22dc3f3201b06e67\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
+42        android:protectionLevel="signature" />
+42-->[androidx.core:core:1.13.1] C:\Users\samue\.gradle\caches\8.9\transforms\1c37a9d6a264a11b22dc3f3201b06e67\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
+43
+44    <uses-permission android:name="com.example.parkingappfront_end.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+44-->[androidx.core:core:1.13.1] C:\Users\samue\.gradle\caches\8.9\transforms\1c37a9d6a264a11b22dc3f3201b06e67\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
+44-->[androidx.core:core:1.13.1] C:\Users\samue\.gradle\caches\8.9\transforms\1c37a9d6a264a11b22dc3f3201b06e67\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
+45
+46    <application
+46-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:11:5-33:19
+47        android:allowBackup="true"
+47-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:14:9-35
+48        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+48-->[androidx.core:core:1.13.1] C:\Users\samue\.gradle\caches\8.9\transforms\1c37a9d6a264a11b22dc3f3201b06e67\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
+49        android:dataExtractionRules="@xml/data_extraction_rules"
+49-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:15:9-65
+50        android:debuggable="true"
+51        android:extractNativeLibs="false"
+52        android:fullBackupContent="@xml/backup_rules"
+52-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:16:9-54
+53        android:icon="@mipmap/ic_launcher"
+53-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:17:9-43
+54        android:label="@string/app_name"
+54-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:18:9-41
+55        android:networkSecurityConfig="@xml/network_security_config"
+55-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:12:9-69
+56        android:roundIcon="@mipmap/ic_launcher_round"
+56-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:19:9-54
+57        android:supportsRtl="true"
+57-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:20:9-35
+58        android:testOnly="true"
+59        android:theme="@style/Theme.parkingapp" >
+59-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:21:9-48
+60        <activity
+60-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:23:9-32:20
+61            android:name="com.example.parkingappfront_end.MainActivity"
+61-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:24:13-41
+62            android:exported="true"
+62-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:25:13-36
+63            android:theme="@style/Theme.parkingapp" >
+63-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:26:13-52
+64            <intent-filter>
+64-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:27:13-31:29
+65                <action android:name="android.intent.action.MAIN" />
+65-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:28:17-69
+65-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:28:25-66
+66
+67                <category android:name="android.intent.category.LAUNCHER" />
+67-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:30:17-77
+67-->C:\Users\samue\AndroidStudioProjects\ParkingApp-Front-End\app\src\main\AndroidManifest.xml:30:27-74
+68            </intent-filter>
+69        </activity>
+70        <activity
+70-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\0f784e9d10f1c080340049fa2d57f0e2\transformed\places-3.5.0\AndroidManifest.xml:15:9-21:20
+71            android:name="com.google.android.libraries.places.widget.AutocompleteActivity"
+71-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\0f784e9d10f1c080340049fa2d57f0e2\transformed\places-3.5.0\AndroidManifest.xml:16:13-91
+72            android:exported="false"
+72-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\0f784e9d10f1c080340049fa2d57f0e2\transformed\places-3.5.0\AndroidManifest.xml:17:13-37
+73            android:label="@string/places_autocomplete_label"
+73-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\0f784e9d10f1c080340049fa2d57f0e2\transformed\places-3.5.0\AndroidManifest.xml:18:13-62
+74            android:theme="@style/PlacesAutocompleteOverlay"
+74-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\0f784e9d10f1c080340049fa2d57f0e2\transformed\places-3.5.0\AndroidManifest.xml:19:13-61
+75            android:windowSoftInputMode="adjustResize" >
+75-->[com.google.android.libraries.places:places:3.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\0f784e9d10f1c080340049fa2d57f0e2\transformed\places-3.5.0\AndroidManifest.xml:20:13-55
+76        </activity> <!-- Needs to be explicitly declared on P+ -->
+77        <uses-library
+77-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\7cf9f03c4e784de80d473fcae9162eed\transformed\play-services-maps-17.0.0\AndroidManifest.xml:33:9-35:40
+78            android:name="org.apache.http.legacy"
+78-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\7cf9f03c4e784de80d473fcae9162eed\transformed\play-services-maps-17.0.0\AndroidManifest.xml:34:13-50
+79            android:required="false" />
+79-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\7cf9f03c4e784de80d473fcae9162eed\transformed\play-services-maps-17.0.0\AndroidManifest.xml:35:13-37
+80
+81        <meta-data
+81-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:22:9-24:37
+82            android:name="com.google.android.play.billingclient.version"
+82-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:23:13-73
+83            android:value="7.1.1" />
+83-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:24:13-34
+84
+85        <activity
+85-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:26:9-30:75
+86            android:name="com.android.billingclient.api.ProxyBillingActivity"
+86-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:27:13-78
+87            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+87-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:28:13-96
+88            android:exported="false"
+88-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:29:13-37
+89            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+89-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:30:13-72
+90        <activity
+90-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:31:9-35:75
+91            android:name="com.android.billingclient.api.ProxyBillingActivityV2"
+91-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:32:13-80
+92            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+92-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:33:13-96
+93            android:exported="false"
+93-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:34:13-37
+94            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+94-->[com.android.billingclient:billing:7.1.1] C:\Users\samue\.gradle\caches\8.9\transforms\fb678996b19954840f8a8d7fe6d88786\transformed\billing-7.1.1\AndroidManifest.xml:35:13-72
+95
+96        <service
+96-->[com.google.firebase:firebase-firestore-ktx:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\277730a5e057012e2e647dcfb9ae88f7\transformed\firebase-firestore-ktx-25.0.0\AndroidManifest.xml:9:9-15:19
+97            android:name="com.google.firebase.components.ComponentDiscoveryService"
+97-->[com.google.firebase:firebase-firestore-ktx:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\277730a5e057012e2e647dcfb9ae88f7\transformed\firebase-firestore-ktx-25.0.0\AndroidManifest.xml:10:13-84
+98            android:directBootAware="true"
+98-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\9392b2e796b66e47ad4c1c2a12e20a52\transformed\firebase-common-21.0.0\AndroidManifest.xml:32:13-43
+99            android:exported="false" >
+99-->[com.google.firebase:firebase-firestore-ktx:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\277730a5e057012e2e647dcfb9ae88f7\transformed\firebase-firestore-ktx-25.0.0\AndroidManifest.xml:11:13-37
 100            <meta-data
-100-->[com.google.firebase:firebase-firestore:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\930145e3fc87bf7be3c10c2cbdb9b63d\transformed\firebase-firestore-25.0.0\AndroidManifest.xml:20:13-22:85
-101                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
-101-->[com.google.firebase:firebase-firestore:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\930145e3fc87bf7be3c10c2cbdb9b63d\transformed\firebase-firestore-25.0.0\AndroidManifest.xml:21:17-111
+100-->[com.google.firebase:firebase-firestore-ktx:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\277730a5e057012e2e647dcfb9ae88f7\transformed\firebase-firestore-ktx-25.0.0\AndroidManifest.xml:12:13-14:85
+101                android:name="com.google.firebase.components:com.google.firebase.firestore.ktx.FirebaseFirestoreLegacyRegistrar"
+101-->[com.google.firebase:firebase-firestore-ktx:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\277730a5e057012e2e647dcfb9ae88f7\transformed\firebase-firestore-ktx-25.0.0\AndroidManifest.xml:13:17-129
 102                android:value="com.google.firebase.components.ComponentRegistrar" />
-102-->[com.google.firebase:firebase-firestore:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\930145e3fc87bf7be3c10c2cbdb9b63d\transformed\firebase-firestore-25.0.0\AndroidManifest.xml:22:17-82
+102-->[com.google.firebase:firebase-firestore-ktx:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\277730a5e057012e2e647dcfb9ae88f7\transformed\firebase-firestore-ktx-25.0.0\AndroidManifest.xml:14:17-82
 103            <meta-data
-103-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\0c149d8f5f1eee5b4f66fce58328e463\transformed\firebase-common-ktx-21.0.0\AndroidManifest.xml:12:13-14:85
-104                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
-104-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\0c149d8f5f1eee5b4f66fce58328e463\transformed\firebase-common-ktx-21.0.0\AndroidManifest.xml:13:17-116
+103-->[com.google.firebase:firebase-firestore:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\ffe2ad4a494d8c224f88b22371ddd50c\transformed\firebase-firestore-25.0.0\AndroidManifest.xml:17:13-19:85
+104                android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar"
+104-->[com.google.firebase:firebase-firestore:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\ffe2ad4a494d8c224f88b22371ddd50c\transformed\firebase-firestore-25.0.0\AndroidManifest.xml:18:17-122
 105                android:value="com.google.firebase.components.ComponentRegistrar" />
-105-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\0c149d8f5f1eee5b4f66fce58328e463\transformed\firebase-common-ktx-21.0.0\AndroidManifest.xml:14:17-82
+105-->[com.google.firebase:firebase-firestore:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\ffe2ad4a494d8c224f88b22371ddd50c\transformed\firebase-firestore-25.0.0\AndroidManifest.xml:19:17-82
 106            <meta-data
-106-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\a6faebbc40dd92da576ad214bd777431\transformed\firebase-common-21.0.0\AndroidManifest.xml:35:13-37:85
-107                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
-107-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\a6faebbc40dd92da576ad214bd777431\transformed\firebase-common-21.0.0\AndroidManifest.xml:36:17-109
+106-->[com.google.firebase:firebase-firestore:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\ffe2ad4a494d8c224f88b22371ddd50c\transformed\firebase-firestore-25.0.0\AndroidManifest.xml:20:13-22:85
+107                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+107-->[com.google.firebase:firebase-firestore:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\ffe2ad4a494d8c224f88b22371ddd50c\transformed\firebase-firestore-25.0.0\AndroidManifest.xml:21:17-111
 108                android:value="com.google.firebase.components.ComponentRegistrar" />
-108-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\a6faebbc40dd92da576ad214bd777431\transformed\firebase-common-21.0.0\AndroidManifest.xml:37:17-82
-109        </service>
-110
-111        <activity
-111-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\d66e8b70992b664c78931d2c84613842\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:9-173
-112            android:name="com.google.android.gms.common.api.GoogleApiActivity"
-112-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\d66e8b70992b664c78931d2c84613842\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:19-85
-113            android:exported="false"
-113-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\d66e8b70992b664c78931d2c84613842\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:146-170
-114            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-114-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\d66e8b70992b664c78931d2c84613842\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:86-145
-115
-116        <provider
-116-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\a6faebbc40dd92da576ad214bd777431\transformed\firebase-common-21.0.0\AndroidManifest.xml:23:9-28:39
-117            android:name="com.google.firebase.provider.FirebaseInitProvider"
-117-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\a6faebbc40dd92da576ad214bd777431\transformed\firebase-common-21.0.0\AndroidManifest.xml:24:13-77
-118            android:authorities="com.example.parkingappfront_end.firebaseinitprovider"
-118-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\a6faebbc40dd92da576ad214bd777431\transformed\firebase-common-21.0.0\AndroidManifest.xml:25:13-72
-119            android:directBootAware="true"
-119-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\a6faebbc40dd92da576ad214bd777431\transformed\firebase-common-21.0.0\AndroidManifest.xml:26:13-43
-120            android:exported="false"
-120-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\a6faebbc40dd92da576ad214bd777431\transformed\firebase-common-21.0.0\AndroidManifest.xml:27:13-37
-121            android:initOrder="100" />
-121-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\a6faebbc40dd92da576ad214bd777431\transformed\firebase-common-21.0.0\AndroidManifest.xml:28:13-36
-122
-123        <service
-123-->[androidx.room:room-runtime:2.6.1] C:\Users\samue\.gradle\caches\8.9\transforms\bb07491b54776f41abb1fa63512d6b18\transformed\room-runtime-2.6.1\AndroidManifest.xml:24:9-28:63
-124            android:name="androidx.room.MultiInstanceInvalidationService"
-124-->[androidx.room:room-runtime:2.6.1] C:\Users\samue\.gradle\caches\8.9\transforms\bb07491b54776f41abb1fa63512d6b18\transformed\room-runtime-2.6.1\AndroidManifest.xml:25:13-74
+108-->[com.google.firebase:firebase-firestore:25.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\ffe2ad4a494d8c224f88b22371ddd50c\transformed\firebase-firestore-25.0.0\AndroidManifest.xml:22:17-82
+109            <meta-data
+109-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\496258dc6dec7b5115b8d27a09510ac7\transformed\firebase-common-ktx-21.0.0\AndroidManifest.xml:12:13-14:85
+110                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
+110-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\496258dc6dec7b5115b8d27a09510ac7\transformed\firebase-common-ktx-21.0.0\AndroidManifest.xml:13:17-116
+111                android:value="com.google.firebase.components.ComponentRegistrar" />
+111-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\496258dc6dec7b5115b8d27a09510ac7\transformed\firebase-common-ktx-21.0.0\AndroidManifest.xml:14:17-82
+112            <meta-data
+112-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\9392b2e796b66e47ad4c1c2a12e20a52\transformed\firebase-common-21.0.0\AndroidManifest.xml:35:13-37:85
+113                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+113-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\9392b2e796b66e47ad4c1c2a12e20a52\transformed\firebase-common-21.0.0\AndroidManifest.xml:36:17-109
+114                android:value="com.google.firebase.components.ComponentRegistrar" />
+114-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\9392b2e796b66e47ad4c1c2a12e20a52\transformed\firebase-common-21.0.0\AndroidManifest.xml:37:17-82
+115        </service>
+116
+117        <activity
+117-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\d8b4254798d3db0280bcba6fc1eca77e\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:9-173
+118            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+118-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\d8b4254798d3db0280bcba6fc1eca77e\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:19-85
+119            android:exported="false"
+119-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\d8b4254798d3db0280bcba6fc1eca77e\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:146-170
+120            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+120-->[com.google.android.gms:play-services-base:18.5.0] C:\Users\samue\.gradle\caches\8.9\transforms\d8b4254798d3db0280bcba6fc1eca77e\transformed\play-services-base-18.5.0\AndroidManifest.xml:5:86-145
+121
+122        <provider
+122-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\9392b2e796b66e47ad4c1c2a12e20a52\transformed\firebase-common-21.0.0\AndroidManifest.xml:23:9-28:39
+123            android:name="com.google.firebase.provider.FirebaseInitProvider"
+123-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\9392b2e796b66e47ad4c1c2a12e20a52\transformed\firebase-common-21.0.0\AndroidManifest.xml:24:13-77
+124            android:authorities="com.example.parkingappfront_end.firebaseinitprovider"
+124-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\9392b2e796b66e47ad4c1c2a12e20a52\transformed\firebase-common-21.0.0\AndroidManifest.xml:25:13-72
 125            android:directBootAware="true"
-125-->[androidx.room:room-runtime:2.6.1] C:\Users\samue\.gradle\caches\8.9\transforms\bb07491b54776f41abb1fa63512d6b18\transformed\room-runtime-2.6.1\AndroidManifest.xml:26:13-43
-126            android:exported="false" />
-126-->[androidx.room:room-runtime:2.6.1] C:\Users\samue\.gradle\caches\8.9\transforms\bb07491b54776f41abb1fa63512d6b18\transformed\room-runtime-2.6.1\AndroidManifest.xml:27:13-37
-127
-128        <activity
-128-->[androidx.compose.ui:ui-tooling-android:1.7.6] C:\Users\samue\.gradle\caches\8.9\transforms\2271ef4883e62b30f50938a1f8d485e0\transformed\ui-tooling-release\AndroidManifest.xml:23:9-25:39
-129            android:name="androidx.compose.ui.tooling.PreviewActivity"
-129-->[androidx.compose.ui:ui-tooling-android:1.7.6] C:\Users\samue\.gradle\caches\8.9\transforms\2271ef4883e62b30f50938a1f8d485e0\transformed\ui-tooling-release\AndroidManifest.xml:24:13-71
-130            android:exported="true" />
-130-->[androidx.compose.ui:ui-tooling-android:1.7.6] C:\Users\samue\.gradle\caches\8.9\transforms\2271ef4883e62b30f50938a1f8d485e0\transformed\ui-tooling-release\AndroidManifest.xml:25:13-36
-131        <activity
-131-->[androidx.compose.ui:ui-test-manifest:1.7.6] C:\Users\samue\.gradle\caches\8.9\transforms\1b81b679715734907630ffb48dd6c677\transformed\ui-test-manifest-1.7.6\AndroidManifest.xml:23:9-25:39
-132            android:name="androidx.activity.ComponentActivity"
-132-->[androidx.compose.ui:ui-test-manifest:1.7.6] C:\Users\samue\.gradle\caches\8.9\transforms\1b81b679715734907630ffb48dd6c677\transformed\ui-test-manifest-1.7.6\AndroidManifest.xml:24:13-63
-133            android:exported="true" />
-133-->[androidx.compose.ui:ui-test-manifest:1.7.6] C:\Users\samue\.gradle\caches\8.9\transforms\1b81b679715734907630ffb48dd6c677\transformed\ui-test-manifest-1.7.6\AndroidManifest.xml:25:13-36
-134
-135        <provider
-135-->[androidx.emoji2:emoji2:1.3.0] C:\Users\samue\.gradle\caches\8.9\transforms\6db1f21834352adbeaa09c2d25fa607e\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
-136            android:name="androidx.startup.InitializationProvider"
-136-->[androidx.emoji2:emoji2:1.3.0] C:\Users\samue\.gradle\caches\8.9\transforms\6db1f21834352adbeaa09c2d25fa607e\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
-137            android:authorities="com.example.parkingappfront_end.androidx-startup"
-137-->[androidx.emoji2:emoji2:1.3.0] C:\Users\samue\.gradle\caches\8.9\transforms\6db1f21834352adbeaa09c2d25fa607e\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
-138            android:exported="false" >
-138-->[androidx.emoji2:emoji2:1.3.0] C:\Users\samue\.gradle\caches\8.9\transforms\6db1f21834352adbeaa09c2d25fa607e\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
-139            <meta-data
-139-->[androidx.emoji2:emoji2:1.3.0] C:\Users\samue\.gradle\caches\8.9\transforms\6db1f21834352adbeaa09c2d25fa607e\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
-140                android:name="androidx.emoji2.text.EmojiCompatInitializer"
-140-->[androidx.emoji2:emoji2:1.3.0] C:\Users\samue\.gradle\caches\8.9\transforms\6db1f21834352adbeaa09c2d25fa607e\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
-141                android:value="androidx.startup" />
-141-->[androidx.emoji2:emoji2:1.3.0] C:\Users\samue\.gradle\caches\8.9\transforms\6db1f21834352adbeaa09c2d25fa607e\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
-142            <meta-data
-142-->[androidx.lifecycle:lifecycle-process:2.8.4] C:\Users\samue\.gradle\caches\8.9\transforms\baf237f45cc3458ff58c2beca33e0682\transformed\lifecycle-process-2.8.4\AndroidManifest.xml:29:13-31:52
-143                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
-143-->[androidx.lifecycle:lifecycle-process:2.8.4] C:\Users\samue\.gradle\caches\8.9\transforms\baf237f45cc3458ff58c2beca33e0682\transformed\lifecycle-process-2.8.4\AndroidManifest.xml:30:17-78
-144                android:value="androidx.startup" />
-144-->[androidx.lifecycle:lifecycle-process:2.8.4] C:\Users\samue\.gradle\caches\8.9\transforms\baf237f45cc3458ff58c2beca33e0682\transformed\lifecycle-process-2.8.4\AndroidManifest.xml:31:17-49
-145            <meta-data
-145-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
-146                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
-146-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
-147                android:value="androidx.startup" />
-147-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
-148        </provider>
-149
-150        <meta-data
-150-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\samue\.gradle\caches\8.9\transforms\4b3ba1d2ceedd37d2ff0b88d841714c6\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:9-122
-151            android:name="com.google.android.gms.version"
-151-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\samue\.gradle\caches\8.9\transforms\4b3ba1d2ceedd37d2ff0b88d841714c6\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:20-65
-152            android:value="@integer/google_play_services_version" />
-152-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\samue\.gradle\caches\8.9\transforms\4b3ba1d2ceedd37d2ff0b88d841714c6\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:66-119
-153
-154        <receiver
-154-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
-155            android:name="androidx.profileinstaller.ProfileInstallReceiver"
-155-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
-156            android:directBootAware="false"
-156-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
-157            android:enabled="true"
-157-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
-158            android:exported="true"
-158-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
-159            android:permission="android.permission.DUMP" >
-159-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
-160            <intent-filter>
-160-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
-161                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
-161-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
-161-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
-162            </intent-filter>
-163            <intent-filter>
-163-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
-164                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
-164-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
-164-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
-165            </intent-filter>
-166            <intent-filter>
-166-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
-167                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
-167-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
-167-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
-168            </intent-filter>
-169            <intent-filter>
-169-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
-170                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
-170-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
-170-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\90a5f827ab04bed06cde724e1797bb57\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
-171            </intent-filter>
-172        </receiver>
-173
-174        <service
-174-->[com.google.android.datatransport:transport-backend-cct:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\ffe069cffd5ff4424d22da4464775876\transformed\transport-backend-cct-3.2.0\AndroidManifest.xml:26:9-32:19
-175            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
-175-->[com.google.android.datatransport:transport-backend-cct:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\ffe069cffd5ff4424d22da4464775876\transformed\transport-backend-cct-3.2.0\AndroidManifest.xml:27:13-103
-176            android:exported="false" >
-176-->[com.google.android.datatransport:transport-backend-cct:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\ffe069cffd5ff4424d22da4464775876\transformed\transport-backend-cct-3.2.0\AndroidManifest.xml:28:13-37
-177            <meta-data
-177-->[com.google.android.datatransport:transport-backend-cct:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\ffe069cffd5ff4424d22da4464775876\transformed\transport-backend-cct-3.2.0\AndroidManifest.xml:29:13-31:39
-178                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
-178-->[com.google.android.datatransport:transport-backend-cct:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\ffe069cffd5ff4424d22da4464775876\transformed\transport-backend-cct-3.2.0\AndroidManifest.xml:30:17-94
-179                android:value="cct" />
-179-->[com.google.android.datatransport:transport-backend-cct:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\ffe069cffd5ff4424d22da4464775876\transformed\transport-backend-cct-3.2.0\AndroidManifest.xml:31:17-36
-180        </service>
-181        <service
-181-->[com.google.android.datatransport:transport-runtime:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\6213dd61de4f7acb2749864cad013fda\transformed\transport-runtime-3.2.0\AndroidManifest.xml:24:9-28:19
-182            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
-182-->[com.google.android.datatransport:transport-runtime:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\6213dd61de4f7acb2749864cad013fda\transformed\transport-runtime-3.2.0\AndroidManifest.xml:25:13-117
-183            android:exported="false"
-183-->[com.google.android.datatransport:transport-runtime:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\6213dd61de4f7acb2749864cad013fda\transformed\transport-runtime-3.2.0\AndroidManifest.xml:26:13-37
-184            android:permission="android.permission.BIND_JOB_SERVICE" >
-184-->[com.google.android.datatransport:transport-runtime:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\6213dd61de4f7acb2749864cad013fda\transformed\transport-runtime-3.2.0\AndroidManifest.xml:27:13-69
-185        </service>
-186
-187        <receiver
-187-->[com.google.android.datatransport:transport-runtime:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\6213dd61de4f7acb2749864cad013fda\transformed\transport-runtime-3.2.0\AndroidManifest.xml:30:9-32:40
-188            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
-188-->[com.google.android.datatransport:transport-runtime:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\6213dd61de4f7acb2749864cad013fda\transformed\transport-runtime-3.2.0\AndroidManifest.xml:31:13-132
-189            android:exported="false" />
-189-->[com.google.android.datatransport:transport-runtime:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\6213dd61de4f7acb2749864cad013fda\transformed\transport-runtime-3.2.0\AndroidManifest.xml:32:13-37
-190    </application>
-191
-192</manifest>
+125-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\9392b2e796b66e47ad4c1c2a12e20a52\transformed\firebase-common-21.0.0\AndroidManifest.xml:26:13-43
+126            android:exported="false"
+126-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\9392b2e796b66e47ad4c1c2a12e20a52\transformed\firebase-common-21.0.0\AndroidManifest.xml:27:13-37
+127            android:initOrder="100" />
+127-->[com.google.firebase:firebase-common:21.0.0] C:\Users\samue\.gradle\caches\8.9\transforms\9392b2e796b66e47ad4c1c2a12e20a52\transformed\firebase-common-21.0.0\AndroidManifest.xml:28:13-36
+128        <provider
+128-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:29:9-37:20
+129            android:name="androidx.startup.InitializationProvider"
+129-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:30:13-67
+130            android:authorities="com.example.parkingappfront_end.androidx-startup"
+130-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:31:13-68
+131            android:exported="false" >
+131-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:32:13-37
+132            <meta-data
+132-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:34:13-36:52
+133                android:name="androidx.work.WorkManagerInitializer"
+133-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:35:17-68
+134                android:value="androidx.startup" />
+134-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:36:17-49
+135            <meta-data
+135-->[androidx.emoji2:emoji2:1.3.0] C:\Users\samue\.gradle\caches\8.9\transforms\3c938b71720b6a8144e67d57f2db9a2e\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+136                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+136-->[androidx.emoji2:emoji2:1.3.0] C:\Users\samue\.gradle\caches\8.9\transforms\3c938b71720b6a8144e67d57f2db9a2e\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+137                android:value="androidx.startup" />
+137-->[androidx.emoji2:emoji2:1.3.0] C:\Users\samue\.gradle\caches\8.9\transforms\3c938b71720b6a8144e67d57f2db9a2e\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+138            <meta-data
+138-->[androidx.lifecycle:lifecycle-process:2.8.4] C:\Users\samue\.gradle\caches\8.9\transforms\def1d83154c24a7beb55f582b9d7fdb0\transformed\lifecycle-process-2.8.4\AndroidManifest.xml:29:13-31:52
+139                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+139-->[androidx.lifecycle:lifecycle-process:2.8.4] C:\Users\samue\.gradle\caches\8.9\transforms\def1d83154c24a7beb55f582b9d7fdb0\transformed\lifecycle-process-2.8.4\AndroidManifest.xml:30:17-78
+140                android:value="androidx.startup" />
+140-->[androidx.lifecycle:lifecycle-process:2.8.4] C:\Users\samue\.gradle\caches\8.9\transforms\def1d83154c24a7beb55f582b9d7fdb0\transformed\lifecycle-process-2.8.4\AndroidManifest.xml:31:17-49
+141            <meta-data
+141-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+142                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+142-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+143                android:value="androidx.startup" />
+143-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+144        </provider>
+145
+146        <service
+146-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:39:9-45:35
+147            android:name="androidx.work.impl.background.systemalarm.SystemAlarmService"
+147-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:40:13-88
+148            android:directBootAware="false"
+148-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:41:13-44
+149            android:enabled="@bool/enable_system_alarm_service_default"
+149-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:42:13-72
+150            android:exported="false" />
+150-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:43:13-37
+151        <service
+151-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:46:9-52:35
+152            android:name="androidx.work.impl.background.systemjob.SystemJobService"
+152-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:47:13-84
+153            android:directBootAware="false"
+153-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:48:13-44
+154            android:enabled="@bool/enable_system_job_service_default"
+154-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:49:13-70
+155            android:exported="true"
+155-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:50:13-36
+156            android:permission="android.permission.BIND_JOB_SERVICE" />
+156-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:51:13-69
+157        <service
+157-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:53:9-59:35
+158            android:name="androidx.work.impl.foreground.SystemForegroundService"
+158-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:54:13-81
+159            android:directBootAware="false"
+159-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:55:13-44
+160            android:enabled="@bool/enable_system_foreground_service_default"
+160-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:56:13-77
+161            android:exported="false" />
+161-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:57:13-37
+162
+163        <receiver
+163-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:61:9-66:35
+164            android:name="androidx.work.impl.utils.ForceStopRunnable$BroadcastReceiver"
+164-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:62:13-88
+165            android:directBootAware="false"
+165-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:63:13-44
+166            android:enabled="true"
+166-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:64:13-35
+167            android:exported="false" />
+167-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:65:13-37
+168        <receiver
+168-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:67:9-77:20
+169            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryChargingProxy"
+169-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:68:13-106
+170            android:directBootAware="false"
+170-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:69:13-44
+171            android:enabled="false"
+171-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:70:13-36
+172            android:exported="false" >
+172-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:71:13-37
+173            <intent-filter>
+173-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:73:13-76:29
+174                <action android:name="android.intent.action.ACTION_POWER_CONNECTED" />
+174-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:74:17-87
+174-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:74:25-84
+175                <action android:name="android.intent.action.ACTION_POWER_DISCONNECTED" />
+175-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:75:17-90
+175-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:75:25-87
+176            </intent-filter>
+177        </receiver>
+178        <receiver
+178-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:78:9-88:20
+179            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$BatteryNotLowProxy"
+179-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:79:13-104
+180            android:directBootAware="false"
+180-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:80:13-44
+181            android:enabled="false"
+181-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:81:13-36
+182            android:exported="false" >
+182-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:82:13-37
+183            <intent-filter>
+183-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:84:13-87:29
+184                <action android:name="android.intent.action.BATTERY_OKAY" />
+184-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:85:17-77
+184-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:85:25-74
+185                <action android:name="android.intent.action.BATTERY_LOW" />
+185-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:86:17-76
+185-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:86:25-73
+186            </intent-filter>
+187        </receiver>
+188        <receiver
+188-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:89:9-99:20
+189            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$StorageNotLowProxy"
+189-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:90:13-104
+190            android:directBootAware="false"
+190-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:91:13-44
+191            android:enabled="false"
+191-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:92:13-36
+192            android:exported="false" >
+192-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:93:13-37
+193            <intent-filter>
+193-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:95:13-98:29
+194                <action android:name="android.intent.action.DEVICE_STORAGE_LOW" />
+194-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:96:17-83
+194-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:96:25-80
+195                <action android:name="android.intent.action.DEVICE_STORAGE_OK" />
+195-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:97:17-82
+195-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:97:25-79
+196            </intent-filter>
+197        </receiver>
+198        <receiver
+198-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:100:9-109:20
+199            android:name="androidx.work.impl.background.systemalarm.ConstraintProxy$NetworkStateProxy"
+199-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:101:13-103
+200            android:directBootAware="false"
+200-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:102:13-44
+201            android:enabled="false"
+201-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:103:13-36
+202            android:exported="false" >
+202-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:104:13-37
+203            <intent-filter>
+203-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:106:13-108:29
+204                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+204-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:107:17-79
+204-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:107:25-76
+205            </intent-filter>
+206        </receiver>
+207        <receiver
+207-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:110:9-121:20
+208            android:name="androidx.work.impl.background.systemalarm.RescheduleReceiver"
+208-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:111:13-88
+209            android:directBootAware="false"
+209-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:112:13-44
+210            android:enabled="false"
+210-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:113:13-36
+211            android:exported="false" >
+211-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:114:13-37
+212            <intent-filter>
+212-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:116:13-120:29
+213                <action android:name="android.intent.action.BOOT_COMPLETED" />
+213-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:117:17-79
+213-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:117:25-76
+214                <action android:name="android.intent.action.TIME_SET" />
+214-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:118:17-73
+214-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:118:25-70
+215                <action android:name="android.intent.action.TIMEZONE_CHANGED" />
+215-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:119:17-81
+215-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:119:25-78
+216            </intent-filter>
+217        </receiver>
+218        <receiver
+218-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:122:9-131:20
+219            android:name="androidx.work.impl.background.systemalarm.ConstraintProxyUpdateReceiver"
+219-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:123:13-99
+220            android:directBootAware="false"
+220-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:124:13-44
+221            android:enabled="@bool/enable_system_alarm_service_default"
+221-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:125:13-72
+222            android:exported="false" >
+222-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:126:13-37
+223            <intent-filter>
+223-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:128:13-130:29
+224                <action android:name="androidx.work.impl.background.systemalarm.UpdateProxies" />
+224-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:129:17-98
+224-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:129:25-95
+225            </intent-filter>
+226        </receiver>
+227        <receiver
+227-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:132:9-142:20
+228            android:name="androidx.work.impl.diagnostics.DiagnosticsReceiver"
+228-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:133:13-78
+229            android:directBootAware="false"
+229-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:134:13-44
+230            android:enabled="true"
+230-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:135:13-35
+231            android:exported="true"
+231-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:136:13-36
+232            android:permission="android.permission.DUMP" >
+232-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:137:13-57
+233            <intent-filter>
+233-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:139:13-141:29
+234                <action android:name="androidx.work.diagnostics.REQUEST_DIAGNOSTICS" />
+234-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:140:17-88
+234-->[androidx.work:work-runtime:2.8.1] C:\Users\samue\.gradle\caches\8.9\transforms\ca75ebd264195aca5b5922ef06675f75\transformed\work-runtime-2.8.1\AndroidManifest.xml:140:25-85
+235            </intent-filter>
+236        </receiver>
+237
+238        <service
+238-->[androidx.room:room-runtime:2.6.1] C:\Users\samue\.gradle\caches\8.9\transforms\4cacd5915772e5b6c7973ee8701e64a5\transformed\room-runtime-2.6.1\AndroidManifest.xml:24:9-28:63
+239            android:name="androidx.room.MultiInstanceInvalidationService"
+239-->[androidx.room:room-runtime:2.6.1] C:\Users\samue\.gradle\caches\8.9\transforms\4cacd5915772e5b6c7973ee8701e64a5\transformed\room-runtime-2.6.1\AndroidManifest.xml:25:13-74
+240            android:directBootAware="true"
+240-->[androidx.room:room-runtime:2.6.1] C:\Users\samue\.gradle\caches\8.9\transforms\4cacd5915772e5b6c7973ee8701e64a5\transformed\room-runtime-2.6.1\AndroidManifest.xml:26:13-43
+241            android:exported="false" />
+241-->[androidx.room:room-runtime:2.6.1] C:\Users\samue\.gradle\caches\8.9\transforms\4cacd5915772e5b6c7973ee8701e64a5\transformed\room-runtime-2.6.1\AndroidManifest.xml:27:13-37
+242
+243        <activity
+243-->[androidx.compose.ui:ui-tooling-android:1.7.6] C:\Users\samue\.gradle\caches\8.9\transforms\41c4eb5e34b451cc46ed345c5c78b0cf\transformed\ui-tooling-release\AndroidManifest.xml:23:9-25:39
+244            android:name="androidx.compose.ui.tooling.PreviewActivity"
+244-->[androidx.compose.ui:ui-tooling-android:1.7.6] C:\Users\samue\.gradle\caches\8.9\transforms\41c4eb5e34b451cc46ed345c5c78b0cf\transformed\ui-tooling-release\AndroidManifest.xml:24:13-71
+245            android:exported="true" />
+245-->[androidx.compose.ui:ui-tooling-android:1.7.6] C:\Users\samue\.gradle\caches\8.9\transforms\41c4eb5e34b451cc46ed345c5c78b0cf\transformed\ui-tooling-release\AndroidManifest.xml:25:13-36
+246        <activity
+246-->[androidx.compose.ui:ui-test-manifest:1.7.6] C:\Users\samue\.gradle\caches\8.9\transforms\6a7e1a2e33afbed77292c3b6ac42b66e\transformed\ui-test-manifest-1.7.6\AndroidManifest.xml:23:9-25:39
+247            android:name="androidx.activity.ComponentActivity"
+247-->[androidx.compose.ui:ui-test-manifest:1.7.6] C:\Users\samue\.gradle\caches\8.9\transforms\6a7e1a2e33afbed77292c3b6ac42b66e\transformed\ui-test-manifest-1.7.6\AndroidManifest.xml:24:13-63
+248            android:exported="true" />
+248-->[androidx.compose.ui:ui-test-manifest:1.7.6] C:\Users\samue\.gradle\caches\8.9\transforms\6a7e1a2e33afbed77292c3b6ac42b66e\transformed\ui-test-manifest-1.7.6\AndroidManifest.xml:25:13-36
+249
+250        <meta-data
+250-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\samue\.gradle\caches\8.9\transforms\06a836e4ed0b3b4e8cc024bb44108617\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:9-122
+251            android:name="com.google.android.gms.version"
+251-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\samue\.gradle\caches\8.9\transforms\06a836e4ed0b3b4e8cc024bb44108617\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:20-65
+252            android:value="@integer/google_play_services_version" />
+252-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\samue\.gradle\caches\8.9\transforms\06a836e4ed0b3b4e8cc024bb44108617\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:66-119
+253
+254        <receiver
+254-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+255            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+255-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+256            android:directBootAware="false"
+256-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+257            android:enabled="true"
+257-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+258            android:exported="true"
+258-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+259            android:permission="android.permission.DUMP" >
+259-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+260            <intent-filter>
+260-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+261                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+261-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+261-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+262            </intent-filter>
+263            <intent-filter>
+263-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+264                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+264-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+264-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+265            </intent-filter>
+266            <intent-filter>
+266-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+267                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+267-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+267-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+268            </intent-filter>
+269            <intent-filter>
+269-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+270                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+270-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+270-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\samue\.gradle\caches\8.9\transforms\9b85e09ab4754a90839bec5d50002c9c\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+271            </intent-filter>
+272        </receiver>
+273
+274        <service
+274-->[com.google.android.datatransport:transport-backend-cct:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\d9522b56e9aa7312409411bd5348c442\transformed\transport-backend-cct-3.2.0\AndroidManifest.xml:26:9-32:19
+275            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+275-->[com.google.android.datatransport:transport-backend-cct:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\d9522b56e9aa7312409411bd5348c442\transformed\transport-backend-cct-3.2.0\AndroidManifest.xml:27:13-103
+276            android:exported="false" >
+276-->[com.google.android.datatransport:transport-backend-cct:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\d9522b56e9aa7312409411bd5348c442\transformed\transport-backend-cct-3.2.0\AndroidManifest.xml:28:13-37
+277            <meta-data
+277-->[com.google.android.datatransport:transport-backend-cct:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\d9522b56e9aa7312409411bd5348c442\transformed\transport-backend-cct-3.2.0\AndroidManifest.xml:29:13-31:39
+278                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+278-->[com.google.android.datatransport:transport-backend-cct:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\d9522b56e9aa7312409411bd5348c442\transformed\transport-backend-cct-3.2.0\AndroidManifest.xml:30:17-94
+279                android:value="cct" />
+279-->[com.google.android.datatransport:transport-backend-cct:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\d9522b56e9aa7312409411bd5348c442\transformed\transport-backend-cct-3.2.0\AndroidManifest.xml:31:17-36
+280        </service>
+281        <service
+281-->[com.google.android.datatransport:transport-runtime:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\5149e08c8272bb1922f8cc2905107c52\transformed\transport-runtime-3.2.0\AndroidManifest.xml:24:9-28:19
+282            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+282-->[com.google.android.datatransport:transport-runtime:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\5149e08c8272bb1922f8cc2905107c52\transformed\transport-runtime-3.2.0\AndroidManifest.xml:25:13-117
+283            android:exported="false"
+283-->[com.google.android.datatransport:transport-runtime:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\5149e08c8272bb1922f8cc2905107c52\transformed\transport-runtime-3.2.0\AndroidManifest.xml:26:13-37
+284            android:permission="android.permission.BIND_JOB_SERVICE" >
+284-->[com.google.android.datatransport:transport-runtime:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\5149e08c8272bb1922f8cc2905107c52\transformed\transport-runtime-3.2.0\AndroidManifest.xml:27:13-69
+285        </service>
+286
+287        <receiver
+287-->[com.google.android.datatransport:transport-runtime:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\5149e08c8272bb1922f8cc2905107c52\transformed\transport-runtime-3.2.0\AndroidManifest.xml:30:9-32:40
+288            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+288-->[com.google.android.datatransport:transport-runtime:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\5149e08c8272bb1922f8cc2905107c52\transformed\transport-runtime-3.2.0\AndroidManifest.xml:31:13-132
+289            android:exported="false" />
+289-->[com.google.android.datatransport:transport-runtime:3.2.0] C:\Users\samue\.gradle\caches\8.9\transforms\5149e08c8272bb1922f8cc2905107c52\transformed\transport-runtime-3.2.0\AndroidManifest.xml:32:13-37
+290    </application>
+291
+292</manifest>

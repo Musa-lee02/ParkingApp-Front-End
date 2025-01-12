@@ -4,7 +4,7 @@
     "type": "PACKAGED_MANIFESTS",
     "kind": "Directory"
   },
-  "applicationId": "com.example.provandoperdavvero.test",
+  "applicationId": "com.example.parkingappfront_end.test",
   "variantName": "debugAndroidTest",
   "elements": [
     {

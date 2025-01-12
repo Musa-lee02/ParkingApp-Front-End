@@ -1,10 +1,10 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.provandoperdavvero.test.app-mergeDebugAndroidTestResources-32:/values-v18/values-v18.xml",
+            "outputFile": "com.example.parkingappfront_end.test.app-mergeDebugAndroidTestResources-34:/values-v18/values-v18.xml",
             "map": [
                 {
-                    "source": "C:\\Users\\lupin\\.gradle\\caches\\transforms-4\\3ee7ff98d03a511cc05f2477e4e1b7bc\\transformed\\core-1.6.1\\res\\values-v18\\values.xml",
+                    "source": "C:\\Users\\samue\\.gradle\\caches\\8.9\\transforms\\d5061967f4dd570d6f196b344fbb4869\\transformed\\core-1.6.1\\res\\values-v18\\values.xml",
                     "from": {
                         "startLines": "4,12",
                         "startColumns": "0,0",

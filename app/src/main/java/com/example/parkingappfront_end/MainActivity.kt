@@ -43,6 +43,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -106,6 +107,8 @@ class MainActivity : ComponentActivity() { // ComponentActivity è una classe di
 fun NavigationView(navController: NavHostController) { // NavigationView è una funzione che serve a creare la navigazione
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
     val selectedIndex = remember { mutableIntStateOf(0) }
+    val context = LocalContext.current
+
 
     // Usa remember per mantenere i ViewModel
     val accountRepository = remember { AccountRepository(RetrofitClient.userApiService) }
@@ -117,7 +120,7 @@ fun NavigationView(navController: NavHostController) { // NavigationView è una 
     val parkingRepository = ParkingSpaceRep(RetrofitClient.parkingSpaceApiService)
     val parkingSpotRepository = ParkingSpotRep(RetrofitClient.parkingSpotApiService)
     val parkingViewModel = ParkingViewModel(parkingSpaceRep =  parkingRepository, parkingSpotRep =parkingSpotRepository )  // ParkingViewModel è una classe che serve a mantenere i dati del parcheggio
-    val reservationViewModel = remember { ReservationViewModel(reservationRep = reservationRepository) } // ReservationViewModel è una classe che serve a mantenere i dati della prenotazione
+    val reservationViewModel = remember { ReservationViewModel(reservationRep = reservationRepository, context = context) } // ReservationViewModel è una classe che serve a mantenere i dati della prenotazione
 
     Scaffold(
         topBar = { TopBar(navController) }, // TopBar è una funzione che serve a creare la barra superiore

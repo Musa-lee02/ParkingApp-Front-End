@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.provandoperdavvero.test" >
+    package="com.example.parkingappfront_end.test" >
 
     <uses-sdk
-        android:minSdkVersion="21"
+        android:minSdkVersion="30"
         android:targetSdkVersion="34" />
 
     <instrumentation
         android:name="androidx.test.runner.AndroidJUnitRunner"
         android:functionalTest="false"
         android:handleProfiling="false"
-        android:label="Tests for com.example.provandoperdavvero"
-        android:targetPackage="com.example.provandoperdavvero" />
-
-    <uses-permission android:name="android.permission.REORDER_TASKS" />
+        android:label="Tests for com.example.parkingappfront_end"
+        android:targetPackage="com.example.parkingappfront_end" />
 
     <queries>
         <package android:name="androidx.test.orchestrator" />
@@ -21,9 +19,11 @@
         <package android:name="com.google.android.apps.common.testing.services" />
     </queries>
 
+    <uses-permission android:name="android.permission.REORDER_TASKS" />
+
     <application
         android:debuggable="true"
-        android:extractNativeLibs="true" >
+        android:extractNativeLibs="false" >
         <uses-library android:name="android.test.runner" />
 
         <activity
