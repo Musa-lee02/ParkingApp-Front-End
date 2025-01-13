@@ -12,6 +12,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.parkingappfront_end.model.Credential
 import com.example.parkingappfront_end.model.SaveUser
 import com.example.parkingappfront_end.model.UserDetails
+import com.example.parkingappfront_end.model.domain.userType
 import com.example.parkingappfront_end.repository.AuthRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -25,7 +26,7 @@ data class RegistrationData(
     var email: String = "",
     var password: String = "",
     var birthDate: LocalDate = LocalDate.parse("1980-01-01"),
-    var admin: String = ""
+    var userType: Enum<userType> = com.example.parkingappfront_end.model.domain.userType.DRIVER,
 )
 
 class RegistrationViewModel(private val registrationRepository: AuthRepository) : ViewModel() {
@@ -56,10 +57,10 @@ class RegistrationViewModel(private val registrationRepository: AuthRepository) 
         )
     }
 
-    fun updateUserDetails(birthDate: LocalDate, admin: String) {
+    fun updateUserDetails(birthDate: LocalDate, typeUser: userType) {
         registrationData.value = registrationData.value.copy(
             birthDate = birthDate,
-            admin = admin
+            userType = typeUser
         )
     }
 
@@ -83,14 +84,7 @@ class RegistrationViewModel(private val registrationRepository: AuthRepository) 
 
                 var response: Response<UserDetails>
 
-                if(registrationData.value.admin.isNotBlank() && registrationData.value.admin == "0000") {
-                    Log.d(TAG, "registrazione: tentativo admin $user")
-                    response = registrationRepository.registerAdmin(user)
-                    Log.d(TAG, "response: $response")
-                    message = "Admin"
-                }
-
-                if(registrationData.value.admin.isNotBlank() && registrationData.value.admin == "1111") {
+                if(registrationData.value.userType == userType.OWNER) {
                     Log.d(TAG, "registrazione: tentativo owner $user")
                     response = registrationRepository.registerOwner(user)
                     Log.d(TAG, "response: $response")

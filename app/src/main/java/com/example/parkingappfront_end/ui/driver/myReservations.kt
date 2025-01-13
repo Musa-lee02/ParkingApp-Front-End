@@ -50,6 +50,7 @@ import java.time.LocalDateTime
 import com.example.parkingappfront_end.model.Reservation
 import com.example.parkingappfront_end.model.ReservationWithDetails
 import com.example.parkingappfront_end.model.domain.SpotType
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 
@@ -73,9 +74,6 @@ fun MainReservations(reservationViewModel: ReservationViewModel, navController: 
                     fontWeight = FontWeight.Bold
                 )
             },
-            colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.primaryContainer
-            )
         )
 
         LazyColumn(
@@ -302,9 +300,10 @@ private fun ReservationDateTimeInfo(startDate: LocalDateTime, endDate: LocalDate
 
 fun isReservationCancellable(startDate : LocalDateTime): Boolean {
     return try {
-        val formatter = DateTimeFormatter.ISO_DATE_TIME
-        val now = LocalDateTime.now()
-        startDate.isAfter(now)
+        val romeZone = ZoneId.of("Europe/Rome")
+        val now = LocalDateTime.now(romeZone)
+
+        now.isBefore(startDate.minusMinutes(4))
     } catch (e: Exception) {
         false
     }

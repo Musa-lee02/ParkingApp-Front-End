@@ -19,6 +19,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.LocalTime
+import java.time.ZoneId
 
 class ReservationViewModel(private val reservationRep: ReservationRep, private val context: Context,) : ViewModel() {
 
@@ -27,6 +28,8 @@ class ReservationViewModel(private val reservationRep: ReservationRep, private v
 
     private val _filteredStats = MutableStateFlow<Map<LocalDate, Double>>(emptyMap())
     val filteredStats: StateFlow<Map<LocalDate, Double>> = _filteredStats.asStateFlow()
+
+
 
     // Filtra le statistiche per intervallo di date
     fun filterStatsByDate(parkingSpace: ParkingSpace, startDate: LocalDate, endDate: LocalDate) {
@@ -59,37 +62,16 @@ class ReservationViewModel(private val reservationRep: ReservationRep, private v
         return (startDate..endDate).associateWith { statsMap[it] ?: 0.0 }
     }
 
-    // Estrai statistiche per il grafico
-    fun getStatsForChart(startDate: LocalDate, endDate: LocalDate): Map<LocalDate, Double> {
-        val labels = generateLabels(startDate, endDate)
-        val stats = _filteredStats.value
-        return labels.associateWith { stats[it] ?: 0.0 }
-    }
 
     // Genera etichette per le date
     fun generateLabels(startDate: LocalDate, endDate: LocalDate): List<LocalDate> {
         return (startDate..endDate).toList()
     }
 
-    // Carica le prenotazioni dell'utente
-    /*
-    fun loadMyReservations() {
-        viewModelScope.launch {
-            try {
-                val response = reservationRep.getByUser(SessionManager.user!!.id)
-                _myReservations.value = if (response.isSuccessful) {
-                    response.body()?.sortedByDescending { it.startDate } ?: emptyList()
-                } else {
-                    emptyList()
-                }
-            } catch (e: Exception) {
-                Log.e("ReservationViewModel", "Errore nel caricamento: ${e.message}", e)
-                _myReservations.value = emptyList()
-            }
-        }
-    }*/
-
     fun loadReservationsWithDetails() {
+        val romeZone = ZoneId.of("Europe/Rome")
+        val nowInRome = LocalDateTime.now(romeZone)
+
         viewModelScope.launch {
             try {
                 val response = reservationRep.getWithDetails(SessionManager.user!!.id)
@@ -97,10 +79,12 @@ class ReservationViewModel(private val reservationRep: ReservationRep, private v
                     response.body()?.sortedByDescending { it.startDate }?.also { reservations ->
                         // Schedula notifiche per tutte le prenotazioni future
                         reservations.forEach { reservation ->
-                            if (reservation.startDate.isAfter(LocalDateTime.now())) {
+                            val notificationTime = reservation.startDate.minusMinutes(5)
+                            if (notificationTime.isAfter(nowInRome)) {
                                 scheduleReservationNotification(reservation)
                             }
                         }
+
                     } ?: emptyList()
                 } else {
                     emptyList()

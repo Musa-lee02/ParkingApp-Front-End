@@ -1,5 +1,6 @@
 package com.example.parkingappfront_end.ui.theme
 
+import android.R.id.primary
 import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -20,35 +21,89 @@ import androidx.core.view.WindowCompat
 
 //  Tema Terracotta e Crema
 
-private val Blue80 = Color(0xFF3772E7)
-private val Blue402 = Color(0xFF0047AB)
-private val BlueGrey10 = Color(0xFFECEFF1)
-private val BlueGrey90 = Color(0xFF263238)
+
+private val ModernLightBluePrimary = Color(0xFF2962FF) // Blu chiaro principale
+private val ModernLightBlueSecondary = Color(0xFF64B5F6) // Blu chiaro secondario
+private val ModernGray = Color(0xFFE0E0E0) // Grigio chiaro per sfondi
+private val ModernDarkGray = Color(0xFF616161) // Grigio scuro per testo secondario
+private val ModernWhite = Color(0xFFFFFFFF) // Bianco
+private val ModernBlack = Color(0xFF000000) // Nero
+private val ModernAccent = Color(0xFF00BCD4) // Colore accent per elementi interattivi
+private val ModernError = Color(0xFFB00020) // Colore per errori
+
+
+
+private val ParkingBluePrimary = Color(0xFF1565C0) // Blu principale
+private val ParkingBlueSecondary = Color(0xFF1E88E5) // Blu secondario
+private val ParkingGray = Color(0xFFECEFF1) // Grigio chiaro per sfondi
+private val ParkingDarkGray = Color(0xFF37474F) // Grigio scuro per testo secondario e dettagli
+private val ParkingWhite = Color(0xFFFFFFFF) // Bianco
+private val ParkingBlack = Color(0xFF000000) // Nero
+private val ParkingAccent = Color(0xFF00E676) // Verde per elementi interattivi e conferme
+private val ParkingError = Color(0xFFD32F2F) // Rosso per errori
+
+
+
+
 
 
 private val DarkBlueColorScheme = darkColorScheme(
-    primary = Blue80,secondary = Blue402,
-    tertiary = BlueGrey90,
-    background = BlueGrey90,
-    surface = BlueGrey90,
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = BlueGrey10,
-    onBackground = BlueGrey10,
-    onSurface = BlueGrey10,
+    primary = ParkingBluePrimary, // Blu principale
+    onPrimary = ParkingWhite, // Testo bianco su blu principale
+    primaryContainer = ParkingBlueSecondary, // Contenitore blu secondario
+    onPrimaryContainer = ParkingWhite, // Testo bianco su contenitore blu secondario
+    secondary = ParkingBlueSecondary, // Blu secondario
+    onSecondary = ParkingWhite, // Testo bianco su blu secondario
+    secondaryContainer = ParkingDarkGray, // Contenitore grigio scuro
+    onSecondaryContainer = ParkingWhite, // Testo bianco su contenitore grigio scuro
+    tertiary = ParkingDarkGray, // Grigio scuro per testo secondario
+    onTertiary = ParkingWhite, // Testo bianco su grigio scuro
+    tertiaryContainer = ParkingGray, // Contenitore grigio chiaro
+    onTertiaryContainer = ParkingBlack, // Testo nero su contenitore grigio chiaro
+    background = ParkingBlack, // Sfondo nero
+    onBackground = ParkingWhite, // Testo bianco su sfondo nero
+    surface = ParkingDarkGray, // Superficie grigio scuro
+    onSurface = ParkingWhite, // Testo bianco su superficie grigio scuro
+    surfaceVariant = ParkingGray, // Superficie variante grigio chiaro
+    onSurfaceVariant = ParkingDarkGray, // Testo grigio scuro su superficie variante
+    outline = ParkingGray, // Bordo grigio chiaro
+    inverseSurface = ParkingGray, // Superficie inversa grigio chiaro
+    inverseOnSurface = ParkingBlack, // Testo nero su superficie inversa
+    inversePrimary = ParkingAccent, // Verde per elementi interattivi
+    error = ParkingError, // Rosso per errori
+    onError = ParkingWhite, // Testo bianco su colore per errori
+    errorContainer = ParkingError.copy(alpha = 0.2f), // Contenitore errori
+    onErrorContainer = ParkingWhite, // Testo bianco su contenitore errori
 )
 
 
 private val LightBlueColorScheme = lightColorScheme(
-    primary = Blue402,
-    secondary = Blue80,
-    tertiary = BlueGrey10,
-    background = Color.White,
-    surface = Color.White,
-    onPrimary = Color.White,onSecondary = Color.White,
-    onTertiary = BlueGrey90,
-    onBackground = BlueGrey90,
-    onSurface = BlueGrey90,
+    primary = ParkingBluePrimary, // Blu principale
+    onPrimary = ParkingWhite, // Testo bianco su blu principale
+    primaryContainer = ParkingBlueSecondary, // Contenitore blu secondario
+    onPrimaryContainer = ParkingBlack, // Testo nero su contenitore blu secondario
+    secondary = ParkingBlueSecondary, // Blu secondario
+    onSecondary = ParkingWhite, // Testo bianco su blu secondario
+    secondaryContainer = ParkingGray, // Contenitore grigio chiaro
+    onSecondaryContainer = ParkingBlack, // Testo nero su contenitore grigio chiaro
+    tertiary = ParkingGray, // Grigio chiaro per testo secondario
+    onTertiary = ParkingBlack, // Testo nero su grigio chiaro
+    tertiaryContainer = ParkingDarkGray, // Contenitore grigio scuro
+    onTertiaryContainer = ParkingWhite, // Testo bianco su contenitore grigio scuro
+    background = ParkingWhite, // Sfondo bianco
+    onBackground = ParkingBlack, // Testo nero su sfondo bianco
+    surface = ParkingWhite, // Superficie bianca
+    onSurface = ParkingBlack, // Testo nero su superficie bianca
+    surfaceVariant = ParkingGray, // Superficie variante grigio chiaro
+    onSurfaceVariant = ParkingDarkGray, // Testo grigio scuro su superficie variante
+    outline = ParkingDarkGray, // Bordo grigio scuro
+    inverseSurface = ParkingDarkGray, // Superficie inversa grigio scuro
+    inverseOnSurface = ParkingWhite, // Testo bianco su superficie inversa
+    inversePrimary = ParkingAccent, // Verde per elementi interattivi
+    error = ParkingError, // Rosso per errori
+    onError = ParkingWhite, // Testo bianco su colore per errori
+    errorContainer = ParkingError.copy(alpha = 0.2f), // Contenitore errori
+    onErrorContainer = ParkingWhite, // Testo bianco su contenitore errori
 )
 
 private val ParkingAppColorScheme = lightColorScheme(

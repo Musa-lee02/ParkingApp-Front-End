@@ -37,8 +37,17 @@ import java.util.Calendar
 import android.app.DatePickerDialog
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.ui.graphics.Shape
+import androidx.compose.ui.zIndex
+import com.example.parkingappfront_end.model.domain.SpotType
 
 
 @Composable
@@ -54,8 +63,27 @@ fun ParkingSearchScreen(
     var endDate by remember { mutableStateOf(startDate.plusHours(1)) }
     var errorMessage by remember { mutableStateOf<String?>(null) }
 
-    LaunchedEffect(Unit) {
+    var expanded by remember { mutableStateOf(false) }
 
+    LaunchedEffect(Unit) {
+        parkingViewModel.loadAddresses()
+    }
+
+
+    var showSuggestions by remember { mutableStateOf(false) }
+    val allAddresses by parkingViewModel.allAddresses.collectAsState()
+    val filteredCities = remember(city, allAddresses) {
+        if (city.isBlank()) {
+            emptyList()
+        } else {
+            allAddresses
+                .map { it.city }
+                .distinct()
+                .filter {
+                    it.lowercase().contains(city.lowercase())
+                }
+                .take(5) // Limit suggestions to 5 items
+        }
     }
 
     Column(
@@ -72,21 +100,57 @@ fun ParkingSearchScreen(
             modifier = Modifier.padding(bottom = 24.dp)
         )
 
-        OutlinedTextField(
-            value = city,
-            onValueChange = { city = it },
-            label = { Text("Città") },
+        Box(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(vertical = 8.dp)
+        ) {
+            OutlinedTextField(
+                value = city,
+                onValueChange = {
+                    city = it
+                    showSuggestions = true
+                },
+                label = { Text("Città") },
+                modifier = Modifier.fillMaxWidth()
                 .padding(horizontal = 16.dp),
-            leadingIcon = {
-                Icon(
-                    imageVector = Icons.Filled.LocationOn,
-                    contentDescription = "City Icon"
-                )
-            },
-            shape = RoundedCornerShape(12.dp)
-        )
+                singleLine = true,
+                leadingIcon = {
+                    Icon(
+                        imageVector = Icons.Filled.LocationOn,
+                        contentDescription = "City Icon"
+                    )
+                },
+                shape = RoundedCornerShape(12.dp)
+            )
+
+            if (showSuggestions && filteredCities.isNotEmpty()) {
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 60.dp)
+                        .zIndex(1f),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+                ) {
+                    LazyColumn(
+                        modifier = Modifier.heightIn(max = 200.dp)
+                    ) {
+                        items(filteredCities) { suggestion ->
+                            Text(
+                                text = suggestion,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable {
+                                        city = suggestion
+                                        showSuggestions = false
+                                    }
+                                    .padding(16.dp)
+                            )
+                        }
+                    }
+                }
+            }
+        }
 
         Spacer(modifier = Modifier.height(24.dp))
 

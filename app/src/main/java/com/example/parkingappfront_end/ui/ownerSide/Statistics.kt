@@ -59,6 +59,7 @@ import java.time.LocalDate
 import java.time.LocalDateTime
 import com.example.parkingappfront_end.model.domain.IndexAxisValueFormatter
 import com.example.parkingappfront_end.ui.driver.ParkingSpaceThumbnail
+import java.time.temporal.ChronoUnit
 
 @Composable
 fun MainStatisticView(
@@ -302,15 +303,32 @@ fun SpaceStatsDetails(
                 }?.sumOf { it.price } ?: 0.0
             } ?: 0.0
 
+            // Calcolo nuove statistiche
+            val periodDays = ChronoUnit.DAYS.between(startDate, endDate) + 1
+            val averageDailyRevenue = totalRevenue / periodDays
+            val averageReservationsPerDay = totalReservations.toDouble() / periodDays
 
-            val mostSoldSpot = spotStats.maxByOrNull { it.value }
-            val mostSoldSpotNumber = mostSoldSpot?.key
-            val mostSoldSpotReservations = mostSoldSpot?.value ?: 0
-            val mostSoldSpotPercentage = if (totalReservations > 0) {
-                (mostSoldSpotReservations.toDouble() / totalReservations * 100).toInt()
-            } else {
-                0
+            val spotOccupancyRates = parkingSpace.parkingSpots?.map { spot ->
+                val spotReservationHours = spot.reservations?.filter { r ->
+                    r.startDate.toLocalDate() >= startDate && r.endDate.toLocalDate() <= endDate
+                }?.sumOf { r ->
+                    ChronoUnit.HOURS.between(r.startDate, r.endDate).toDouble()
+                } ?: 0.0
+                val totalPeriodHours = periodDays * 24
+                Pair(spot.number, (spotReservationHours / totalPeriodHours * 100))
             }
+
+            val averageOccupancyRate = spotOccupancyRates?.map { it.second }?.average() ?: 0.0
+            val mostOccupiedSpot = spotOccupancyRates?.maxByOrNull { it.second }
+            val leastOccupiedSpot = spotOccupancyRates?.minByOrNull { it.second }
+
+            val averageReservationDuration = parkingSpace.parkingSpots?.flatMap { spot ->
+                spot.reservations?.filter { r ->
+                    r.startDate.toLocalDate() >= startDate && r.endDate.toLocalDate() <= endDate
+                } ?: emptyList()
+            }?.map { r ->
+                ChronoUnit.HOURS.between(r.startDate, r.endDate).toDouble()
+            }?.average() ?: 0.0
 
             Column(
                 modifier = Modifier
@@ -325,86 +343,40 @@ fun SpaceStatsDetails(
                 )
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Totale prenotazioni
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = "Totale prenotazioni:",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-                    Text(
-                        text = "$totalReservations",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
+                // Sezione Performance Generale
+                Text(
+                    text = "Performance Generale",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.secondary
+                )
                 Spacer(modifier = Modifier.height(8.dp))
 
-                // Totale ricavi
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = "Totale ricavi:",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Medium
-                    )
-                    Text(
-                        text = "€${String.format("%.2f", totalRevenue)}",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = Color(0xFF0070BA)
-                    )
-                }
+                StatRow("Totale prenotazioni", "$totalReservations")
+                StatRow("Totale ricavi", "€${String.format("%.2f", totalRevenue)}", Color(0xFF0070BA))
+                StatRow("Media giornaliera ricavi", "€${String.format("%.2f", averageDailyRevenue)}", Color(0xFF0070BA))
+                StatRow("Prenotazioni medie/giorno", String.format("%.1f", averageReservationsPerDay))
+
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // Posto auto più venduto
-                if (mostSoldSpotNumber != null) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = "Posto più venduto:",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Medium
-                        )
-                        Text(
-                            text = "$mostSoldSpotNumber ($mostSoldSpotReservations pren. )",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                    Spacer(modifier = Modifier.height(8.dp))
+                // Sezione Occupazione
+                Text(
+                    text = "Statistiche Occupazione",
+                    fontSize = 20.sp,
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.secondary
+                )
+                Spacer(modifier = Modifier.height(8.dp))
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween
-                    ) {
-                        Text(
-                            text = "Percentuale del totale:",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Medium
-                        )
-                        Text(
-                            text = "$mostSoldSpotPercentage%",
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold,
-                            color = Color.Green
-                        )
-                    }
-                } else {
-                    Text(
-                        text = "Nessun posto auto venduto",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = MaterialTheme.colorScheme.error
-                    )
+                StatRow("Tasso occupazione medio", "${String.format("%.1f", averageOccupancyRate)}%")
+                mostOccupiedSpot?.let {
+                    StatRow("Posto più occupato", "Spot ${it.first} (${String.format("%.1f", it.second)}%)", Color.Green)
                 }
+                leastOccupiedSpot?.let {
+                    StatRow("Posto meno occupato", "Spot ${it.first} (${String.format("%.1f", it.second)}%)", Color.Red)
+                }
+                StatRow("Durata media prenotazione", String.format("%.1f ore", averageReservationDuration))
+
             }
         } else {
             Box(
@@ -422,6 +394,32 @@ fun SpaceStatsDetails(
             }
         }
 
+    }
+}
+
+@Composable
+private fun StatRow(
+    label: String,
+    value: String,
+    valueColor: Color = Color.Unspecified
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 4.dp),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text = label,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Medium
+        )
+        Text(
+            text = value,
+            fontSize = 16.sp,
+            fontWeight = FontWeight.Bold,
+            color = valueColor
+        )
     }
 }
 

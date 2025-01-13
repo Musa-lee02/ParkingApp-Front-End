@@ -10,7 +10,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.parkingappfront_end"
-        minSdk = 30
+        minSdk = 33
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -33,7 +33,7 @@ android {
     compileOptions {
     }
     kotlinOptions {
-        jvmTarget = "21"
+        jvmTarget = "21" //21
     }
     buildFeatures {
         compose = true
@@ -115,6 +115,8 @@ dependencies {
 
     implementation ("androidx.work:work-runtime-ktx:2.8.1")
     implementation ("androidx.core:core-ktx:1.12.0")
+    implementation ("androidx.activity:activity-compose:1.7.2")
+    implementation ("androidx.appcompat:appcompat:1.7.0-alpha03")
 }
 
 kotlin {

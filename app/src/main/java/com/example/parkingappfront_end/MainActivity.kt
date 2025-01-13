@@ -30,6 +30,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -43,6 +44,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
@@ -100,6 +102,7 @@ class MainActivity : ComponentActivity() { // ComponentActivity è una classe di
         }
 
     }
+
 }
 
 
@@ -302,7 +305,19 @@ fun TopBar(navHostController: NavHostController) {
 
 @Composable
 fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostController) {
-    NavigationBar {
+    val colorScheme = MaterialTheme.colorScheme
+
+    NavigationBar(
+        containerColor = Color.White, // Colore di sfondo della BottomBar
+        contentColor = colorScheme.onPrimaryContainer// Colore predefinito per icone e testo
+    ) {
+        val selectedItemColors = NavigationBarItemDefaults.colors(
+            selectedIconColor = Color.White, // Colore interno dell'icona selezionata
+            unselectedIconColor = colorScheme.onPrimaryContainer, // Colore delle icone non selezionate
+            selectedTextColor = colorScheme.secondary, // Colore del testo selezionato
+            unselectedTextColor = colorScheme.onPrimaryContainer, // Colore del testo non selezionato
+            indicatorColor = colorScheme.secondary
+        )
 
         if (SessionManager.user != null) {
             if (SessionManager.user!!.role != "ROLE_OWNER") {
@@ -326,8 +341,8 @@ fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostContro
                     },
                     label = {
                         Text(text = "Cerca")
-                    }
-
+                    },
+                    colors = selectedItemColors
                 )
                 NavigationBarItem(
                     selected = selectedIndex.value == 1,
@@ -349,7 +364,8 @@ fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostContro
                     },
                     label = {
                         Text(text = "Prenotazioni")
-                    }
+                    },
+                    colors = selectedItemColors
                 )
             }
             if (SessionManager.user!!.role == "ROLE_OWNER") {
@@ -373,8 +389,8 @@ fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostContro
                     },
                     label = {
                         Text(text = "Parcheggi")
-                    }
-
+                    },
+                    colors = selectedItemColors
                 )
                 NavigationBarItem(
                     selected = selectedIndex.value == 1,
@@ -396,10 +412,9 @@ fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostContro
                     },
                     label = {
                         Text(text = "Profitti")
-                    }
-
+                    },
+                    colors = selectedItemColors
                 )
-
             }
         }
         NavigationBarItem(
@@ -407,7 +422,7 @@ fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostContro
             onClick = {
                 selectedIndex.value = 2
 
-                if(SessionManager.user == null) //SessionManager.user == null
+                if (SessionManager.user == null)
                     navHostController.navigate("userAuth") {
                         popUpTo(navHostController.graph.startDestinationId) {
                             saveState = true
@@ -431,12 +446,17 @@ fun BottomBar(selectedIndex: MutableState<Int>, navHostController: NavHostContro
                 )
             },
             label = {
-                Text(text = "Account")
-            }
-
+                Text(text = if(SessionManager.user != null) "Account" else "")
+            },
+            colors = NavigationBarItemDefaults.colors(
+                selectedIconColor = colorScheme.secondary,
+                selectedTextColor = colorScheme.secondary,
+                unselectedIconColor = colorScheme.onPrimaryContainer,
+                unselectedTextColor = colorScheme.onPrimaryContainer
+            )
         )
-
     }
 }
+
 //commenti
 

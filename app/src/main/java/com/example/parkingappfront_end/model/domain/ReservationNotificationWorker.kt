@@ -9,6 +9,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Build
+import android.util.Log
 import androidx.core.app.ActivityCompat
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
@@ -23,6 +24,7 @@ import com.example.parkingappfront_end.R
 import com.example.parkingappfront_end.model.ReservationWithDetails
 import java.time.Duration
 import java.time.LocalDateTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 
 class ReservationNotificationWorker(
@@ -35,6 +37,7 @@ class ReservationNotificationWorker(
         val title = inputData.getString("title") ?: return Result.failure()
         val message = inputData.getString("message") ?: return Result.failure()
 
+        Log.d("NotificationWorker", "Executing notification for reservationId: $reservationId")
         showNotification(reservationId, title, message)
         return Result.success()
     }
@@ -43,7 +46,6 @@ class ReservationNotificationWorker(
         val channelId = "reservation_channel"
         val notificationId = reservationId.toInt()
 
-        // Crea il notification channel (richiesto per Android 8.0 e superiori)
         createNotificationChannel(channelId)
 
         val intent = Intent(applicationContext, MainActivity::class.java).apply {
@@ -57,7 +59,7 @@ class ReservationNotificationWorker(
         )
 
         val notification = NotificationCompat.Builder(applicationContext, channelId)
-            .setSmallIcon(R.drawable.ic_launcher_foreground) // Assicurati di avere questa icona
+            .setSmallIcon(R.drawable.ic_launcher_foreground)
             .setContentTitle(title)
             .setContentText(message)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
@@ -66,9 +68,10 @@ class ReservationNotificationWorker(
             .build()
 
         NotificationManagerCompat.from(applicationContext).apply {
-            if (ActivityCompat.checkSelfPermission(context,
-                    Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.checkSelfPermission(context, Manifest.permission.POST_NOTIFICATIONS) == PackageManager.PERMISSION_GRANTED) {
                 notify(notificationId, notification)
+            } else {
+                Log.e("NotificationWorker", "Permission for POST_NOTIFICATIONS not granted")
             }
         }
     }
@@ -96,13 +99,15 @@ class ReservationNotificationWorker(
         ) {
             val workManager = WorkManager.getInstance(context)
 
-            // Calcola il delay fino alla notifica (15 minuti prima)
-            val currentTime = LocalDateTime.now()
-            val notificationTime = startDate.minusMinutes(15)
-            val delay = Duration.between(currentTime, notificationTime)
+            val zoneId = ZoneId.of("Europe/Rome")
+            val currentTime = LocalDateTime.now(zoneId)
+            val notificationTime = startDate.minusMinutes(15).atZone(zoneId)
+            val delay = Duration.between(currentTime.atZone(zoneId), notificationTime)
 
-            // Se la data è già passata, non schedulare la notifica
-            if (delay.isNegative) return
+            if (delay.isNegative) {
+                Log.w("NotificationWorker", "Notification time has already passed")
+                return
+            }
 
             val notificationData = workDataOf(
                 "reservationId" to reservationId,
@@ -120,6 +125,9 @@ class ReservationNotificationWorker(
                 ExistingWorkPolicy.REPLACE,
                 notificationWork
             )
+
+            Log.d("NotificationWorker", "Scheduled notification for reservationId: $reservationId with delay: ${delay.seconds} seconds")
         }
     }
 }
+

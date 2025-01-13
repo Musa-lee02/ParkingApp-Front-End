@@ -40,6 +40,8 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 
 import com.example.parkingappfront_end.model.Credential
+import com.example.parkingappfront_end.model.domain.SpotType
+import com.example.parkingappfront_end.model.domain.userType
 import com.example.parkingappfront_end.viewmodels.LoginViewModel
 import java.time.Instant
 import java.time.LocalDate
@@ -344,7 +346,11 @@ fun RegistrationStep2(registrationViewModel: RegistrationViewModel, onRegistrati
 
     var selectedDate by remember { mutableStateOf(maxDate) }
     var showDatePicker by remember { mutableStateOf(false) }
-    var admin by remember { mutableStateOf("") }
+    var expanded by remember { mutableStateOf(false) }
+
+    val typeUser = userType.values()
+    var selectedType by remember { mutableStateOf(userType.DRIVER) } // Default value
+
 
     fun isValidDate(date: LocalDate): Boolean = date.isBefore(LocalDate.now())
 
@@ -429,21 +435,41 @@ fun RegistrationStep2(registrationViewModel: RegistrationViewModel, onRegistrati
             Spacer(modifier = Modifier.height(8.dp))
 
 
-            OutlinedTextField(
-                value = admin,
-                onValueChange = { admin = it },
-                label = { Text("ADMIN Code") },
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(16.dp),
-                singleLine = true
-            )
-            Text(
-                text = "Insert Admin Code",
-                style = MaterialTheme.typography.bodySmall,
+            ExposedDropdownMenuBox(
+                expanded = expanded,
+                onExpandedChange = { expanded = !expanded },
                 modifier = Modifier
-                    .padding(top = 4.dp)
-                    .offset(x = 8.dp),
-            )
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+            ) {
+                OutlinedTextField(
+                    readOnly = true,
+                    value = if (selectedType == userType.DRIVER) "Guidatore"
+                            else if (selectedType == userType.OWNER) "Proprietario parcehggi"
+                             else TODO(),
+                    onValueChange = {},
+                    label = { Text("Tipo di utente") },
+                    trailingIcon = { ExposedDropdownMenuDefaults.TrailingIcon(expanded = expanded) },
+                    modifier = Modifier.menuAnchor()
+                )
+                ExposedDropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false }
+                ) {
+                    typeUser.forEach { type ->
+                        DropdownMenuItem(
+                            text = { Text(
+                                if (type == userType.DRIVER) "Guidatore"
+                                else "Proprietario parcehggi"
+                            ) },
+                            onClick = {
+                                selectedType = type
+                                expanded = false
+                            }
+                        )
+                    }
+                }
+            }
             Spacer(modifier = Modifier.height(10.dp))
 
 
@@ -453,7 +479,7 @@ fun RegistrationStep2(registrationViewModel: RegistrationViewModel, onRegistrati
                 }
 
                 Button(onClick = {
-                    registrationViewModel.updateUserDetails(selectedDate, admin)
+                    registrationViewModel.updateUserDetails(selectedDate,selectedType)
                     registrationViewModel.register(onRegistrationComplete)
                     onNext() // Passa al prossimo step
                 },

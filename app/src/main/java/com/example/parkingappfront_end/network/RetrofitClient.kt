@@ -66,7 +66,7 @@ object RetrofitClient {
 
     val retrofit: Retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl(Phone_URL) //Emulator_URL
+            .baseUrl(Emulator1_URL) //Emulator_URL
             .client(client)
             .addConverterFactory(GsonConverterFactory.create(
                 GsonBuilder()
